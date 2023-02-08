@@ -20,7 +20,7 @@ class Sun(Body):
     def __init__(self, name="Sun", mass=1.9891e30,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 texture="sun1.jpg", size_scale=1.0, distance_scale=1.0):
+                 texture="sun2.jpg", size_scale=1.0, distance_scale=1.0):
         params = {
             "name": name,
             "mass": mass,

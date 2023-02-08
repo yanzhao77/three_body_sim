@@ -9,7 +9,7 @@
 from mayavi import mlab
 from bodies import Body, Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
 from common.consts import SECONDS_PER_DAY, SECONDS_PER_HOUR, SECONDS_PER_MONTH, SECONDS_PER_WEEK
-
+from common.consts import AU
 from simulators.mayavi_simulator import MayaviSimulator
 
 if __name__ == '__main__':
@@ -22,14 +22,28 @@ if __name__ == '__main__':
     # 2、质量：(以地球为1)木星 ：土星 ：天王星 ：海王星 ：地球 ：金星 ：火星 ：水星 = 318：95：14.53：17.15：1：0.8：0.11：0.0553
     # 3、离太阳从近到远的顺序：水星、金星、地球、火星、木星、土星、天王星、海王星
     bodies = [
-        Sun(size_scale=1),  # 太阳
-        Earth(size_scale=2e1, distance_scale=1e1),  # 地球
+        Sun(mass=1.5e30, init_position=[849597870.700, 0, 0], init_velocity=[0, 7.0, 0],
+            texture="sun1.jpg", size_scale=1, distance_scale=1e1),  # 太阳1,
+
+        Sun(mass=2e30, init_position=[0, 0, 0], init_velocity=[0, -8.0, 0],
+            texture="sun2.jpg", size_scale=1, distance_scale=1e1),  # 太阳2,
+
+        Sun(mass=2.5e30, init_position=[0, -849597870.700, 0], init_velocity=[18.0, 0, 0],
+            texture="sun2.jpg", size_scale=1, distance_scale=1e1),  # 太阳3,
+
+        Earth(init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0],
+              size_scale=5e1, distance_scale=1e1)  # 地球
     ]
+
+    # Sun(name="sun1", init_position=[849597870.700, 0, 0], init_velocity=[0, 7.0, 0]),
+    #     #                Sun(name="sun2", init_position=[0, 0, 0], init_velocity=[0, -8.0, 0]),
+    #     #                Sun(name="sun3", init_position=[0, -849597870.700, 0], init_velocity=[18.0, 0, 0]),
+    #     #                Earth(init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0])]
     from simulators.system import System
 
     body_sys = System(bodies)
     simulator = MayaviSimulator(body_sys)
-    simulator.run_anim(SECONDS_PER_WEEK)
+    simulator.run_anim_10(SECONDS_PER_WEEK)
     # azimuth:
     #    观测方位角，可选，float类型（以度为单位，0-360），用x轴投影到x-y平面上的球体上的位置矢量所对的角度。
     # elevation:

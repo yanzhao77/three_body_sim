@@ -84,20 +84,16 @@ class MayaviBody:
                                    opacity=1,
                                    name=self.body.name)
             # # 调整镜面反射参数
-            sphere.actor.property.specular = 0.1
-            sphere.actor.property.specular_power = 5
+            sphere.actor.property.specular = 0.5  # 0.1
+            sphere.actor.property.specular_power = 128
             # 设置背面剔除，以更好的显示透明效果
             sphere.actor.property.backface_culling = True
-            # # 调整镜面反射参数
-            # sphere_earth.actor.property.specular = 0.9
-            # sphere_earth.actor.property.specular_power = 5
-            # # 设置背面剔除，以更好的显示透明效果
-            # sphere_earth.actor.property.backface_culling = True
-
+            # sphere.actor.property.lighting_ = 10
+            sphere.actor.property.lighting = False
             sphere.scene.disable_render = False
             # sphere_earth.scene.disable_render = False
 
-            sphere.scene.anti_aliasing_frames = 0
+            sphere.scene.anti_aliasing_frames = 10
             # sphere_earth.scene.anti_aliasing_frames = 0
             self.sphere = sphere
 

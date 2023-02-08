@@ -24,6 +24,7 @@ if __name__ == '__main__':
     bodies = [
         Sun(size_scale=1),  # 太阳
         Earth(size_scale=2e1, distance_scale=1e1),  # 地球
+        Jupiter(size_scale=0.5e1, distance_scale=1e1),  # 木星
     ]
     from simulators.system import System
 
