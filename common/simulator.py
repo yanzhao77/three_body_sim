@@ -7,7 +7,7 @@
 # python_version  :3.8
 # ==============================================================================
 from common.system import System
-from bodies import Body, Sun, Earth
+from bodies import Body, Sun, Earth, Jupiter
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -24,6 +24,7 @@ Z_MIN, Z_MAX = -2e+12, 2e+12  # the z range of the bounding box (m)
 X_MIN, X_MAX = -1e+9, 1e+9  # the x range of the bounding box (m)
 Y_MIN, Y_MAX = -1e+9, 1e+9  # the y range of the bounding box (m)
 Z_MIN, Z_MAX = -1e+9, 1e+9  # the z range of the bounding box (m)
+
 
 # X_MIN, X_MAX = -8e+8, 8e+8  # the x range of the bounding box (m)
 # Y_MIN, Y_MAX = -8e+8, 8e+8  # the y range of the bounding box (m)
@@ -46,8 +47,8 @@ def show(bodies, idx=0):
     colors = ['red', 'blue', 'red', 'red']
     sizes = [800, 500, 800, 800]
     for idx, body in enumerate(bodies):
-        color = 'red' if str(body.name).startswith("sun") else 'blue'
-        size = 800 if str(body.name).startswith("sun") else 500
+        color = 'red' if str(body.name).lower().startswith("sun") else 'blue'
+        size = 800 if str(body.name).lower().startswith("sun") else 500
         pos = body.position
         ax.text(pos[0], pos[1], pos[2] + 1e8, body.name, color=color, fontsize=20)
         ax.scatter(pos[0], pos[1], pos[2], color=color, s=size)
@@ -73,28 +74,13 @@ class Simulator:
 
     def evolve(self, dt):
         show(self.system.bodies)
-        self.system.update_acceleration()
-
-        # next_p = p + dt * v + 0.5 * a * (dt ** 2)
-        # next_v = v + dt * a
-        #     for body1 in bodies:
-        #         for body2 in bodies:
-        #             if body1 == body2:  # 相等说明是同一个天体，跳过计算
-        #                 continue
-        #             r = body2.position - body1.position
-        #             # F = G x (m1 x m2) / r²  万有引力定律
-        #             F = Configs.G * body1.mass * body2.mass * r / np.linalg.norm(r) / r.dot(r)
-        #             body1.momentum = body1.momentum + F * dt  # 动量定理
-        #         body1.position = body1.position + (body1.momentum / body1.mass) * dt
-        #         body1.update_source_data()
+        self.system.calc_acceleration()
 
         for body in self.system.bodies:
-            # body.vx = body.vx + ax * dt
-            # body.x = body.x + body.vx * dt
             # acceleration 加速度
             body.velocity += body.acceleration * dt
-            # body.position += body.velocity * dt  # - 0.5 * body.acceleration * (dt ** 2)
-            body.position += body.velocity * dt
+            # body.position += 0.5 * body.acceleration * (dt ** 2)
+            body.position += 0.5 * body.velocity * dt
             print(body)
             # print(body.name, body.position)
 
@@ -121,10 +107,12 @@ if __name__ == '__main__':
 
     # _sys = System([Sun(), Earth()])
 
-    _sys = System([Sun(name="sun1", init_position=[849597870.700, 0, 0], init_velocity=[0, 7.0, 0]),
-                   Sun(name="sun2", init_position=[0, 0, 0], init_velocity=[0, -8.0, 0]),
-                   Sun(name="sun3", init_position=[0, -849597870.700, 0], init_velocity=[18.0, 0, 0]),
-                   Earth(init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0])])
+    # _sys = System([Sun(name="sun1", init_position=[849597870.700, 0, 0], init_velocity=[0, 7.0, 0]),
+    #                Sun(name="sun2", init_position=[0, 0, 0], init_velocity=[0, -8.0, 0]),
+    #                Sun(name="sun3", init_position=[0, -849597870.700, 0], init_velocity=[18.0, 0, 0]),
+    #                Earth(init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0])])
+
+    _sys = System([Sun(), Earth(), Jupiter()])
 
     _sim = Simulator(_sys, t)
     _sim.run(t * 100)

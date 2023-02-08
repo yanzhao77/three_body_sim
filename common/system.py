@@ -157,37 +157,21 @@ class System(object):
         acc = [dx / distance * mag, dy / distance * mag, dz / distance * mag]
         return np.array(acc)/1000/1000/1000
 
-    def update_acceleration(self):
-        # for body in self.bodies:
-        #     body.acceleration = np.zeros(3)
-
+    def calc_acceleration(self):
         for body1 in self.bodies:
             acceleration = np.zeros(3)
             for body2 in self.bodies:
                 if body1 is body2:
                     continue
-                # r = np.sqrt(np.sum(np.square(body2.position - body1.position)))
-                # aij = 6.67e-11 * body2.mass / (r * r)
-                # dir = (body2.position - body1.position) / r
-                # body.acceleration1 += aij * dir
 
                 r = body2.position - body1.position
-                # m/s²
-                # body1.acceleration += self.acceleration(body1,body2)
+                #
+                # G = 6.67e-11 # 万有引力常数
+                # m/s² = kg * m / m**3
+                # km/s² = kg * m / m**3 / 1e9
+                # acceleration = G * body2.mass * dx / (d ** 3)
                 acceleration += (6.67e-11 * body2.mass * r / np.linalg.norm(r) ** 3) / 1e9
 
-                # body1.acceleration = body.acceleration2
-                # r = body2.position - body1.position
-                # # body1.acceleration = -body2.mass * r / np.linalg.norm(r) ** 3
-                # body1.acceleration += 6.67e-11 * body2.mass * r / np.linalg.norm(r) ** 3
-                # body1.acceleration = (G * body2.mass * (x / pow(x ** 2 + y ** 2 + z ** 2, 3 / 2)))
-                # pow(x ** 2 + y ** 2 + z ** 2, 3 / 2)
-                # G = 6.67e-11 # 万有引力常数
-                # m1 = 1 # 第一个天体的质量
-                # m2 = 1 # 第二个天体的质量
-                # r = 1 # 两个天体之间的距离
-                #
-                # a = G * m2 / math.pow(r, 2)
             body1.acceleration = acceleration
 
 

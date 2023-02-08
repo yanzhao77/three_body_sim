@@ -9,28 +9,28 @@
 from bodies.body import Body, AU
 
 
-class Earth(Body):
+class Jupiter(Body):
     """
-    地球
+    木星
     ------------------------
-     远日点距离: 152097701 km
-     近日点距离: 147098074 km
-     　逃逸速度: 11.186 km/s
-     　公转速度: 29.79 km/s
-     　天体质量: 5.97237✕10²⁴ kg
-     　平均密度: 5507.85 kg/m³
+    远日点距离: 5.4588 天文单位
+    近日点距离: 4.9501 天文单位
+    　逃逸速度: 59.5 km/s
+    　公转速度: 13.06 km/s
+    　天体质量: 1.8982✕10²⁷ kg(317.8 M⊕)
+    　平均密度: 1.326 g/cm³ -> -> 1.326✕10³ kg/m³
     """
 
-    def __init__(self, name="Earth", mass=5.97237e24,
-                 init_position=[1.12 * AU, 0, 0],
-                 init_velocity=[0, 29.79, 0],
+    def __init__(self, name="Jupiter", mass=1.8982e27,
+                 init_position=[5.2 * AU, 0, 0],
+                 init_velocity=[0, 13.06, 0],
                  texture="", size_scale=1.0, distance_scale=1.0):
         params = {
             "name": name,
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 5507.85,
+            "density": 1.326e3,
             "color": [
                 125,
                 125,
@@ -44,5 +44,5 @@ class Earth(Body):
 
 
 if __name__ == '__main__':
-    earth = Earth()
-    print(earth)
+    jupiter = Jupiter()
+    print(jupiter)

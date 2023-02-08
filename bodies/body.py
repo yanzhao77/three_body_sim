@@ -35,7 +35,7 @@ class Body:
         self.__his_pos = []
         self.__his_vel = []
         self.__his_acc = []
-        self.__his_reserved_num = 20
+        self.__his_reserved_num = 100
 
         self.name = name
         self.__mass = mass

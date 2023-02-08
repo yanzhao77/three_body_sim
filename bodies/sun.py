@@ -10,7 +10,7 @@ from bodies.body import Body
 
 
 class Sun(Body):
-    def __init__(self, name="sun", mass=1.9891e30,
+    def __init__(self, name="Sun", mass=1.9891e30,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  texture="", size_scale=1.0, distance_scale=1.0):
