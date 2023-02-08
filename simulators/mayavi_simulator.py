@@ -47,7 +47,7 @@ class MayaviSimulator:
 
 if __name__ == '__main__':
     # 背景色
-    bgcolor = (1 / 255, 1 / 255, 30 / 255)  # 宇宙背景色
+    bgcolor = (1 / 255, 1 / 255, 100 / 255)  # 宇宙背景色
     mlab.figure(bgcolor=bgcolor, size=(1440, 810))
     # 八大行星：木星(♃)、土星(♄)、天王星(♅)、海王星(♆)、地球(⊕)、金星(♀)、火星(♂)、水星(☿)
     # 排列顺序
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     # 3、离太阳从近到远的顺序：水星、金星、地球、火星、木星、土星、天王星、海王星
     bodies = [
         Sun(size_scale=1),  # 太阳
-        Mercury(size_scale=2e1, distance_scale=1.2e1),  # 水星
+        Mercury(size_scale=3e1, distance_scale=1e1),  # 水星
         Venus(size_scale=2e1, distance_scale=1e1),  # 金星
         Earth(size_scale=2e1, distance_scale=1e1),  # 地球
         Mars(size_scale=2e1, distance_scale=1e1),  # 火星
@@ -71,5 +71,5 @@ if __name__ == '__main__':
     body_sys = System(bodies)
     simulator = MayaviSimulator(body_sys)
     simulator.run_anim()
-    mlab.view(azimuth=-45, distance=5e12)
+    mlab.view(azimuth=-45, distance=9e9)
     mlab.show()
