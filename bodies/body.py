@@ -33,6 +33,9 @@ class Body:
         self.__his_acc = []
         self.__his_reserved_num = 100
 
+        if name is None:
+            name = getattr(self.__class__, '__name__')
+
         self.name = name
         self.__mass = mass
 

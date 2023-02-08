@@ -9,7 +9,7 @@
 from common.consts import SECONDS_PER_DAY, SECONDS_PER_HOUR, SECONDS_PER_MONTH, SECONDS_PER_WEEK
 from common.system import System
 from bodies import Body, Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
-
+from mayavi import mlab
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits import mplot3d
@@ -26,13 +26,12 @@ X_MIN, X_MAX = -1e+9, 1e+9  # the x range of the bounding box (m)
 Y_MIN, Y_MAX = -1e+9, 1e+9  # the y range of the bounding box (m)
 Z_MIN, Z_MAX = -1e+9, 1e+9  # the z range of the bounding box (m)
 
-
 X_MIN, X_MAX = -8e+8, 8e+8  # the x range of the bounding box (m)
 Y_MIN, Y_MAX = -8e+8, 8e+8  # the y range of the bounding box (m)
 Z_MIN, Z_MAX = -8e+8, 8e+8  # the z range of the bounding box (m)
 
 
-def show(bodies, idx=0):
+def show_figure(bodies, idx=0):
     # from scipy.interpolate import make_interp_spline
 
     # Creating figures for the plot
@@ -74,7 +73,7 @@ class Simulator:
         self.dt = dt
 
     def evolve(self, dt):
-        show(self.system.bodies)
+        show_figure(self.system.bodies)
         self.system.calc_acceleration()
 
         for body in self.system.bodies:
@@ -96,6 +95,26 @@ class Simulator:
         while True:
             # time.sleep(1)
             self.evolve(dt)
+
+
+def run(bodies):
+    """
+    运行天体
+    :param bodies:
+    :return:
+    """
+    for body1 in bodies:
+        for body2 in bodies:
+            if body1 == body2:  # 相等说明是同一个天体，跳过计算
+                continue
+            #
+            r = body2.position - body1.position
+            # F = G x (m1 x m2) / r²  万有引力定律
+            F = G * body1.mass * body2.mass * r / np.linalg.norm(r) / r.dot(r)
+            body1.momentum = body1.momentum + F * Configs.dt  # 动量定理
+        body1.position = body1.position + (body1.momentum / body1.mass) * Configs.dt
+        body1.update_source_data()
+
 
 
 def solar_system():

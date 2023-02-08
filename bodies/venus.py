@@ -24,18 +24,14 @@ class Venus(Body):
     def __init__(self, name="Venus", mass=4.8675e24,
                  init_position=[0.72 * AU, 0, 0],
                  init_velocity=[0, 35, 0],
-                 texture="", size_scale=1.0, distance_scale=1.0):
+                 texture="venus.jpg", size_scale=1.0, distance_scale=1.0):
         params = {
             "name": name,
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
             "density": 5.24e3,
-            "color": [
-                125,
-                125,
-                125
-            ],
+            "color": (173, 81, 5),
             "texture": texture,
             "size_scale": size_scale,
             "distance_scale": distance_scale

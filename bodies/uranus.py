@@ -24,18 +24,14 @@ class Uranus(Body):
     def __init__(self, name="Uranus", mass=8.681e25,
                  init_position=[19 * AU, 0, 0],
                  init_velocity=[0, 6.81, 0],
-                 texture="", size_scale=1.0, distance_scale=1.0):
+                 texture="uranus.jpg", size_scale=1.0, distance_scale=1.0):
         params = {
             "name": name,
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
             "density": 1.27e3,
-            "color": [
-                125,
-                125,
-                125
-            ],
+            "color": (94, 124, 193),
             "texture": texture,
             "size_scale": size_scale,
             "distance_scale": distance_scale

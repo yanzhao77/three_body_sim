@@ -23,18 +23,14 @@ class Mars(Body):
     def __init__(self, name="Mars", mass=6.4171e23,
                  init_position=[1.5 * AU, 0, 0],
                  init_velocity=[0, 24.13, 0],
-                 texture="", size_scale=1.0, distance_scale=1.0):
+                 texture="mars.jpg", size_scale=1.0, distance_scale=1.0):
         params = {
             "name": name,
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
             "density": 3.9335e3,
-            "color": [
-                125,
-                125,
-                125
-            ],
+            "color": (213, 97, 59),
             "texture": texture,
             "size_scale": size_scale,
             "distance_scale": distance_scale

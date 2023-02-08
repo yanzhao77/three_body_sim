@@ -24,18 +24,14 @@ class Pluto(Body):
     def __init__(self, name="Pluto", mass=1.303e22,
                  init_position=[40 * AU, 0, 0],
                  init_velocity=[0, 4.7, 0],
-                 texture="", size_scale=1.0, distance_scale=1.0):
+                 texture="pluto2.jpg", size_scale=1.0, distance_scale=1.0):
         params = {
             "name": name,
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
             "density": 1.854e3,
-            "color": [
-                125,
-                125,
-                125
-            ],
+            "color": (67, 28, 7),
             "texture": texture,
             "size_scale": size_scale,
             "distance_scale": distance_scale

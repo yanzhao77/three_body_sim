@@ -24,18 +24,14 @@ class Earth(Body):
     def __init__(self, name="Earth", mass=5.97237e24,
                  init_position=[1.12 * AU, 0, 0],
                  init_velocity=[0, 29.79, 0],
-                 texture="", size_scale=1.0, distance_scale=1.0):
+                 texture="earth1.jpg", size_scale=1.0, distance_scale=1.0):
         params = {
             "name": name,
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
             "density": 5507.85,
-            "color": [
-                125,
-                125,
-                125
-            ],
+            "color": (1, 89, 162),
             "texture": texture,
             "size_scale": size_scale,
             "distance_scale": distance_scale

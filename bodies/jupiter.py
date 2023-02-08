@@ -24,18 +24,14 @@ class Jupiter(Body):
     def __init__(self, name="Jupiter", mass=1.8982e27,
                  init_position=[5.2 * AU, 0, 0],
                  init_velocity=[0, 13.06, 0],
-                 texture="", size_scale=1.0, distance_scale=1.0):
+                 texture="jupiter1.jpg", size_scale=1.0, distance_scale=1.0):
         params = {
             "name": name,
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
             "density": 1.326e3,
-            "color": [
-                125,
-                125,
-                125
-            ],
+            "color": (173, 121, 92),
             "texture": texture,
             "size_scale": size_scale,
             "distance_scale": distance_scale
