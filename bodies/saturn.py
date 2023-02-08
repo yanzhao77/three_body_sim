@@ -6,27 +6,31 @@
 # notes           :
 # python_version  :3.8
 # ==============================================================================
-from bodies.body import Body
+from bodies.body import Body, AU
 
 
-class Sun(Body):
+class Saturn(Body):
     """
-    太阳
+    土星
     ------------------------
-    天体质量: 1.9891×10³⁰ kg
-    平均密度: 1.408×10³ kg/m³
+    远日点距离: 10.1238 天文单位
+    近日点距离: 9.0412 天文单位
+    逃逸速度: 35.49 km/s
+    　公转速度: 9.64 km/s
+    　天体质量: 5.6834✕10²⁶ kg
+    　平均密度: 0.687 g/cm³ -> 0.687×10³ kg/m³
     """
 
-    def __init__(self, name="Sun", mass=1.9891e30,
-                 init_position=[0, 0, 0],
-                 init_velocity=[0, 0, 0],
+    def __init__(self, name="Saturn", mass=5.6834e26,
+                 init_position=[10 * AU, 0, 0],
+                 init_velocity=[0, 9.64, 0],
                  texture="", size_scale=1.0, distance_scale=1.0):
         params = {
             "name": name,
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 1.408e3,
+            "density": 0.687e3,
             "color": [
                 125,
                 125,
@@ -40,4 +44,5 @@ class Sun(Body):
 
 
 if __name__ == '__main__':
-    print(Sun())
+    saturn = Saturn()
+    print(saturn)

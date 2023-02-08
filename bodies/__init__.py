@@ -2,3 +2,10 @@ from bodies.body import Body
 from bodies.earth import Earth
 from bodies.sun import Sun
 from bodies.jupiter import Jupiter
+from bodies.mars import Mars
+from bodies.mercury import Mercury
+from bodies.neptune import Neptune
+from bodies.pluto import Pluto
+from bodies.saturn import Saturn
+from bodies.uranus import Uranus
+from bodies.venus import Venus

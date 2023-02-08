@@ -7,6 +7,7 @@
 # python_version  :3.8
 # ==============================================================================
 import numpy as np
+from common.consts import AU, G
 
 
 class System(object):
@@ -36,14 +37,14 @@ class System(object):
             ke = 0.5 * body.mass * (v[0] ** 2 + v[1] ** 2)  # ke = 0.5 * body.mass * (v[0]**2  v[1]**2)
         return ke
 
-    def kinetic_energy(self, vx, vy, vz, mass):
-        """
-        计算动能
-        """
-        v = body.velocity  # velocity
-        return 0.5 * mass * (vx ** 2 + vy ** 2 + vz ** 2)
+    # def kinetic_energy(self, vx, vy, vz, mass):
+    #     """
+    #     计算动能
+    #     """
+    #     v = body.velocity  # velocity
+    #     return 0.5 * mass * (vx ** 2 + vy ** 2 + vz ** 2)
 
-    def potential_energy(self, x, y, z, mass, G, M):
+    def potential_energy(self, x, y, z, mass,M):
         """
         计算势能
         """
@@ -139,8 +140,7 @@ class System(object):
     #         body1.position = body1.position + (body1.momentum / body1.mass) * dt
     #         body1.update_source_data()
 
-
-    def acceleration(self, body1, body2, G=6.67e-11):
+    def acceleration(self, body1, body2):
         """
         计算两个天体之间的加速度
         :param body1: 天体1
@@ -155,7 +155,7 @@ class System(object):
         distance = math.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
         mag = G * body2.mass / (distance ** 2)
         acc = [dx / distance * mag, dy / distance * mag, dz / distance * mag]
-        return np.array(acc)/1000/1000/1000
+        return np.array(acc) / 1000 / 1000 / 1000
 
     def calc_acceleration(self):
         for body1 in self.bodies:
@@ -170,7 +170,7 @@ class System(object):
                 # m/s² = kg * m / m**3
                 # km/s² = kg * m / m**3 / 1e9
                 # acceleration = G * body2.mass * dx / (d ** 3)
-                acceleration += (6.67e-11 * body2.mass * r / np.linalg.norm(r) ** 3) / 1e9
+                acceleration += (G * body2.mass * r / np.linalg.norm(r) ** 3) / 1e9
 
             body1.acceleration = acceleration
 

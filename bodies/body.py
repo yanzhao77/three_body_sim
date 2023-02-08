@@ -9,11 +9,7 @@
 import json
 import numpy as np
 import math
-
-"""
-天文单位
-"""
-AU: float = 149597870.700
+from common.consts import AU
 
 
 class Body:
@@ -58,8 +54,6 @@ class Body:
         # m/s²
         self.__acceleration = np.array([0, 0, 0], dtype='float32')
         self.__record_history()
-
-
 
     @property
     def position(self):

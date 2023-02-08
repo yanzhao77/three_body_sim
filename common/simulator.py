@@ -6,8 +6,9 @@
 # notes           :
 # python_version  :3.8
 # ==============================================================================
+from common.consts import SECONDS_PER_DAY, SECONDS_PER_HOUR, SECONDS_PER_MONTH, SECONDS_PER_WEEK
 from common.system import System
-from bodies import Body, Sun, Earth, Jupiter
+from bodies import Body, Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -26,9 +27,9 @@ Y_MIN, Y_MAX = -1e+9, 1e+9  # the y range of the bounding box (m)
 Z_MIN, Z_MAX = -1e+9, 1e+9  # the z range of the bounding box (m)
 
 
-# X_MIN, X_MAX = -8e+8, 8e+8  # the x range of the bounding box (m)
-# Y_MIN, Y_MAX = -8e+8, 8e+8  # the y range of the bounding box (m)
-# Z_MIN, Z_MAX = -8e+8, 8e+8  # the z range of the bounding box (m)
+X_MIN, X_MAX = -8e+8, 8e+8  # the x range of the bounding box (m)
+Y_MIN, Y_MAX = -8e+8, 8e+8  # the y range of the bounding box (m)
+Z_MIN, Z_MAX = -8e+8, 8e+8  # the z range of the bounding box (m)
 
 
 def show(bodies, idx=0):
@@ -59,7 +60,7 @@ def show(bodies, idx=0):
         if len(his_pos) > 1:
             _his_pos = list(zip(*his_pos))
             ax.plot3D(_his_pos[0], _his_pos[1], _his_pos[2], color=color, alpha=0.8)
-    plt.title("3D scatter plot %s" % idx)
+    plt.title("3D %s" % idx)
     # display the  plot
     plt.show()
 
@@ -80,7 +81,7 @@ class Simulator:
             # acceleration 加速度
             body.velocity += body.acceleration * dt
             # body.position += 0.5 * body.acceleration * (dt ** 2)
-            body.position += 0.5 * body.velocity * dt
+            body.position += body.velocity * dt
             print(body)
             # print(body.name, body.position)
 
@@ -97,9 +98,28 @@ class Simulator:
             self.evolve(dt)
 
 
-if __name__ == '__main__':
-    t = 60 * 60 * 24 * 100
+def solar_system():
+    t = SECONDS_PER_WEEK
+    _sys = System([
+        Sun(),  # 太阳
+        Mercury(),  # 水星
+        Venus(),  # 金星
+        Earth(),  # 地球
+        Mars(),  # 火星
+        Jupiter(),  # 木星
+        Saturn(),  # 土星
+        Uranus(),  # 天王星
+        Neptune(),  # 海王星
+        Pluto()  # 冥王星(从太阳系的行星中排除)
+    ])
 
+    _sim = Simulator(_sys, t)
+    _sim.run(t * 100)
+
+
+if __name__ == '__main__':
+    # t = 60 * 60 * 24 * 10
+    solar_system()
     # _sys = System([Sun(init_position=[0, 0, 149597870.700]), Earth()])
 
     # _sys = System([Sun(init_position=[849597870.700, 0, 0], init_velocity=[0, 9.79, 0]),
@@ -112,7 +132,7 @@ if __name__ == '__main__':
     #                Sun(name="sun3", init_position=[0, -849597870.700, 0], init_velocity=[18.0, 0, 0]),
     #                Earth(init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0])])
 
-    _sys = System([Sun(), Earth(), Jupiter()])
-
-    _sim = Simulator(_sys, t)
-    _sim.run(t * 100)
+    # _sys = System([Sun(), Earth(), Jupiter()])
+    #
+    # _sim = Simulator(_sys, t)
+    # _sim.run(t * 100)
