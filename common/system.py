@@ -139,12 +139,30 @@ class System(object):
     #         body1.position = body1.position + (body1.momentum / body1.mass) * dt
     #         body1.update_source_data()
 
+
+    def acceleration(self, body1, body2, G=6.67e-11):
+        """
+        计算两个天体之间的加速度
+        :param body1: 天体1
+        :param body2: 天体2
+        :param G: 引力常数
+        :return: 加速度
+        """
+        import math
+        dx = body2.position[0] - body1.position[0]
+        dy = body2.position[1] - body1.position[1]
+        dz = body2.position[2] - body1.position[2]
+        distance = math.sqrt(dx ** 2 + dy ** 2 + dz ** 2)
+        mag = G * body2.mass / (distance ** 2)
+        acc = [dx / distance * mag, dy / distance * mag, dz / distance * mag]
+        return np.array(acc)/1000/1000/1000
+
     def update_acceleration(self):
-        for body in self.bodies:
-            body.acceleration = np.zeros(3)
+        # for body in self.bodies:
+        #     body.acceleration = np.zeros(3)
 
         for body1 in self.bodies:
-            body1.record_history()
+            acceleration = np.zeros(3)
             for body2 in self.bodies:
                 if body1 is body2:
                     continue
@@ -154,7 +172,9 @@ class System(object):
                 # body.acceleration1 += aij * dir
 
                 r = body2.position - body1.position
-                body.acceleration += -6.67e-11 * body2.mass * r / np.linalg.norm(r) ** 3
+                # m/s²
+                # body1.acceleration += self.acceleration(body1,body2)
+                acceleration += (6.67e-11 * body2.mass * r / np.linalg.norm(r) ** 3) / 1e9
 
                 # body1.acceleration = body.acceleration2
                 # r = body2.position - body1.position
@@ -168,6 +188,7 @@ class System(object):
                 # r = 1 # 两个天体之间的距离
                 #
                 # a = G * m2 / math.pow(r, 2)
+            body1.acceleration = acceleration
 
 
 """

@@ -23,7 +23,7 @@ class Earth(Body):
 
     def __init__(self, name="earth", mass=5.97237e24,
                  init_position=[149597870.700, 0, 0],
-                 init_velocity=[29.79, 0, 0],
+                 init_velocity=[0, 29.79, 0],
                  texture="", size_scale=1.0, distance_scale=1.0):
         params = {
             "name": name,

@@ -32,14 +32,19 @@ class Body:
         :param size_scale: 尺寸缩放
         :param distance_scale: 距离缩放
         """
+        self.__his_pos = []
+        self.__his_vel = []
+        self.__his_acc = []
+        self.__his_reserved_num = 20
+
         self.name = name
         self.__mass = mass
 
         self.init_position = np.array(init_position, dtype='float32')
         self.init_velocity = np.array(init_velocity, dtype='float32')
 
-        self.position = self.init_position
-        self.velocity = self.init_velocity
+        self.__position = self.init_position
+        self.__velocity = self.init_velocity
 
         self.__density = density
 
@@ -50,14 +55,40 @@ class Body:
         self.distance_scale = distance_scale
 
         # 初始化后，加速度为0，只有多个天体的引力才会影响到加速度
-        self.acceleration = np.array([0, 0, 0], dtype='float32')
+        # m/s²
+        self.__acceleration = np.array([0, 0, 0], dtype='float32')
+        self.__record_history()
 
-        self.__his_pos = []
-        self.__his_vel = []
-        self.__his_acc = []
-        self.__his_reserved_num = 10
 
-    def append_history(self, his_list, data):
+
+    @property
+    def position(self):
+        return self.__position
+
+    @position.setter
+    def position(self, value):
+        self.__position = value
+        self.__record_history()
+
+    @property
+    def acceleration(self):
+        return self.__acceleration
+
+    @acceleration.setter
+    def acceleration(self, value):
+        self.__acceleration = value
+        self.__record_history()
+
+    @property
+    def velocity(self):
+        return self.__velocity
+
+    @velocity.setter
+    def velocity(self, value):
+        self.__velocity = value
+        self.__record_history()
+
+    def __append_history(self, his_list, data):
         """
 
         :param his_list:
@@ -69,23 +100,22 @@ class Body:
                 np.sum(data == his_list[-1]) < len(data):
             his_list.append(data.copy())
 
-    def record_history(self):
+    def __record_history(self):
         """
         记录历史
         :return:
         """
         # 如果历史记录数超过了保留数量，则截断，只保留 __his_reserved_num 数量的历史
         if len(self.__his_pos) > self.__his_reserved_num:
-            self.__his_pos = self.__his_pos[len(self.__his_pos)-self.__his_reserved_num:]
-            self.__his_vel = self.__his_vel[len(self.__his_vel)-self.__his_reserved_num:]
-            self.__his_acc = self.__his_acc[len(self.__his_acc)-self.__his_reserved_num:]
+            self.__his_pos = self.__his_pos[len(self.__his_pos) - self.__his_reserved_num:]
+            self.__his_vel = self.__his_vel[len(self.__his_vel) - self.__his_reserved_num:]
+            self.__his_acc = self.__his_acc[len(self.__his_acc) - self.__his_reserved_num:]
 
         # 追加历史记录(位置、速度、加速度)
-        self.append_history(self.__his_pos, self.position)
-        self.append_history(self.__his_vel, self.velocity)
-        self.append_history(self.__his_acc, self.acceleration)
-
-        print(self.name, "his pos->", self.__his_pos)
+        self.__append_history(self.__his_pos, self.position)
+        self.__append_history(self.__his_vel, self.velocity)
+        self.__append_history(self.__his_acc, self.acceleration)
+        # print(self.name, "his pos->", self.__his_pos)
 
     def his_position(self):
         """
