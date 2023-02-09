@@ -6,9 +6,6 @@
 # notes           :
 # python_version  :3.8
 # ==============================================================================
-import numpy as np
-import random
-from mayavi import mlab
 from PIL import Image
 
 

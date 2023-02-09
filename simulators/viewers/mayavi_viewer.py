@@ -7,31 +7,18 @@
 # python_version  :3.8
 # ==============================================================================
 from mayavi import mlab
-import numpy as np
-from bodies import Body
-from mayavi import mlab
-import numpy as np
 from tvtk.api import tvtk
-from abc import ABCMeta, abstractmethod
 import os
 import matplotlib.pyplot as plt
 from common.func import get_dominant_colors
 
+from simulators.viewers.body_viewer import BodyViewer
+import numpy as np
 
-class MayaviBody:
-    def __init__(self, body: Body):
-        self.body = body
-        if self.body.texture is None or self.body.texture == '':
-            self.color = tuple(np.array(body.color) / 255)
-        else:
-            self.texture = self.__find_texture(self.body.texture)  # 纹理
-            if self.texture is None:
-                self.color = tuple(np.array(body.color) / 255)
-            else:
-                self.color = self.__texture_to_color(self.texture)
-        self.build_body()
 
-    def update_source_data(self):
+class MayaviViewer(BodyViewer):
+
+    def update(self):
         """
 
         :return:
@@ -41,8 +28,6 @@ class MayaviBody:
         z_offset = self.body.position[2] - self.sphere.mlab_source.z
 
         self.sphere.mlab_source.set(x=self.position[0], y=self.position[1], z=self.position[2])
-        # print(self.sphere.mlab_source.y, self.position[1])
-        # self.sphere.actor.actor.position = self.position
         return x_offset[0], y_offset[0], z_offset[0]
 
     def __find_texture(self, texture):
@@ -70,12 +55,12 @@ class MayaviBody:
         # print(self.name, first_color)
         return tuple(np.array(first_color) / 255)
 
-    def build_body(self):
+    def build(self):
         """
         构建球体对象
         :return:
         """
-        if not hasattr(self, "sphere"):
+        if not hasattr(self, "sphere") or self.sphere is None:
             scale_factor = self.body.size_scale * self.body.raduis
             sphere = mlab.points3d(self.body.position[0], self.body.position[1], self.body.position[2],
                                    scale_factor=scale_factor,

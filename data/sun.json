@@ -14,11 +14,7 @@
         0
       ],
       "density": 1.408e3,
-      "color": [
-        125,
-        125,
-        125
-      ],
+      "color": [170, 98, 25],
       "texture": "",
       "size_scale": 1.0,
       "distance_scale": 1.0

@@ -7,58 +7,26 @@
 # python_version  :3.8
 # ==============================================================================
 from mayavi import mlab
-from bodies import Body, Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
-from common.consts import SECONDS_PER_DAY, SECONDS_PER_HOUR, SECONDS_PER_MONTH, SECONDS_PER_WEEK
-from common.consts import AU
-from simulators.mayavi_simulator import MayaviSimulator
+from bodies import Sun, Earth
+from common.consts import SECONDS_PER_WEEK
+from scenes.func import mayavi_run
 
 if __name__ == '__main__':
-    # 背景色
-    bgcolor = (1 / 255, 1 / 255, 30 / 255)  # 宇宙背景色
-    mlab.figure(bgcolor=bgcolor, size=(1440, 810))
-    # 八大行星：木星(♃)、土星(♄)、天王星(♅)、海王星(♆)、地球(⊕)、金星(♀)、火星(♂)、水星(☿)
-    # 排列顺序
-    # 1、体积：(以地球为1)木星 ：土星 ：天王星 ：海王星 ：地球 ：金星 ：火星 ：水星 = 1330：745：65：60：1：0.86：0.15：0.056
-    # 2、质量：(以地球为1)木星 ：土星 ：天王星 ：海王星 ：地球 ：金星 ：火星 ：水星 = 318：95：14.53：17.15：1：0.8：0.11：0.0553
-    # 3、离太阳从近到远的顺序：水星、金星、地球、火星、木星、土星、天王星、海王星
+    """
+    3个太阳、1个地球（效果1）
+    可以修改影响效果的参数为： 
+    1、三个方向的初始位置 init_position[x, y, z]
+    2、三个方向的初始速度 init_velocity[x, y, z]
+    3、天体质量 mass    
+    """
     bodies = [
         Sun(mass=1.5e30, init_position=[849597870.700, 0, 0], init_velocity=[0, 7.0, 0],
-            texture="sun1.jpg", size_scale=1, distance_scale=1e1),  # 太阳1,
-
+            size_scale=1e2, texture="sun1.jpg"),  # 太阳放大 100 倍
         Sun(mass=2e30, init_position=[0, 0, 0], init_velocity=[0, -8.0, 0],
-            texture="sun2.jpg", size_scale=1, distance_scale=1e1),  # 太阳2,
-
+            size_scale=1e2, texture="sun2.jpg"),  # 太阳放大 100 倍
         Sun(mass=2.5e30, init_position=[0, -849597870.700, 0], init_velocity=[18.0, 0, 0],
-            texture="sun2.jpg", size_scale=1, distance_scale=1e1),  # 太阳3,
-
+            size_scale=1e2, texture="sun2.jpg"),  # 太阳放大 100 倍
         Earth(init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0],
-              size_scale=5e1, distance_scale=1e1)  # 地球
+              size_scale=4e3, distance_scale=1),  # 地球放大 4000 倍，距离保持不变
     ]
-
-    # Sun(name="sun1", init_position=[849597870.700, 0, 0], init_velocity=[0, 7.0, 0]),
-    #     #                Sun(name="sun2", init_position=[0, 0, 0], init_velocity=[0, -8.0, 0]),
-    #     #                Sun(name="sun3", init_position=[0, -849597870.700, 0], init_velocity=[18.0, 0, 0]),
-    #     #                Earth(init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0])]
-    from simulators.system import System
-
-    body_sys = System(bodies)
-    simulator = MayaviSimulator(body_sys)
-    simulator.run_anim_10(SECONDS_PER_WEEK)
-    # azimuth:
-    #    观测方位角，可选，float类型（以度为单位，0-360），用x轴投影到x-y平面上的球体上的位置矢量所对的角度。
-    # elevation:
-    #    观测天顶角，可选，float类型（以度为单位，0-180）, 位置向量和z轴所对的角度。
-    # distance:
-    #    观测距离，可选，float类型 or 'auto',一个正浮点数，表示距放置相机的焦点的距离。
-    #    Mayavi 3.4.0中的新功能：'auto' 使得距离为观察所有对象的最佳位置。
-    # focalpoint:
-    #    观测焦点，可选，类型为一个由3个浮点数组成的数组 or 'auto'，，代表观测相机的焦点
-    #    Mayavi 3.4.0中的新功能：'auto'，则焦点位于场景中所有对象的中心。
-    # roll:
-    #    控制滚动，可选，float类型，即摄影机围绕其轴的旋转
-    # reset_roll:
-    #    布尔值，可选。如果为True，且未指定“滚动”，则重置相机的滚动方向。
-    # figure:
-    #    要操作的Mayavi图形。如果为 None，则使用当前图形。
-    mlab.view(azimuth=-45, distance=9e9)
-    mlab.show()
+    mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=0)

@@ -6,13 +6,14 @@
 # notes           :
 # python_version  :3.8
 # ==============================================================================
+from abc import ABCMeta, abstractmethod
 import json
 import numpy as np
 import math
 from common.consts import AU
 
 
-class Body:
+class Body(metaclass=ABCMeta):
     def __init__(self, name, mass, init_position, init_velocity,
                  density=5e3, color=(125 / 255, 125 / 255, 125 / 255),
                  texture=None, size_scale=1.0, distance_scale=1.0):
@@ -158,7 +159,8 @@ class Body:
         """
         # v = m/ρ
         # 体积(m³) = 质量(kg) / 密度(kg/m³)
-        v = self.mass / self.density
+        # 体积(km³) = 体积(m³)  / 1e9
+        v = self.mass / self.density / 1e9
         return v
 
     @property
