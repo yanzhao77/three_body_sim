@@ -16,6 +16,6 @@ if __name__ == '__main__':
     """
     bodies = [
         Sun(size_scale=1.2e2),                    # 太阳放大 120 倍
-        Earth(size_scale=4e3, distance_scale=1),  # 地球放大 4000 倍，距离保持不变
+        Earth(size_scale=2e3, distance_scale=1),  # 地球放大 2000 倍，距离保持不变
     ]
     mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45)
