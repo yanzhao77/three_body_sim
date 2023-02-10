@@ -10,3 +10,4 @@ from bodies.saturn import Saturn
 from bodies.uranus import Uranus
 from bodies.venus import Venus
 from bodies.moon import Moon
+from bodies.asteroid import Asteroid

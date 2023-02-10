@@ -6,7 +6,7 @@
 # notes           :
 # python_version  :3.8
 # ==============================================================================
-from bodies import Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
+from bodies import Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Asteroid
 from common.consts import SECONDS_PER_WEEK
 from scenes.func import mayavi_run
 
@@ -26,6 +26,7 @@ if __name__ == '__main__':
         Venus(size_scale=4e3, distance_scale=1),        # 金星放大 4000 倍，距离保持不变
         Earth(size_scale=4e3, distance_scale=1),        # 地球放大 4000 倍，距离保持不变
         Mars(size_scale=4e3, distance_scale=1),         # 火星放大 4000 倍，距离保持不变
+        # Asteroid(size_scale=4e4, distance_scale=1),     # 小行星放大 40000 倍，距离保持不变
         Jupiter(size_scale=0.8e3, distance_scale=0.5),  # 木星放大 800 倍，距离缩小到真实距离的 0.5
         Saturn(size_scale=0.8e3, distance_scale=0.38),  # 土星放大 800 倍，距离缩小到真实距离的 0.38
         Uranus(size_scale=0.8e3, distance_scale=0.26),  # 天王星放大 800 倍，距离缩小到真实距离的 0.26

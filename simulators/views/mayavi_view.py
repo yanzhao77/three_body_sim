@@ -27,41 +27,52 @@ class MayaviView(BodyView):
         :return:
         """
         if hasattr(self.sphere, "mlab_source"):
-            x_offset = self.body.position[0] - self.sphere.mlab_source.x
-            y_offset = self.body.position[1] - self.sphere.mlab_source.y
-            z_offset = self.body.position[2] - self.sphere.mlab_source.z
+            # self.sphere.mlab_source.x 的位置是已经和 distance_scale 进行了相乘
+            # body.position 是真实位置，所以需要和 distance_scale 相乘
+            x_offset = self.body.position[0] * self.body.distance_scale - self.sphere.mlab_source.x
+            y_offset = self.body.position[1] * self.body.distance_scale - self.sphere.mlab_source.y
+            z_offset = self.body.position[2] * self.body.distance_scale - self.sphere.mlab_source.z
+            # self.position 的位置是已经和 distance_scale 进行了相乘
             self.sphere.mlab_source.set(x=self.position[0], y=self.position[1], z=self.position[2])
-        else:
-            x_offset, y_offset, z_offset = 0, 0, 0
 
-        if hasattr(self, "rings"):
-            if hasattr(self.rings, "mlab_source"):
-                if hasattr(self, "rings") and self.body.has_rings:
-                    x = self.rings.mlab_source.x
-                    y = self.rings.mlab_source.y
-                    z = self.rings.mlab_source.z
-                    self.rings.mlab_source.set(x=x + x_offset, y=y + y_offset, z=z + z_offset)
+            if hasattr(self, "rings"):
+                if hasattr(self.rings, "mlab_source"):
+                    if hasattr(self, "rings") and self.body.has_rings:
+                        x = self.rings.mlab_source.x
+                        y = self.rings.mlab_source.y
+                        z = self.rings.mlab_source.z
+                        x = x + x_offset[0]
+                        y = y + y_offset[0]
+                        z = z + z_offset[0]
+                        self.rings.mlab_source.set(x=x, y=y, z=z)
 
         # return x_offset[0], y_offset[0], z_offset[0]
 
     def build_rings(self):
         if not hasattr(self, "rings") or self.rings is None:
 
-            R = 2
-            r = 0.3
+            R = 2.2
+            r = 0.5
             rings_scale = 0.5e5
             resolution = 50
             theta = np.linspace(0, 2 * np.pi, resolution)
             phi = np.linspace(0, 2 * np.pi, resolution)
             torus = np.zeros((3, resolution, resolution))
 
+            # # body.position 是真实位置，所以需要和 distance_scale 相乘
             for i in range(0, resolution):
                 for j in range(0, resolution):  # size_scale=8.0e2
                     torus[0][i][j] = (R + r * np.cos(phi[j])) * np.cos(theta[i]) * \
-                                     self.body.size_scale * rings_scale + self.body.position[0]
+                                     self.body.size_scale * rings_scale + \
+                                     self.body.position[0]  # * self.body.distance_scale
+
                     torus[1][i][j] = (R + r * np.cos(phi[j])) * np.sin(theta[i]) * \
-                                     self.body.size_scale * rings_scale + self.body.position[1]
-                    torus[2][i][j] = 1 * np.sin(phi[j]) + self.body.position[2]
+                                     self.body.size_scale * rings_scale + \
+                                     self.body.position[1]  # * self.body.distance_scale
+                    # 带环的厚度
+                    thicknesses_scale = self.body.raduis * 20
+                    torus[2][i][j] = thicknesses_scale * np.sin(phi[j]) + \
+                                     self.body.position[2]  # * self.body.distance_scale
             rings_color = (173 / 255, 121 / 255, 92 / 255)
             if hasattr(self.body, "rings_color"):
                 rings_color = tuple(np.array(self.body.rings_color) / 255)
@@ -96,14 +107,15 @@ class MayaviView(BodyView):
             # sphere_earth.scene.anti_aliasing_frames = 0
             self.sphere = sphere
 
-        if self.texture is not None and self.texture != '':
-            self.__set_texture(self.texture)
+        if hasattr(self, "texture"):
+            if self.texture is not None and self.texture != '':
+                self.__set_texture(self.texture)
 
         if self.body.has_rings:
             self.build_rings()
-            return self.sphere, self.rings
+            # return self.sphere, self.rings
 
-        return self.sphere,
+        # return self.sphere,
 
     def __set_texture(self, image_file):
         """

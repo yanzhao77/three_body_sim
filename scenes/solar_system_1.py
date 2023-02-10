@@ -20,14 +20,14 @@ if __name__ == '__main__':
     #  以下展示的效果为太阳系真实的距离
     #  但是由于宇宙空间尺度非常大，按照实际的大小无法看到行星天体，因此需要对天体的尺寸进行放大
     bodies = [
-        Sun(size_scale=1.2e2),      # 太阳放大 120 倍，距离保持不变
+        Sun(size_scale=0.8e2),      # 太阳放大 80 倍，距离保持不变
         Mercury(size_scale=4e3),    # 水星放大 4000 倍，距离保持不变
         Venus(size_scale=4e3),      # 金星放大 4000 倍，距离保持不变
         Earth(size_scale=4e3),      # 地球放大 4000 倍，距离保持不变
         Mars(size_scale=4e3),       # 火星放大 4000 倍，距离保持不变
-        Jupiter(size_scale=1e3),    # 木星放大 1000 倍，距离保持不变
-        Saturn(size_scale=1e3),     # 土星放大 1000 倍，距离保持不变
-        Uranus(size_scale=1e3),     # 天王星放大 1000 倍，距离保持不变
+        Jupiter(size_scale=0.8e3),  # 木星放大 800 倍，距离保持不变
+        Saturn(size_scale=0.8e3),   # 土星放大 800 倍，距离保持不变
+        Uranus(size_scale=0.8e3),   # 天王星放大 800 倍，距离保持不变
         Neptune(size_scale=1e3),    # 海王星放大 1000 倍，距离保持不变
         Pluto(size_scale=10e3),     # 冥王星放大 10000 倍，距离保持不变(从太阳系的行星中排除)
     ]
