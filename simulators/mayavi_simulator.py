@@ -9,12 +9,15 @@
 from mayavi import mlab
 from simulators.simulator import Simulator
 from common.system import System
-from simulators.viewers.mayavi_viewer import MayaviViewer
+from simulators.viewers.mayavi_view import MayaviView
 
 
 class MayaviSimulator(Simulator):
+    """
+    Mayavi天体运行模拟器
+    """
     def __init__(self, bodies_sys: System):
-        super().__init__(bodies_sys, MayaviViewer)
+        super().__init__(bodies_sys, MayaviView)
 
     @mlab.animate(delay=100, ui=True)
     def run(self, dt):

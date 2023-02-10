@@ -16,7 +16,7 @@ def mayavi_run(bodies, dt=SECONDS_PER_WEEK,
     """
     用 mayavi 查看运行效果
     :param bodies: 天体
-    :param dt: 按时间差进行演变，值越小越精确，但演变速度会慢。
+    :param dt: 单位：秒，按时间差进行演变，值越小越精确，但演变速度会慢。
     :param view_azimuth: 观测方位角，可选，float类型（以度为单位，0-360），用x轴投影到x-y平面上的球体上的位置矢量所对的角度。
     :param view_distance: 观测距离，可选，float类型 or 'auto',一个正浮点数，表示距放置相机的焦点的距离。
     :param view_focalpoint: 观测焦点，可选，类型为一个由3个浮点数组成的数组 or 'auto'，，代表观测相机的焦点
@@ -49,3 +49,29 @@ def mayavi_run(bodies, dt=SECONDS_PER_WEEK,
     mlab.view(azimuth=view_azimuth, distance=view_distance, focalpoint=view_focalpoint)
     # mlab.view(azimuth=-45, elevation=45, distance=100e8 * 2 * 2 * 4 * 4, focalpoint=[5e10, 5e10, 5e9])
     mlab.show()
+
+
+def mpl_run(bodies, dt=SECONDS_PER_WEEK):
+    """
+
+    :param bodies: 天体
+    :param dt: 单位：秒，按时间差进行演变，值越小越精确，但演变速度会慢。
+    :return:
+    """
+    from simulators.mpl_simulator import MplSimulator
+    body_sys = System(bodies)
+    simulator = MplSimulator(body_sys)
+    simulator.run(dt)
+
+
+if __name__ == '__main__':
+    from bodies import Sun, Earth
+
+    """
+    太阳、地球
+    """
+    bodies = [
+        Sun(size_scale=1.2e2),  # 太阳放大 120 倍
+        Earth(size_scale=4e3, distance_scale=1),  # 地球放大 4000 倍，距离保持不变
+    ]
+    mpl_run(bodies, SECONDS_PER_WEEK)

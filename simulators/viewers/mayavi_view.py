@@ -12,11 +12,14 @@ import os
 import matplotlib.pyplot as plt
 from common.func import get_dominant_colors
 
-from simulators.viewers.body_viewer import BodyViewer
+from simulators.viewers.body_view import BodyView
 import numpy as np
 
 
-class MayaviViewer(BodyViewer):
+class MayaviView(BodyView):
+    """
+    Mayavi天体视图（天体效果展示用）
+    """
 
     def update(self):
         """
@@ -30,32 +33,32 @@ class MayaviViewer(BodyViewer):
         self.sphere.mlab_source.set(x=self.position[0], y=self.position[1], z=self.position[2])
         return x_offset[0], y_offset[0], z_offset[0]
 
-    def __find_texture(self, texture):
-        """
-        在多路径下寻找纹理图片
-        :param texture: 纹理图片
-        :return: 纹理图片的路径
-        """
-        paths = ['./textures', '../textures']
-        for path in paths:
-            p = path + "/" + texture
-            if os.path.exists(p):
-                return p
+    # def __find_texture(self, texture):
+    #     """
+    #     在多路径下寻找纹理图片
+    #     :param texture: 纹理图片
+    #     :return: 纹理图片的路径
+    #     """
+    #     paths = ['./textures', '../textures']
+    #     for path in paths:
+    #         p = path + "/" + texture
+    #         if os.path.exists(p):
+    #             return p
+    #
+    #     return None
+    #
+    # def __texture_to_color(self, texture):
+    #     """
+    #     根据纹理图片获取颜色
+    #     :param texture:
+    #     :return:
+    #     """
+    #     colors = get_dominant_colors(texture)
+    #     first_color = colors[0]
+    #     # print(self.name, first_color)
+    #     return tuple(np.array(first_color) / 255)
 
-        return None
-
-    def __texture_to_color(self, texture):
-        """
-        根据纹理图片获取颜色
-        :param texture:
-        :return:
-        """
-        colors = get_dominant_colors(texture)
-        first_color = colors[0]
-        # print(self.name, first_color)
-        return tuple(np.array(first_color) / 255)
-
-    def build(self):
+    def appear(self):
         """
         构建球体对象
         :return:

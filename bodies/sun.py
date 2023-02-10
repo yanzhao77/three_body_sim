@@ -34,6 +34,14 @@ class Sun(Body):
         }
         super().__init__(**params)
 
+    @property
+    def is_fixed_star(self):
+        """
+        太阳为恒星
+        :return:
+        """
+        return True
+
 
 if __name__ == '__main__':
     print(Sun())

@@ -38,6 +38,14 @@ class Saturn(Body):
         }
         super().__init__(**params)
 
+    @property
+    def has_rings(self):
+        """
+        土星带光环的天体
+        :return:
+        """
+        return True
+
 
 if __name__ == '__main__':
     saturn = Saturn()

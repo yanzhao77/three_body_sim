@@ -12,7 +12,7 @@ from common.system import System
 
 class Simulator(metaclass=ABCMeta):
     """
-
+    天体运行模拟器
     """
 
     def __init__(self, bodies_sys: System, viewer_type: type):
@@ -21,30 +21,41 @@ class Simulator(metaclass=ABCMeta):
         :param bodies_sys: 天体系统
         :param viewer_type: BodyViewer类型
         """
-        self.body_viewers = []
+        self.body_views = []
         self.bodies_sys = bodies_sys
-        self.init_viewers(viewer_type)
+        self.init_views(viewer_type)
 
-    def init_viewers(self, viewer_type: type):
+    def init_views(self, viewer_type: type):
         """
 
         :param viewer_type: BodyViewer类型
         :return:
         """
         for body in self.bodies_sys.bodies:
-            viewer = viewer_type(body)
-            self.body_viewers.append(viewer)
+            view = viewer_type(body)
+            self.body_views.append(view)
 
     def evolve(self, dt: int):
         """
-        按时间差进行演变，值越小越精确，但演变速度会慢。
+        单位：秒，按时间差进行演变，值越小越精确，但演变速度会慢。
         :param dt: 时间差（秒）
         :return:
         """
         self.bodies_sys.evolve(dt)
-        for idx, viewer in enumerate(self.body_viewers):
-            viewer.position = self.bodies_sys.bodies[idx].position * self.bodies_sys.bodies[idx].distance_scale
-            viewer.update()
+        for idx, view in enumerate(self.body_views):
+            body = self.bodies_sys.bodies[idx]
+            view.position = body.position * body.distance_scale
+            view.name = body.name
+            view.mass = body.mass
+            view.acceleration = body.acceleration
+            view.velocity = body.velocity
+            # viewer.volume = body.volume
+            view.raduis = body.raduis * body.size_scale
+            view.his_position = body.his_position()
+            view.is_fixed_star = body.is_fixed_star
+            view.has_rings = body.has_rings
+
+            view.update()
 
     @abstractmethod
     def run(self, dt: int):
