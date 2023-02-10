@@ -63,6 +63,9 @@ class Body(metaclass=ABCMeta):
         self.__acceleration = np.array([0, 0, 0], dtype='float32')
         self.__record_history()
 
+        # 是否显示
+        self.appeared = True
+
     @property
     def has_rings(self):
         """

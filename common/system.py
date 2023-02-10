@@ -9,6 +9,7 @@
 import numpy as np
 from common.consts import AU, G
 from bodies import Body, Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
+from common.func import calculate_distance
 
 
 class System(object):
@@ -16,8 +17,9 @@ class System(object):
     天体系统
     """
 
-    def __init__(self, bodies):
+    def __init__(self, bodies, max_distance=-1):
         self.bodies = bodies
+        self.max_distance = max_distance
 
     def add(self, body):
         self.bodies.append(body)
@@ -64,9 +66,36 @@ class System(object):
         计算加速度
         :return:
         """
+
+        def valid_body(body):
+            """
+            有效的天体
+            :param body:
+            :return:
+            """
+            if not body.appeared:
+                return False
+            if self.max_distance > 0:
+                if calculate_distance(body.position) > self.max_distance:
+                    body.appeared = False
+                    return False
+
+            return True
+
+        self.bodies = list(filter(valid_body, self.bodies))
+
         for body1 in self.bodies:
             acceleration = np.zeros(3)
             for body2 in self.bodies:
+                if self.max_distance > 0:
+                    if calculate_distance(body1.position) > self.max_distance:  # 太远了，则小时
+                        body1.appeared = False
+                    if calculate_distance(body2.position) > self.max_distance:  # 太远了，则小时
+                        body2.appeared = False
+
+                if False == body1.appeared or body2.appeared == False:
+                    continue
+
                 if body1 is body2:
                     continue
                 elif body1.ignore_gravity(body2) or body2.ignore_gravity(body1):

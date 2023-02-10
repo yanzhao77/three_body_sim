@@ -36,6 +36,8 @@ class BodyView(metaclass=ABCMeta):
         self.raduis = None
         self.velocity = None
 
+        self.appeared = True
+
     def __repr__(self):
         return '<%s> m=%.3e(kg), r=%.3e(km), p=[%.3e,%.3e,%.3e](km), v=%s(km/s)' % \
                (self.name, self.mass, self.raduis,
