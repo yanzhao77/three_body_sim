@@ -17,6 +17,7 @@ class Body(metaclass=ABCMeta):
     """
     天体信息基类
     """
+
     def __init__(self, name, mass, init_position, init_velocity,
                  density=5e3, color=(125 / 255, 125 / 255, 125 / 255),
                  texture=None, size_scale=1.0, distance_scale=1.0):
@@ -230,6 +231,15 @@ class Body(metaclass=ABCMeta):
         return '<%s> m=%.3e(kg), r=%.3e(km), p=[%.3e,%.3e,%.3e](km), v=%s(km/s)' % \
                (self.name, self.mass, self.raduis,
                 self.position[0], self.position[1], self.position[2], self.velocity)
+
+    def ignore_gravity(self, body):
+        """
+        是否忽略引力
+        :param body:
+        :return:
+        """
+
+        return False
 
     def position_au(self):
         """

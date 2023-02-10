@@ -69,6 +69,8 @@ class System(object):
             for body2 in self.bodies:
                 if body1 is body2:
                     continue
+                elif body1.ignore_gravity(body2) or body2.ignore_gravity(body1):
+                    continue
 
                 r = body2.position - body1.position
                 # G = 6.67e-11 # 万有引力常数

@@ -27,7 +27,7 @@ class Asteroid(Body):
     """
 
     def __init__(self, name="Asteroid", mass=4.1e10,
-                 init_position=[1.5 * AU, 0, 0],
+                 init_position=[1.6 * AU, 0, 0],
                  init_velocity=[0, 25.37, 0],
                  texture="", size_scale=1.0, distance_scale=1.0):
         params = {
@@ -43,6 +43,17 @@ class Asteroid(Body):
         }
         super().__init__(**params)
 
+    def ignore_gravity(self, body):
+        """
+        是否忽略引力
+        :param body:
+        :return:
+        """
+        # 小行星只对恒星有引力，忽略其他行星的引力
+        if body.is_fixed_star:
+            return False
+
+        return True
 
 if __name__ == '__main__':
     asteroid = Asteroid()
