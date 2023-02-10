@@ -117,6 +117,13 @@ class MayaviView(BodyView):
 
         # return self.sphere,
 
+    def disappear(self):
+        if hasattr(self, "sphere"):
+            self.sphere.visible = False
+
+        if hasattr(self, "rings"):
+            self.rings.visible = False
+
     def __set_texture(self, image_file):
         """
         设置纹理图片到天体

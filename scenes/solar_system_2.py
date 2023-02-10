@@ -20,17 +20,20 @@ if __name__ == '__main__':
     #  以下展示的效果非太阳系真实的距离和大小
     #  1、由于宇宙空间尺度非常大，按照实际的大小无法看到行星天体，因此需要对天体的尺寸进行放大
     #  2、对每个行星天体的距离进行了缩放
+
+    # region 构建太阳系
     bodies = [
-        Sun(size_scale=0.8e2),                          # 太阳放大 80 倍
-        Mercury(size_scale=4e3, distance_scale=1),      # 水星放大 4000 倍，距离保持不变
-        Venus(size_scale=4e3, distance_scale=1),        # 金星放大 4000 倍，距离保持不变
-        Earth(size_scale=4e3, distance_scale=1),        # 地球放大 4000 倍，距离保持不变
-        Mars(size_scale=4e3, distance_scale=1),         # 火星放大 4000 倍，距离保持不变
-        Jupiter(size_scale=0.8e3, distance_scale=0.5),  # 木星放大 800 倍，距离缩小到真实距离的 0.5
-        Saturn(size_scale=0.8e3, distance_scale=0.38),  # 土星放大 800 倍，距离缩小到真实距离的 0.38
-        Uranus(size_scale=0.8e3, distance_scale=0.26),  # 天王星放大 800 倍，距离缩小到真实距离的 0.26
-        Neptune(size_scale=1e3, distance_scale=0.22),   # 海王星放大 1000 倍，距离缩小到真实距离的 0.22
-        Pluto(size_scale=10e3, distance_scale=0.20),    # 冥王星放大 10000 倍，距离缩小到真实距离的 0.2(从太阳系的行星中排除)
+        Sun(size_scale=0.8e2),                              # 太阳放大 80 倍
+        Mercury(size_scale=4e3, distance_scale=1.3),        # 水星放大 4000 倍，距离放大 1.3 倍
+        Venus(size_scale=4e3, distance_scale=1.3),          # 金星放大 4000 倍，距离放大 1.3 倍
+        Earth(size_scale=4e3, distance_scale=1.3),          # 地球放大 4000 倍，距离放大 1.3 倍
+        Mars(size_scale=4e3, distance_scale=1.3),           # 火星放大 4000 倍，距离放大 1.3 倍
+        Jupiter(size_scale=0.68e3, distance_scale=0.65),    # 木星放大 680 倍，距离缩小到真实距离的 0.65
+        Saturn(size_scale=0.68e3, distance_scale=0.52),     # 土星放大 680 倍，距离缩小到真实距离的 0.52
+        Uranus(size_scale=0.8e3, distance_scale=0.36),      # 天王星放大 800 倍，距离缩小到真实距离的 0.36
+        Neptune(size_scale=1e3, distance_scale=0.27),       # 海王星放大 1000 倍，距离缩小到真实距离的 0.27
+        Pluto(size_scale=10e3, distance_scale=0.23),        # 冥王星放大 10000 倍，距离缩小到真实距离的 0.23(从太阳系的行星中排除)
     ]
+    # endregion
 
     mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45, view_distance=3e9, view_focalpoint=[5e2, 5e2, 5e2])

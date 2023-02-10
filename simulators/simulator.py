@@ -44,6 +44,10 @@ class Simulator(metaclass=ABCMeta):
         self.bodies_sys.evolve(dt)
         for idx, view in enumerate(self.body_views):
             body = self.bodies_sys.bodies[idx]
+            view.appeared = body.appeared
+            if not view.appeared:
+                view.disappear()
+                continue
             view.position = body.position * body.distance_scale
             view.name = body.name
             view.mass = body.mass
@@ -58,6 +62,9 @@ class Simulator(metaclass=ABCMeta):
             view.distance_scale = body.distance_scale
 
             view.update()
+
+        self.bodies_sys.bodies = list(filter(lambda b:b.appeared, self.bodies_sys.bodies))
+        self.body_views = list(filter(lambda b:b.appeared, self.body_views))
 
     @abstractmethod
     def run(self, dt: int):

@@ -66,10 +66,10 @@ def get_position_force(angles, force=1, radius=1, radius_offset=None, force_offs
     """
     angles = np.array(angles * np.pi)
 
-    if isinstance(radius_offset, int):
+    if isinstance(radius_offset, float):
         radius = radius + np.random.rand(len(angles)) * radius_offset
 
-    if isinstance(force_offset, int):
+    if isinstance(force_offset, float):
         force = force + np.random.rand(len(angles)) * force_offset
 
     pxs = radius * np.cos(angles)

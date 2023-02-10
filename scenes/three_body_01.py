@@ -21,11 +21,11 @@ if __name__ == '__main__':
     """
     bodies = [
         Sun(mass=1.5e30, init_position=[849597870.700, 0, 0], init_velocity=[0, 7.0, 0],
-            size_scale=1e2, texture="sun1.jpg"),  # 太阳放大 100 倍
+            size_scale=5e1, texture="sun1.jpg"),  # 太阳放大 100 倍
         Sun(mass=2e30, init_position=[0, 0, 0], init_velocity=[0, -8.0, 0],
-            size_scale=1e2, texture="sun2.jpg"),  # 太阳放大 100 倍
+            size_scale=5e1, texture="sun2.jpg"),  # 太阳放大 100 倍
         Sun(mass=2.5e30, init_position=[0, -849597870.700, 0], init_velocity=[18.0, 0, 0],
-            size_scale=1e2, texture="sun2.jpg"),  # 太阳放大 100 倍
+            size_scale=5e1, texture="sun2.jpg"),  # 太阳放大 100 倍
         Earth(init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0],
               size_scale=4e3, distance_scale=1),  # 地球放大 4000 倍，距离保持不变
     ]

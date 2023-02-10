@@ -17,7 +17,7 @@ class System(object):
     天体系统
     """
 
-    def __init__(self, bodies, max_distance=-1):
+    def __init__(self, bodies, max_distance=60 * AU):
         self.bodies = bodies
         self.max_distance = max_distance
 
@@ -82,9 +82,11 @@ class System(object):
 
             return True
 
-        self.bodies = list(filter(valid_body, self.bodies))
+        # self.bodies = list(filter(valid_body, self.bodies))
 
         for body1 in self.bodies:
+            if not valid_body(body1):
+                continue
             acceleration = np.zeros(3)
             for body2 in self.bodies:
                 if self.max_distance > 0:
