@@ -46,6 +46,14 @@ class Saturn(Body):
         """
         return True
 
+    @property
+    def rings_color(self):
+        """
+        土星光环的颜色
+        :return:
+        """
+        return 173, 121, 92
+
 
 if __name__ == '__main__':
     saturn = Saturn()

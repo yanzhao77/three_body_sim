@@ -9,7 +9,7 @@
 from mayavi import mlab
 from simulators.simulator import Simulator
 from common.system import System
-from simulators.viewers.mayavi_view import MayaviView
+from simulators.views.mayavi_view import MayaviView
 
 
 class MayaviSimulator(Simulator):

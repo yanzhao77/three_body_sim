@@ -14,6 +14,9 @@ from common.consts import AU
 
 
 class Body(metaclass=ABCMeta):
+    """
+    天体信息基类
+    """
     def __init__(self, name, mass, init_position, init_velocity,
                  density=5e3, color=(125 / 255, 125 / 255, 125 / 255),
                  texture=None, size_scale=1.0, distance_scale=1.0):

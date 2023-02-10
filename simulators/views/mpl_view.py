@@ -10,7 +10,7 @@ import os
 import matplotlib.pyplot as plt
 from common.func import get_dominant_colors
 
-from simulators.viewers.body_view import BodyView
+from simulators.views.body_view import BodyView
 import numpy as np
 
 

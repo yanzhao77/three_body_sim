@@ -29,7 +29,7 @@ class BodyView(metaclass=ABCMeta):
                 self.color = tuple(np.array(body.color) / 255)
             else:
                 self.color = self.__get_texture_main_color(self.texture)
-        self.sphere = self.appear()
+        self.appear()
         self.position = [None, None, None]
         self.name = None
         self.mass = None

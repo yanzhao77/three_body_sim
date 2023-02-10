@@ -54,6 +54,8 @@ class Simulator(metaclass=ABCMeta):
             view.his_position = body.his_position()
             view.is_fixed_star = body.is_fixed_star
             view.has_rings = body.has_rings
+            view.size_scale = body.size_scale
+            view.distance_scale = body.distance_scale
 
             view.update()
 

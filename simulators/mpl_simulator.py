@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from simulators.simulator import Simulator
 from common.system import System
-from simulators.viewers.mpl_view import MplView
+from simulators.views.mpl_view import MplView
 import numpy as np
 import time
 
