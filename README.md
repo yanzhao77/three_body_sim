@@ -11,8 +11,8 @@
 # 效果图
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_1.png" width="40%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_2.png" width="40%">
-<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_1.jpg" width="40%">
-<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_2.jpg" width="40%">
+<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_1.png" width="40%">
+<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_2.png" width="40%">
 
 # 抖音课堂：
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/douyin_x.jpg" width="40%">
