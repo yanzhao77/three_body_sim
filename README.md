@@ -8,6 +8,11 @@
 
 我们可以自己通过调整天体的初始坐标、质量和矢量速度等等参数来自定义各种场景来控制天体的运行效果。
 
+# 效果图
+<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_1.png" width="40%">
+<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_2.png" width="40%">
+<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_1.jpg" width="40%">
+<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_2.jpg" width="40%">
 
 # 抖音课堂：
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/douyin_x.jpg" width="40%">
