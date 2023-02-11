@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-# title           :太阳系场景
-# description     :
+# title           :太阳系场景模拟1
+# description     :太阳系场景模拟（展示的效果为太阳系真实的距离）
 # author          :Python超人
 # date            :2023-02-11
 # link            :https://gitcode.net/pythoncr/

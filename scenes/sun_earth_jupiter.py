@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-# title           :
-# description     :
+# title           :太阳、地球、木星场景模拟
+# description     :太阳、地球、木星场景模拟
 # author          :Python超人
 # date            :2023-02-11
 # link            :https://gitcode.net/pythoncr/

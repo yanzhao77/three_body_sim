@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-# title           :太阳系场景
-# description     :
+# title           :三体场景模拟01
+# description     :三体场景模拟（3个太阳、1个地球）
 # author          :Python超人
 # date            :2023-02-11
 # link            :https://gitcode.net/pythoncr/
