@@ -32,34 +32,20 @@ https://gitcode.net/pythoncr/three_body_sim
 **images** 图片
 
 # 安装 Python 库
-按照您电脑上的 Python 环境版本下载安装包（我的电脑版本为：Python3.7）
-1. vtk   8.2.0
-https://www.lfd.uci.edu/~gohlke/pythonlibs/#vtk
-
-2. traits 6.3.2
-https://www.lfd.uci.edu/~gohlke/pythonlibs/#traits
-
-3. mayavi 4.7.1
-https://www.lfd.uci.edu/~gohlke/pythonlibs/#mayavi
-
-
 ```shell script
 # 先安装基础包
-pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com pillow matplotlib
-pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com pyqt5
-# 下载的安装包安装顺序如下：
-# vtk、traits、mayavi
-cd e:\three_body_sim\packages
-pip install VTK-8.2.0-cp37-cp37m-win_amd64.whl
-pip install traits-6.3.2-cp37-cp37m-win_amd64.whl
-pip install mayavi-4.7.1+vtk82-cp37-cp37m-win_amd64.whl
+pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com pyqt5 mayavi
 ```
 
 # 模拟场景运行
 ```shell script
+# 进入当前代码的根目录
 cd e:\three_body_sim\
+
+SET PYTHONPATH=%CD%
+
 # 从运行demo开始
-python scences/demo.py
+python scenes/demo.py
 
 # 三体场景
 # 3个太阳、1个地球（效果1）
