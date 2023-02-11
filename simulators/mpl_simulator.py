@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-# title           :
-# description     :
+# title           :matplotlib天体运行模拟器
+# description     :matplotlib天体运行模拟器
 # author          :Python超人
 # date            :2023-02-11
 # link            :https://gitcode.net/pythoncr/

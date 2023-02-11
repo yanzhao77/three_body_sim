@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-# title           :
-# description     :
+# title           :Mayavi天体视图
+# description     :Mayavi天体视图（天体效果展示用，需要安装 mayavi）
 # author          :Python超人
 # date            :2023-02-11
 # link            :https://gitcode.net/pythoncr/

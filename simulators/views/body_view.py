@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-# title           :
-# description     :
+# title           :天体视图
+# description     :天体视图（天体效果展示用）
 # author          :Python超人
 # date            :2023-02-11
 # link            :https://gitcode.net/pythoncr/
