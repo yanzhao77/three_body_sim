@@ -45,11 +45,15 @@ https://www.lfd.uci.edu/~gohlke/pythonlibs/#traits
 4. mayavi 4.7.1
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#mayavi
 
+
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/pip_install.png" />
 
 需要的安装包顺序如下：
 pyqt4、vtk、traits、mayavi
 ```shell script
+pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com pyqt5
+pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com pillow matplotlib
+
 cd e:\three_body_sim\packages
 pip install PyQt4-4.11.4-cp37-cp37m-win_amd64.whl
 pip install VTK-8.2.0-cp37-cp37m-win_amd64.whl

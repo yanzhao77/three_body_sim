@@ -1,13 +1,4 @@
-### 参考资料
-
-Map an image onto a sphere and plot 3D trajectorie
-https://www.manongdao.com/q-1190222.html
-
-上标数字 0-9上标小数字特殊符号
-```text
-
-```
-
+### 数字 0-9 上标小数字特殊符号
 ```python
     # ⁰ ¹ ² ³ ⁴ ⁵ ⁶ ⁷ ⁸ ⁹
     # 远日点距离: 
