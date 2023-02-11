@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
-# title           :
-# description     :
+# title           :天体系统
+# description     :天体系统，多个天体就是一个系统
 # author          :Python超人
-# date            :2023-01-22
-# notes           :
+# date            :2023-02-11
+# link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
 import numpy as np

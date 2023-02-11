@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
-# title           :
-# description     :
+# title           :场景用功能库
+# description     :场景用功能库
 # author          :Python超人
-# date            :2023-01-22
-# notes           :
+# date            :2023-02-11
+# link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
 from common.consts import SECONDS_PER_WEEK

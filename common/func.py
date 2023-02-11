@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
-# title           :
-# description     :
+# title           :公共库函数
+# description     :公共库函数
 # author          :Python超人
-# date            :2023-01-22
-# notes           :
+# date            :2023-02-11
+# link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
 from PIL import Image
@@ -42,26 +42,15 @@ def get_dominant_colors(infile, resize=(20, 20)):
     return colors
 
 
-def circle_x_y(points, radius=1.6 * AU):
+def get_positions_velocitys(angles, velocity=1, radius=1, radius_offset=None, velocity_offset=None):
     """
-
-    :param points:
-    :param radius:
-    :return:
-    """
-    x = radius * np.cos(points)
-    y = radius * np.sin(points)
-    return x, y
-
-
-def get_position_force(angles, force=1, radius=1, radius_offset=None, force_offset=None):
-    """
-
-    :param angles:
-    :param force:
-    :param radius:
-    :param radius_offset:
-    :param force_offset:
+    以位置 （0, 0, 0）为中心，随机获取空间上的位置和公转方向的速度集合
+    （比如：获取大批小行星的位置）
+    :param angles: 参考中心位置（0, 0, 0）的角度集合
+    :param velocity: 速度
+    :param radius: 半径（距离中心位置（0, 0, 0）的距离）
+    :param radius_offset:在半径的基础上，随机偏移的值
+    :param velocity_offset:在速度的基础上，随机偏移的值
     :return:
     """
     angles = np.array(angles * np.pi)
@@ -69,17 +58,17 @@ def get_position_force(angles, force=1, radius=1, radius_offset=None, force_offs
     if isinstance(radius_offset, float):
         radius = radius + np.random.rand(len(angles)) * radius_offset
 
-    if isinstance(force_offset, float):
-        force = force + np.random.rand(len(angles)) * force_offset
+    if isinstance(velocity_offset, float):
+        velocity = velocity + np.random.rand(len(angles)) * velocity_offset
 
     pxs = radius * np.cos(angles)
     pys = radius * np.sin(angles)
 
-    fys = force * np.cos(angles)  # math.cos(math.radians(angle))
-    fxs = force * np.sin(angles)  # math.sin(math.radians(angle))
+    vys = velocity * np.cos(angles)
+    vxs = velocity * np.sin(angles)
 
     # return pxs, pys, fxs, fys
-    return np.round(pxs, 2), np.round(pys, 2), -np.round(fxs, 2), np.round(fys, 2)
+    return np.round(pxs, 2), np.round(pys, 2), -np.round(vxs, 2), np.round(vys, 2)
 
 
 def calculate_distance(pos1, pos2=[0, 0, 0]):

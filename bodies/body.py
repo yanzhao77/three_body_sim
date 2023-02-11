@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
-# title           :
-# description     :
+# title           :天体基类
+# description     :天体基类（所有星体都继承了该类）
 # author          :Python超人
-# date            :2023-01-22
-# notes           :
+# date            :2023-02-11
+# link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
 from abc import ABCMeta, abstractmethod
@@ -15,7 +15,7 @@ from common.consts import AU
 
 class Body(metaclass=ABCMeta):
     """
-    天体信息基类
+    天体基类
     """
 
     def __init__(self, name, mass, init_position, init_velocity,

@@ -2,14 +2,14 @@
 # title           :太阳系场景
 # description     :
 # author          :Python超人
-# date            :2023-01-22
-# notes           :
+# date            :2023-02-11
+# link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
 from bodies import Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Asteroid
 from bodies.body import AU
 from common.consts import SECONDS_PER_WEEK
-from common.func import get_position_force
+from common.func import get_positions_velocitys
 from scenes.func import mayavi_run
 import numpy as np
 
@@ -50,13 +50,13 @@ if __name__ == '__main__':
     NUM_OF_ASTEROIDS = 60
     asteroids = []
     angles = np.linspace(0, 40 * np.pi, NUM_OF_ASTEROIDS)
-    pxs, pys, fxs, fys = get_position_force(angles,
-                                            radius=1.60 * AU,
-                                            force=23.37,
-                                            radius_offset=0.1 * AU,
-                                            force_offset=0.2)
+    pxs, pys, vxs, vys = get_positions_velocitys(angles,
+                                                 radius=1.60 * AU,
+                                                 velocity=23.37,
+                                                 radius_offset=0.1 * AU,
+                                                 velocity_offset=0.2)
     for i, px in enumerate(pxs):
-        py, fx, fy = pys[i], fxs[i], fys[i]
+        py, fx, fy = pys[i], vxs[i], vys[i]
         asteroids.append(Asteroid(size_scale=1e9,  # 小行星放大 1000000000 倍，距离放大 1.4 倍
                                   init_position=[px, py, 0],
                                   init_velocity=[fx, fy, 0],

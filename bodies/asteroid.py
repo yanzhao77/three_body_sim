@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
-# title           :
-# description     :
+# title           :小行星
+# description     :小行星
 # author          :Python超人
-# date            :2023-01-22
-# notes           :
+# date            :2023-02-11
+# link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
 from bodies.body import Body, AU
@@ -54,6 +54,7 @@ class Asteroid(Body):
             return False
 
         return True
+
 
 if __name__ == '__main__':
     asteroid = Asteroid()
