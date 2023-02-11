@@ -33,29 +33,23 @@ https://gitcode.net/pythoncr/three_body_sim
 
 # 安装 Python 库
 按照您电脑上的 Python 环境版本下载安装包（我的电脑版本为：Python3.7）
-1. pyqt4 (4.11.4)
-https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyqt4
-
-2. vtk   8.2.0
+1. vtk   8.2.0
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#vtk
 
-3. traits 6.3.2
+2. traits 6.3.2
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#traits
 
-4. mayavi 4.7.1
+3. mayavi 4.7.1
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#mayavi
 
 
-<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/pip_install.png" />
-
-需要的安装包顺序如下：
-pyqt4、vtk、traits、mayavi
 ```shell script
-pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com pyqt5
+# 先安装基础包
 pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com pillow matplotlib
-
+pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com pyqt5
+# 下载的安装包安装顺序如下：
+# vtk、traits、mayavi
 cd e:\three_body_sim\packages
-pip install PyQt4-4.11.4-cp37-cp37m-win_amd64.whl
 pip install VTK-8.2.0-cp37-cp37m-win_amd64.whl
 pip install traits-6.3.2-cp37-cp37m-win_amd64.whl
 pip install mayavi-4.7.1+vtk82-cp37-cp37m-win_amd64.whl
