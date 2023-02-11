@@ -10,7 +10,7 @@
 
 
 # 抖音课堂：
-<img src="https://gitcode.net/pythoncr/python_oa/-/raw/master/09.%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86/images/douyin_x.jpg" width="40%">
+<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/douyin_x.jpg" width="40%">
 
 # 课程下载
 https://gitcode.net/pythoncr/three_body_sim
@@ -45,7 +45,7 @@ https://www.lfd.uci.edu/~gohlke/pythonlibs/#traits
 4. mayavi 4.7.1
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#mayavi
 
-<img src="./images/pip_install.png" />
+<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/pip_install.png" />
 
 需要的安装包顺序如下：
 pyqt4、vtk、traits、mayavi
@@ -93,78 +93,5 @@ python scenes/sun_earth.py
 python scenes/sun_earth_jupiter.py 
 ```
 
-
---------------------
-安装 
-mayavi
-pip install -i https://pypi.douban.com/simple PyQt5 pyqt5-tools
-
-Step 1：下载所需要的安装包
-【链接网址】http://www.lfd.uci.edu/~gohlke/pythonlibs/
-另外我已经把依赖包放入 百度云，有需要的小伙伴可以私信找我。
-我的python环境是python3.6
-需要的安装包顺序为：
-
-
-Step 2：进行安装包安装
-下载对应的版本，利用pip进行安装。
-
-pip install xxx.whl
---------------------
-
 # 免责声明
 * 本项目开源代码和资料主要用于教学，任何直接或间接因使用我方的任何内容所导致的全部后果与我方无关，若使用者无法对使用我方内容后的任何后果负责，请不要使用我方的任何内容。若我方的任何内容侵犯了您的法律权益，请联系pythoncr@126.com，作者会第一时间删除侵权内容。
-
-```shell script
-(mayavi) e:\three_body_sim\packages>pip install PyQt4-4.11.4-cp37-cp37m-win_amd64.whl
-Processing e:\three_body_sim\packages\pyqt4-4.11.4-cp37-cp37m-win_amd64.whl
-Installing collected packages: PyQt4
-Successfully installed PyQt4-4.11.4
-
-(mayavi) e:\three_body_sim\packages>pip install VTK-8.2.0-cp37-cp37m-win_amd64.whl
-Processing e:\three_body_sim\packages\vtk-8.2.0-cp37-cp37m-win_amd64.whl
-Installing collected packages: VTK
-Successfully installed VTK-8.2.0
-
-(mayavi) e:\three_body_sim\packages>pip install traits-6.3.2-cp37-cp37m-win_amd64.whl
-Processing e:\three_body_sim\packages\traits-6.3.2-cp37-cp37m-win_amd64.whl
-Installing collected packages: traits
-Successfully installed traits-6.3.2
-
-(mayavi) e:\three_body_sim\packages>
-(mayavi) e:\three_body_sim\packages>pip install mayavi-4.7.1+vtk82-cp37-cp37m-win_amd64.whl
-Processing e:\three_body_sim\packages\mayavi-4.7.1+vtk82-cp37-cp37m-win_amd64.whl
-Requirement already satisfied: vtk in c:\programdata\anaconda3\lib\site-packages (from mayavi==4.7.1+vtk82) (8.2.0)
-Collecting pyface>=6.1.1 (from mayavi==4.7.1+vtk82)
-  Downloading https://files.pythonhosted.org/packages/35/e4/39e0ed023382c35f5a13630f33d81b467c0b0dd58ec4e06998eadb665637/pyface-7.4.4-py3-none-any.whl (1.3MB)
-     |████████████████████████████████| 1.3MB 344kB/s
-Collecting traitsui>=6.0.0 (from mayavi==4.7.1+vtk82)
-  Downloading https://files.pythonhosted.org/packages/6b/ea/392eaa31cac6182c9e6eb01714579221d3636630ed4f20f0b6d0ae3fd606/traitsui-7.4.3-py3-none-any.whl (1.5MB)
-     |████████████████████████████████| 1.5MB 6.4MB/s
-Collecting apptools (from mayavi==4.7.1+vtk82)
-  Downloading https://files.pythonhosted.org/packages/b1/6a/04d263d0f14e549a60112b498057a9736c62f77324974d9a860086367199/apptools-5.2.0-py3-none-any.whl (229kB)
-     |████████████████████████████████| 235kB 6.8MB/s
-Requirement already satisfied: numpy in c:\programdata\anaconda3\lib\site-packages (from mayavi==4.7.1+vtk82) (1.15.0)
-Requirement already satisfied: traits>=4.6.0 in c:\programdata\anaconda3\lib\site-packages (from mayavi==4.7.1+vtk82) (6.3.2)
-Requirement already satisfied: pygments in c:\programdata\anaconda3\lib\site-packages (from mayavi==4.7.1+vtk82) (2.4.2)
-Collecting envisage (from mayavi==4.7.1+vtk82)
-  Downloading https://files.pythonhosted.org/packages/8f/4d/52b6f88b08dad56e26a1e485a0139312227d415ffbfb1be60be7464bf28e/envisage-6.1.1-py3-none-any.whl (281kB)
-     |████████████████████████████████| 286kB 6.4MB/s
-Collecting importlib-resources>=1.1.0; python_version < "3.9" (from pyface>=6.1.1->mayavi==4.7.1+vtk82)
-  Downloading https://files.pythonhosted.org/packages/be/0f/bd3e7fa47cc43276051c557d3b2fe946664781d2ecf08b05d074e1a3ee59/importlib_resources-5.10.2-py3-none-any.whl
-Requirement already satisfied: importlib-metadata>=3.6.0; python_version < "3.8" in c:\programdata\anaconda3\lib\site-packages (from pyface>=6.1.1->mayavi==4.7.1+vtk82) (4.12.0)
-Collecting configobj (from apptools->mayavi==4.7.1+vtk82)
-  Downloading https://files.pythonhosted.org/packages/d3/bb/d10e531b297dd1d46f6b1fd11d018247af9f2d460037554bb7bb9011c6ac/configobj-5.0.8-py2.py3-none-any.whl
-Requirement already satisfied: setuptools in c:\programdata\anaconda3\lib\site-packages (from envisage->mayavi==4.7.1+vtk82) (41.4.0)
-Collecting zipp>=3.1.0; python_version < "3.10" (from importlib-resources>=1.1.0; python_version < "3.9"->pyface>=6.1.1->mayavi==4.7.1+vtk82)
-  Downloading https://files.pythonhosted.org/packages/95/7b/1608a7344743f54a8c072d64d2a279934fd204d6d015278b0a0ed4ce104b/zipp-3.13.0-py3-none-any.whl
-Requirement already satisfied: typing-extensions>=3.6.4; python_version < "3.8" in c:\programdata\anaconda3\lib\site-packages (from importlib-metadata>=3.6.0; python_version < "3.8"->pyface>=6.1.1->mayavi==4.7.
-1+vtk82) (3.7.4.3)
-Requirement already satisfied: six in c:\programdata\anaconda3\lib\site-packages (from configobj->apptools->mayavi==4.7.1+vtk82) (1.15.0)
-Installing collected packages: zipp, importlib-resources, pyface, traitsui, configobj, apptools, envisage, mayavi
-  Found existing installation: zipp 0.6.0
-    Uninstalling zipp-0.6.0:
-      Successfully uninstalled zipp-0.6.0
-Successfully installed apptools-5.2.0 configobj-5.0.8 envisage-6.1.1 importlib-resources-5.10.2 mayavi-4.7.1+vtk82 pyface-7.4.4 traitsui-7.4.3 zipp-3.13.0
-
-```
