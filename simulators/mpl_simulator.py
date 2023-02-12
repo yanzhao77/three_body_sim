@@ -11,6 +11,7 @@ import matplotlib.animation as animation
 from simulators.simulator import Simulator
 from common.system import System
 from simulators.views.mpl_view import MplView
+import numpy as np
 
 plt.rcParams['font.sans-serif'] = ['SimHei']  # 步骤一（替换默认sans-serif字体）
 plt.rcParams['axes.unicode_minus'] = False  # 步骤二（解决坐标轴负数的负号显示问题）
@@ -32,29 +33,28 @@ class MplSimulator(Simulator):
         """
         fig = plt.figure('天体模拟运行效果', figsize=(16, 12))
         ax = fig.gca(projection="3d")
-
-        MAX_FRAME = 2000
+        save_gif = True
+        MAX_FRAME = 200
+        import copy
         views_frames = []
         for i in range(MAX_FRAME):
             self.evolve(dt)
-            body_views = self.body_views
-            self.show_figure(ax, body_views)
-            views_frames.append(body_views.copy())
+            body_views = copy.deepcopy(self.body_views)
+            if not save_gif:
+                self.show_figure(ax, body_views, pause=0.1)
+            views_frames.append(body_views)
 
-        # TODO: views_frames 用于 gif 动画
-        # fig = plt.figure()
-        #
-        # def update(num):
-        #     body_viewers = viewers_frames[num]
-        #     print(body_viewers)
-        #
-        #     return self.show_figure(plt, body_viewers)
-        #
-        # ani = animation.FuncAnimation(fig=fig, func=update, frames=np.arange(0, MAX_FRAME), interval=1)
-        # ani.save('bodies_run.gif')
-        # plt.show()
+        if save_gif:
+            # TODO: views_frames 用于 gif 动画
+            def update(num):
+                body_views = views_frames[num]
+                return self.show_figure(ax, body_views, pause=0)
 
-    def show_figure(self, ax, bodies):
+            ani = animation.FuncAnimation(fig=fig, func=update, frames=np.arange(0, MAX_FRAME), interval=1)
+            ani.save('bodies_run.gif')
+            # plt.show()
+
+    def show_figure(self, ax, bodies, pause=0.1):
         plt.cla()
 
         ax.set_title('天体模拟运行效果')
@@ -83,7 +83,9 @@ class MplSimulator(Simulator):
                 _his_pos = list(zip(*his_pos))
                 # 历史轨迹线
                 ax.plot3D(_his_pos[0], _his_pos[1], _his_pos[2], color=color, alpha=0.5)
-        plt.pause(0.1)
+
+        if pause > 0:
+            plt.pause(pause)
 
 
 if __name__ == '__main__':

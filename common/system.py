@@ -17,7 +17,12 @@ class System(object):
     天体系统
     """
 
-    def __init__(self, bodies, max_distance=60 * AU):
+    def __init__(self, bodies, max_distance=200 * AU):
+        """
+
+        :param bodies:
+        :param max_distance:系统的最大范围，超出范围的天体就不显示了
+        """
         self.bodies = bodies
         self.max_distance = max_distance
 
