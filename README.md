@@ -52,6 +52,7 @@ pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com pyq
 # 进入当前代码的根目录
 cd e:\three_body_sim\
 SET PYTHONPATH=%CD%
+
 # matplotlib 模拟器（支持动画和导出 gif 文件）
 python simulators\mpl_simulator.py
 
@@ -63,7 +64,6 @@ python simulators\mayavi_simulator.py
 ```shell script
 # 进入当前代码的根目录
 cd e:\three_body_sim\
-
 SET PYTHONPATH=%CD%
 
 # 场景
