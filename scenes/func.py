@@ -51,17 +51,18 @@ def mayavi_run(bodies, dt=SECONDS_PER_WEEK,
     mlab.show()
 
 
-def mpl_run(bodies, dt=SECONDS_PER_WEEK):
+def mpl_run(bodies, dt=SECONDS_PER_WEEK, gif_file_name=None):
     """
 
     :param bodies: 天体
     :param dt: 单位：秒，按时间差进行演变，值越小越精确，但演变速度会慢。
+    :param gif_file_name: 导出的 gif 文件名，如果为空，则显示动画
     :return:
     """
     from simulators.mpl_simulator import MplSimulator
     body_sys = System(bodies)
     simulator = MplSimulator(body_sys)
-    simulator.run(dt)
+    simulator.run(dt, gif_file_name)
 
 
 if __name__ == '__main__':

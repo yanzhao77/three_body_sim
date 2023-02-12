@@ -12,6 +12,7 @@ from simulators.simulator import Simulator
 from common.system import System
 from simulators.views.mpl_view import MplView
 import numpy as np
+import copy
 
 plt.rcParams['font.sans-serif'] = ['SimHei']  # 步骤一（替换默认sans-serif字体）
 plt.rcParams['axes.unicode_minus'] = False  # 步骤二（解决坐标轴负数的负号显示问题）
@@ -25,36 +26,59 @@ class MplSimulator(Simulator):
     def __init__(self, bodies_sys: System):
         super().__init__(bodies_sys, MplView)
 
-    def run(self, dt):
+    def save_as_gif(self, dt, gif_max_frame=200, gif_file_name='bodies_run.gif'):
         """
-
-        :param dt:
+        保存 GIF 文件
+        :param dt: 单位：秒，按时间差进行演变，值越小越精确，但演变速度会慢。
+        :param gif_max_frame: 导出的 gif 的最多帧数
+        :param gif_file_name: 导出的 gif 文件名
         :return:
         """
         fig = plt.figure('天体模拟运行效果', figsize=(16, 12))
         ax = fig.gca(projection="3d")
-        save_gif = True
-        MAX_FRAME = 200
-        import copy
         views_frames = []
-        for i in range(MAX_FRAME):
+        for i in range(gif_max_frame):
             self.evolve(dt)
             body_views = copy.deepcopy(self.body_views)
-            if not save_gif:
-                self.show_figure(ax, body_views, pause=0.1)
             views_frames.append(body_views)
 
-        if save_gif:
-            # TODO: views_frames 用于 gif 动画
-            def update(num):
-                body_views = views_frames[num]
-                return self.show_figure(ax, body_views, pause=0)
+        def update(num):
+            body_views = views_frames[num]
+            print("GIF 生成进度：%d/%d %.2f" % (num + 1, gif_max_frame, ((num + 1) / gif_max_frame) * 100) + "%")
+            return self.show_figure(ax, body_views, pause=0)
 
-            ani = animation.FuncAnimation(fig=fig, func=update, frames=np.arange(0, MAX_FRAME), interval=1)
-            ani.save('bodies_run.gif')
-            # plt.show()
+        ani = animation.FuncAnimation(fig=fig, func=update, frames=np.arange(0, gif_max_frame), interval=1)
+        ani.save(gif_file_name)
+
+    def run(self, dt, gif_file_name=None):
+        """
+
+        :param dt: 单位：秒，按时间差进行演变，值越小越精确，但演变速度会慢。
+        :param gif_file_name: 导出的 gif 文件名，如果为空，则显示动画
+        :return:
+        """
+        if gif_file_name is not None:
+            self.save_as_gif(dt, gif_max_frame=200, gif_file_name=gif_file_name)
+            return
+
+        fig = plt.figure('天体模拟运行效果', figsize=(16, 12))
+        ax = fig.gca(projection="3d")
+        # TODO: 注意：显示动态图，需先进行以下设置：
+        # Pycharm：：File –> Settings –> Tools –> Python Scientific –> Show plots in tool window(取消打勾)
+
+        while True:
+            self.evolve(dt)
+            body_views = copy.deepcopy(self.body_views)
+            self.show_figure(ax, body_views, pause=0.1)
 
     def show_figure(self, ax, bodies, pause=0.1):
+        """
+
+        :param ax:
+        :param bodies:
+        :param pause:
+        :return:
+        """
         plt.cla()
 
         ax.set_title('天体模拟运行效果')
@@ -89,7 +113,7 @@ class MplSimulator(Simulator):
 
 
 if __name__ == '__main__':
-    # TODO: 注意：绘制动态图，需先进行以下设置：
+    # TODO: 注意：显示动态图，需先进行以下设置：
     # Pycharm：：File –> Settings –> Tools –> Python Scientific –> Show plots in tool window(取消打勾)
     from scenes.func import mpl_run
     from bodies import Sun, Earth
@@ -108,4 +132,6 @@ if __name__ == '__main__':
         Earth(name='地球', init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0],
               size_scale=4e3, distance_scale=1),  # 地球放大 4000 倍，距离保持不变
     ]
-    mpl_run(bodies, SECONDS_PER_WEEK)
+    gif_file_name = None  # 显示动画
+    # gif_file_name = 'bodies_run.gif'  # 保存 GIF 文件
+    mpl_run(bodies, SECONDS_PER_WEEK, gif_file_name)

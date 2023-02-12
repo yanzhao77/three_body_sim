@@ -47,6 +47,18 @@ https://gitcode.net/pythoncr/three_body_sim
 pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com pyqt5 mayavi
 ```
 
+# 支持两种模拟器
+```shell script
+# 进入当前代码的根目录
+cd e:\three_body_sim\
+SET PYTHONPATH=%CD%
+# matplotlib 模拟器（支持动画和导出 gif 文件）
+python simulators\mpl_simulator.py
+
+# mayavi模拟器
+python simulators\mayavi_simulator.py
+```
+
 # 模拟场景运行
 ```shell script
 # 进入当前代码的根目录
@@ -54,6 +66,7 @@ cd e:\three_body_sim\
 
 SET PYTHONPATH=%CD%
 
+# 场景
 # 从运行demo开始
 python scenes/demo.py
 
