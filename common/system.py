@@ -69,13 +69,14 @@ class System(object):
 
         def valid_body(body):
             """
-            有效的天体
+            判断是否为有效的天体
             :param body:
             :return:
             """
-            if not body.appeared:
+            if not body.appeared: # 不显示
                 return False
             if self.max_distance > 0:
+                # 超过了 max_distance 距离，则不显示，并消失
                 if calculate_distance(body.position) > self.max_distance:
                     body.appeared = False
                     return False
@@ -90,9 +91,9 @@ class System(object):
             acceleration = np.zeros(3)
             for body2 in self.bodies:
                 if self.max_distance > 0:
-                    if calculate_distance(body1.position) > self.max_distance:  # 太远了，则小时
+                    if calculate_distance(body1.position) > self.max_distance:  # 超过了max_distance距离，则消失
                         body1.appeared = False
-                    if calculate_distance(body2.position) > self.max_distance:  # 太远了，则小时
+                    if calculate_distance(body2.position) > self.max_distance:  # 超过了max_distance距离，则消失
                         body2.appeared = False
 
                 if False == body1.appeared or body2.appeared == False:
