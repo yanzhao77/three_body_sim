@@ -27,19 +27,19 @@ if __name__ == '__main__':
 
     # region 1.构建4个小行星 -------------
     # asteroids = [
-    #     Asteroid(size_scale=1e9,  # 小行星放大 1000000000 倍，距离保持不变
+    #     Asteroid(size_scale=3e9,  # 小行星放大 1000000000 倍，距离保持不变
     #              init_position=[1.6 * AU, 0, 0],
     #              init_velocity=[0, 25.37, 0],
     #              distance_scale=1),
-    #     Asteroid(size_scale=1e9,  # 小行星放大 1000000000 倍，距离保持不变
+    #     Asteroid(size_scale=3e9,  # 小行星放大 1000000000 倍，距离保持不变
     #              init_position=[-1.6 * AU, 0, 0],
     #              init_velocity=[0, -25.37, 0],
     #              distance_scale=1),
-    #     Asteroid(size_scale=1e9,  # 小行星放大 1000000000 倍，距离保持不变
+    #     Asteroid(size_scale=3e9,  # 小行星放大 1000000000 倍，距离保持不变
     #              init_position=[0, 1.6 * AU, 0],
     #              init_velocity=[-25.37, 0, 0],
     #              distance_scale=1),
-    #     Asteroid(size_scale=1e9,  # 小行星放大 1000000000 倍，距离保持不变
+    #     Asteroid(size_scale=3e9,  # 小行星放大 1000000000 倍，距离保持不变
     #              init_position=[0, -1.6 * AU, 0],
     #              init_velocity=[25.37, 0, 0],
     #              distance_scale=1),
@@ -57,7 +57,7 @@ if __name__ == '__main__':
                                                  velocity_offset=0.2)
     for i, px in enumerate(pxs):
         py, fx, fy = pys[i], vxs[i], vys[i]
-        asteroids.append(Asteroid(size_scale=5e9,  # 小行星放大 5000000000 倍，距离放大 1.4 倍
+        asteroids.append(Asteroid(size_scale=3e9,  # 小行星放大 5000000000 倍，距离放大 1.4 倍
                                   init_position=[px, py, 0],
                                   init_velocity=[fx, fy, 0],
                                   distance_scale=1.4))
