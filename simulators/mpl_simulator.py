@@ -30,7 +30,7 @@ class MplSimulator(Simulator):
         """
         保存 GIF 文件
         :param dt: 单位：秒，按时间差进行演变，值越小越精确，但演变速度会慢。
-        :param gif_max_frame: 导出的 gif 的最多帧数
+        :param gif_max_frame: 导出的 gif 文件的画面帧数
         :param gif_file_name: 导出的 gif 文件名
         :return:
         """
@@ -44,21 +44,26 @@ class MplSimulator(Simulator):
 
         def update(num):
             body_views = views_frames[num]
-            print("GIF 生成进度：%d/%d %.2f" % (num + 1, gif_max_frame, ((num + 1) / gif_max_frame) * 100) + "%")
+            print("\rGIF 生成进度：%d/%d %.2f" % (num + 1, gif_max_frame, ((num + 1) / gif_max_frame) * 100) + "%", end='')
             return self.show_figure(ax, body_views, pause=0)
 
         ani = animation.FuncAnimation(fig=fig, func=update, frames=np.arange(0, gif_max_frame), interval=1)
         ani.save(gif_file_name)
 
-    def run(self, dt, gif_file_name=None):
+    def run(self, dt, **kwargs):
         """
 
         :param dt: 单位：秒，按时间差进行演变，值越小越精确，但演变速度会慢。
-        :param gif_file_name: 导出的 gif 文件名，如果为空，则显示动画
+        :param kwargs:
+            gif_file_name: 导出的 gif 文件名，如果为空，则显示动画
+            gif_max_frame: 导出的 gif 文件的画面帧数
         :return:
         """
+        gif_file_name = kwargs["gif_file_name"] if "gif_file_name" in kwargs else None
+        gif_max_frame = kwargs["gif_max_frame"] if "gif_max_frame" in kwargs else None
+
         if gif_file_name is not None:
-            self.save_as_gif(dt, gif_max_frame=200, gif_file_name=gif_file_name)
+            self.save_as_gif(dt, gif_max_frame=gif_max_frame, gif_file_name=gif_file_name)
             return
 
         fig = plt.figure('天体模拟运行效果', figsize=(16, 12))
@@ -113,8 +118,6 @@ class MplSimulator(Simulator):
 
 
 if __name__ == '__main__':
-    # TODO: 注意：显示动态图，需先进行以下设置：
-    # Pycharm：：File –> Settings –> Tools –> Python Scientific –> Show plots in tool window(取消打勾)
     from scenes.func import mpl_run
     from bodies import Sun, Earth
     from common.consts import SECONDS_PER_WEEK
@@ -132,6 +135,12 @@ if __name__ == '__main__':
         Earth(name='地球', init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0],
               size_scale=4e3, distance_scale=1),  # 地球放大 4000 倍，距离保持不变
     ]
-    gif_file_name = None  # 显示动画
-    # gif_file_name = 'bodies_run.gif'  # 保存 GIF 文件
-    mpl_run(bodies, SECONDS_PER_WEEK, gif_file_name)
+    # 保存 GIF，参数为指定保存 GIF 文件以及文件的画面帧数
+    gif_file_name, gif_max_frame = 'bodies_run.gif', 200
+
+    # 只显示动画，不保存 GIF 文件。注释掉以下代码，则使用上面的参数
+    # TODO: 注意：显示动态图，需先进行以下设置：
+    # Pycharm：：File –> Settings –> Tools –> Python Scientific –> Show plots in tool window(取消打勾)
+    gif_file_name, gif_max_frame = None, None
+
+    mpl_run(bodies, SECONDS_PER_WEEK, gif_file_name, gif_max_frame)

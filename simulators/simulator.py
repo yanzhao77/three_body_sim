@@ -67,7 +67,7 @@ class Simulator(metaclass=ABCMeta):
         self.body_views = list(filter(lambda b:b.appeared, self.body_views))
 
     @abstractmethod
-    def run(self, dt: int):
+    def run(self, dt: int, **kwargs):
         """
         按时间差运行，值越小越精确，但演变速度会慢。
         :param dt: 时间差（秒）

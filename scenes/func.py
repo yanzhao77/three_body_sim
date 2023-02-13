@@ -51,7 +51,7 @@ def mayavi_run(bodies, dt=SECONDS_PER_WEEK,
     mlab.show()
 
 
-def mpl_run(bodies, dt=SECONDS_PER_WEEK, gif_file_name=None):
+def mpl_run(bodies, dt=SECONDS_PER_WEEK, gif_file_name=None, gif_max_frame=200):
     """
 
     :param bodies: 天体
@@ -62,7 +62,8 @@ def mpl_run(bodies, dt=SECONDS_PER_WEEK, gif_file_name=None):
     from simulators.mpl_simulator import MplSimulator
     body_sys = System(bodies)
     simulator = MplSimulator(body_sys)
-    simulator.run(dt, gif_file_name)
+
+    simulator.run(dt, gif_file_name=gif_file_name, gif_max_frame=gif_max_frame)
 
 
 if __name__ == '__main__':

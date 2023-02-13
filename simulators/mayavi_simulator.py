@@ -21,11 +21,10 @@ class MayaviSimulator(Simulator):
         super().__init__(bodies_sys, MayaviView)
 
     @mlab.animate(delay=100, ui=True)
-    def run(self, dt):
+    def run(self, dt, **kwargs):
         f = mlab.gcf()
         while True:
             self.evolve(dt)
-            # Updating scene...
             f.scene.render()
             yield
 
