@@ -8,9 +8,12 @@
 # ==============================================================================
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import matplotlib.colors as mcolors
 from simulators.simulator import Simulator
 from common.system import System
+from common.consts import AU
 from simulators.views.mpl_view import MplView
+from simulators.func import create_fig_ax, update_ax_styles
 import numpy as np
 import copy
 
@@ -26,7 +29,7 @@ class MplSimulator(Simulator):
     def __init__(self, bodies_sys: System):
         super().__init__(bodies_sys, MplView)
 
-    def save_as_gif(self, dt, gif_max_frame=200, gif_file_name='bodies_run.gif'):
+    def save_as_gif(self, dt, gif_max_frame=200, gif_file_name='bodies_run.gif', styles={}):
         """
         保存 GIF 文件
         :param dt: 单位：秒，按时间差进行演变，值越小越精确，但演变速度会慢。
@@ -34,8 +37,9 @@ class MplSimulator(Simulator):
         :param gif_file_name: 导出的 gif 文件名
         :return:
         """
-        fig = plt.figure('天体模拟运行效果', figsize=(16, 12))
-        ax = fig.gca(projection="3d")
+
+        fig, ax = create_fig_ax()
+
         views_frames = []
         for i in range(gif_max_frame):
             self.evolve(dt)
@@ -45,7 +49,7 @@ class MplSimulator(Simulator):
         def update(num):
             body_views = views_frames[num]
             print("\rGIF 生成进度：%d/%d %.2f" % (num + 1, gif_max_frame, ((num + 1) / gif_max_frame) * 100) + "%", end='')
-            return self.show_figure(ax, body_views, pause=0)
+            return self.show_figure(ax, body_views, pause=0, update_ax=update_ax_styles, styles=styles)
 
         ani = animation.FuncAnimation(fig=fig, func=update, frames=np.arange(0, gif_max_frame), interval=1)
         ani.save(gif_file_name)
@@ -61,22 +65,23 @@ class MplSimulator(Simulator):
         """
         gif_file_name = kwargs["gif_file_name"] if "gif_file_name" in kwargs else None
         gif_max_frame = kwargs["gif_max_frame"] if "gif_max_frame" in kwargs else None
+        styles = kwargs["styles"] if "styles" in kwargs else {}
 
         if gif_file_name is not None:
-            self.save_as_gif(dt, gif_max_frame=gif_max_frame, gif_file_name=gif_file_name)
+            self.save_as_gif(dt, gif_max_frame=gif_max_frame, gif_file_name=gif_file_name, styles=styles)
             return
 
-        fig = plt.figure('天体模拟运行效果', figsize=(16, 12))
-        ax = fig.gca(projection="3d")
+        fig, ax = create_fig_ax()
+
         # TODO: 注意：显示动态图，需先进行以下设置：
         # Pycharm：：File –> Settings –> Tools –> Python Scientific –> Show plots in tool window(取消打勾)
 
         while True:
             self.evolve(dt)
             body_views = copy.deepcopy(self.body_views)
-            self.show_figure(ax, body_views, pause=0.1)
+            self.show_figure(ax, body_views, pause=0.1, update_ax=update_ax_styles, styles=styles)
 
-    def show_figure(self, ax, bodies, pause=0.1):
+    def show_figure(self, ax, bodies, pause=0.1, update_ax=None, styles={}):
         """
 
         :param ax:
@@ -84,12 +89,9 @@ class MplSimulator(Simulator):
         :param pause:
         :return:
         """
-        plt.cla()
-
-        ax.set_title('天体模拟运行效果')
-        ax.set_xlabel('X')
-        ax.set_ylabel('Y')
-        ax.set_zlabel('Z')
+        if update_ax is not None:
+            # 更新 ax
+            update_ax(ax, styles)
 
         for idx, body in enumerate(bodies):
             if body.is_fixed_star:
@@ -98,20 +100,39 @@ class MplSimulator(Simulator):
                 color = 'blue'
             # size = 800 if str(body.name).lower().startswith("sun") else 500
             size = body.raduis / 80000
-            pos = body.position
-            # 天体名称
-            ax.text(pos[0], pos[1], pos[2] + 0.006, s=body.name, color=color, fontsize=12)
+            # size = pow(body.raduis / AU * body.size_scale,3)
+            pos = body.position / AU
+
             # 天体
             ax.scatter(pos[0], pos[1], pos[2], color=color, s=size, alpha=0.8)
             # for _his_pos in body.his_position():
             #     ax.scatter3D(_his_pos[0], _his_pos[1], _his_pos[2], color=color, alpha=0.5)
             # ax.scatter(his_pos[0], his_pos[1], his_pos[2], color=colors[idx], s=10)
-            his_pos = body.his_position
+            his_pos = np.array(body.his_position) / AU
             tail_len = len(his_pos)
             if tail_len > 1:
                 _his_pos = list(zip(*his_pos))
                 # 历史轨迹线
                 ax.plot3D(_his_pos[0], _his_pos[1], _his_pos[2], color=color, alpha=0.5)
+
+            z_range = ax.get_zlim()[1] - ax.get_zlim()[0]
+            # z_range = 0.11   1.52
+            ax.text(pos[0], pos[1], pos[2] + size*(z_range/5000), s=body.name, color=color, fontsize=12)
+            # 计算每个坐标轴的数据范围
+            # x_range = ax.get_xlim()[1] - ax.get_xlim()[0]
+            # y_range = ax.get_ylim()[1] - ax.get_ylim()[0]
+            # z_range = ax.get_zlim()[1] - ax.get_zlim()[0]
+            # r = (body.raduis/AU)
+            # k = r / (max(x_range, y_range, z_range))
+            # k = r / np.array([x_range, y_range, z_range])
+            # 计算文本的偏移量
+            # 偏移量与刻度、球体大小相关
+            # text_offset = (max(x_range, y_range, z_range) + (size)) / 80
+            # text_offset = *(z_range/3)
+            # ax.text(pos[0] + k[0] * r, pos[1] + k[1] * r, pos[2] + k[2] * r,
+            #         s=body.name,
+            #         color=color,
+            #         fontsize=12)
 
         if pause > 0:
             plt.pause(pause)

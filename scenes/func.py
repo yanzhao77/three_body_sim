@@ -6,6 +6,7 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
+import matplotlib.pyplot as plt
 from common.consts import SECONDS_PER_WEEK
 from common.system import System
 
@@ -64,6 +65,22 @@ def mpl_run(bodies, dt=SECONDS_PER_WEEK, gif_file_name=None, gif_max_frame=200):
     simulator = MplSimulator(body_sys)
 
     simulator.run(dt, gif_file_name=gif_file_name, gif_max_frame=gif_max_frame)
+
+
+COSMIC_BG_COLOR = "#002563"
+COSMIC_FORE_COLOR = "white"
+
+
+def create_fig_ax(styles={}):
+    bg_color = styles["bg_color"] if "bg_color" in styles else COSMIC_BG_COLOR
+    fore_color = styles["fore_color"] if "fore_color" in styles else COSMIC_FORE_COLOR
+    if bg_color is None:
+        fig = plt.figure('天体模拟运行效果', figsize=(20, 12))
+    else:
+        fig = plt.figure('天体模拟运行效果', figsize=(20, 12), facecolor=bg_color)
+    ax = fig.gca(projection="3d")
+
+    return fig, ax
 
 
 if __name__ == '__main__':
