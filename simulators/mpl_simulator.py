@@ -146,6 +146,6 @@ if __name__ == '__main__':
     # 只显示动画，不保存 GIF 文件。注释掉以下代码，则使用上面的参数
     # TODO: 注意：显示动态图，需先进行以下设置：
     # Pycharm：：File –> Settings –> Tools –> Python Scientific –> Show plots in tool window(取消打勾)
-    # gif_file_name, gif_max_frame = None, None
+    gif_file_name, gif_max_frame = None, None
 
     mpl_run(bodies, SECONDS_PER_WEEK, gif_file_name, gif_max_frame)
