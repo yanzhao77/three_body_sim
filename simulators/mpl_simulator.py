@@ -99,7 +99,7 @@ class MplSimulator(Simulator):
             else:
                 color = 'blue'
             # size = 800 if str(body.name).lower().startswith("sun") else 500
-            size = body.raduis / 80000
+            size = body.raduis * body.size_scale / 80000
             # size = pow(body.raduis / AU * body.size_scale,3)
             pos = body.position / AU
 
@@ -116,23 +116,7 @@ class MplSimulator(Simulator):
                 ax.plot3D(_his_pos[0], _his_pos[1], _his_pos[2], color=color, alpha=0.5)
 
             z_range = ax.get_zlim()[1] - ax.get_zlim()[0]
-            # z_range = 0.11   1.52
             ax.text(pos[0], pos[1], pos[2] + size*(z_range/5000), s=body.name, color=color, fontsize=12)
-            # 计算每个坐标轴的数据范围
-            # x_range = ax.get_xlim()[1] - ax.get_xlim()[0]
-            # y_range = ax.get_ylim()[1] - ax.get_ylim()[0]
-            # z_range = ax.get_zlim()[1] - ax.get_zlim()[0]
-            # r = (body.raduis/AU)
-            # k = r / (max(x_range, y_range, z_range))
-            # k = r / np.array([x_range, y_range, z_range])
-            # 计算文本的偏移量
-            # 偏移量与刻度、球体大小相关
-            # text_offset = (max(x_range, y_range, z_range) + (size)) / 80
-            # text_offset = *(z_range/3)
-            # ax.text(pos[0] + k[0] * r, pos[1] + k[1] * r, pos[2] + k[2] * r,
-            #         s=body.name,
-            #         color=color,
-            #         fontsize=12)
 
         if pause > 0:
             plt.pause(pause)
@@ -157,11 +141,11 @@ if __name__ == '__main__':
               size_scale=4e3, distance_scale=1),  # 地球放大 4000 倍，距离保持不变
     ]
     # 保存 GIF，参数为指定保存 GIF 文件以及文件的画面帧数
-    gif_file_name, gif_max_frame = 'bodies_run.gif', 200
+    gif_file_name, gif_max_frame = 'bodies_run.gif', 100
 
     # 只显示动画，不保存 GIF 文件。注释掉以下代码，则使用上面的参数
     # TODO: 注意：显示动态图，需先进行以下设置：
     # Pycharm：：File –> Settings –> Tools –> Python Scientific –> Show plots in tool window(取消打勾)
-    gif_file_name, gif_max_frame = None, None
+    # gif_file_name, gif_max_frame = None, None
 
     mpl_run(bodies, SECONDS_PER_WEEK, gif_file_name, gif_max_frame)
