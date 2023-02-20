@@ -20,7 +20,6 @@ class Moon(Body):
      　平均密度: 3.344 g/cm³ -> 3.344✕10³ kg/m³
     """
 
-    # 质    量约  [1] 平均密度约 3.344 g/cm³ [1] 质    量约 7.342✕1022 kg [1]
     def __init__(self, name="Moon", mass=7.342e22,
                  init_position=[363104 + 1.12 * AU, 0, 0],
                  init_velocity=[0, 29.79 + 1.023, 0],

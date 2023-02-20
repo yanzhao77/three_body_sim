@@ -18,6 +18,11 @@ COSMIC_FORE_COLOR = "white"
 
 
 def get_default_colors(styles={}):
+    """
+
+    :param styles:
+    :return:
+    """
     bg_color = styles["bg_color"] if "bg_color" in styles else "white"  # COSMIC_BG_COLOR
     fore_color = styles["fore_color"] if "fore_color" in styles else "black"  # COSMIC_FORE_COLOR
     # bg_color = styles["bg_color"] if "bg_color" in styles else COSMIC_BG_COLOR
@@ -28,6 +33,11 @@ def get_default_colors(styles={}):
 
 
 def create_fig_ax(styles={}):
+    """
+
+    :param styles:
+    :return:
+    """
     bg_color, fore_color = get_default_colors(styles)
 
     plt.rcParams['patch.facecolor'] = bg_color

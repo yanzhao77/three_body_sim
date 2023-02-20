@@ -78,7 +78,7 @@ class System(object):
             :param body:
             :return:
             """
-            if not body.appeared: # 不显示
+            if not body.appeared:  # 不显示
                 return False
             if self.max_distance > 0:
                 # 超过了 max_distance 距离，则不显示，并消失
