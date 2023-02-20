@@ -1,7 +1,7 @@
 {
   "bodies": [
     {
-      "name": "sun",
+      "name": "太阳",
       "mass": 1.9891e30,
       "init_position": [
         0,
@@ -24,7 +24,7 @@
       "distance_scale": 1.0
     },
     {
-      "name": "earth",
+      "name": "地球",
       "mass": 5.97237e24,
       "init_position": [
         149597870.700,

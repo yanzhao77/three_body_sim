@@ -1,7 +1,7 @@
 {
   "bodies": [
     {
-      "name": "sun",
+      "name": "太阳",
       "mass": 1.9891e30,
       "init_position": [
         0,
