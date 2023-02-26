@@ -30,11 +30,11 @@ class BodyView(metaclass=ABCMeta):
             else:
                 self.color = self.__get_texture_main_color(self.texture)
         self.appear()
-        self.position = [None, None, None]
-        self.name = None
-        self.mass = None
-        self.raduis = None
-        self.velocity = None
+        self.position = body.position
+        self.name = body.name
+        self.mass = body.mass
+        self.raduis = body.raduis
+        self.velocity = body.velocity
 
         self.appeared = True
 
