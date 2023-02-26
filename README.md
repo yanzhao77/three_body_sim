@@ -44,7 +44,7 @@ https://gitcode.net/pythoncr/three_body_sim
 # 安装 Python 库
 ```shell script
 # 先安装基础包
-pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com pyqt5 mayavi
+pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina pyqt5 pyglet mayavi
 ```
 
 # 支持两种模拟器
