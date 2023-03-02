@@ -8,44 +8,8 @@
 # ==============================================================================
 # pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina
 from ursina import Ursina, window, Entity, camera, color, mouse, Vec2, Vec3, load_texture, held_keys
-from math import sin, cos, radians
-from ursina.prefabs.first_person_controller import FirstPersonController
-import sys
-import random as rd
-import os
 
-from simulators.views.ursina_view import UrsinaView
-
-
-class Player(FirstPersonController):
-    def __init__(self, planets):
-        # global planets
-
-        super().__init__()
-        pos = planets[0].position
-        camera.fov = 100
-        self.position = Vec3(pos[0], pos[1], pos[2])
-        self.gravity = 0
-        self.vspeed = 40
-        self.speed = 100
-        self.mouse_sensitivity = Vec2(160, 160)
-        self.on_enable()
-
-    def input(self, key):
-        if key == "escape":
-            if mouse.locked:
-                self.on_disable()
-            else:
-                sys.exit()
-
-    def _update(self):
-        # {'left mouse': 0, 'left': 0, 'left shift': 0, 'space': 1, 'w': 0, 's': 0, 'd': 0, 'a': 0, 'shift': 0})
-        if held_keys["left mouse"]:
-            self.on_enable()
-        if held_keys["left shift"]:
-            self.y -= self.vspeed
-        if held_keys["space"]:
-            self.y += self.vspeed
+from simulators.views.ursina_view import UrsinaView, UrsinaPlayer
 
 # # -------------------------------------------------------------------------------
 # app = Ursina()
@@ -163,31 +127,31 @@ if __name__ == '__main__':
     """
     3个太阳、1个地球
     """
-    # bodies = [
-    #     Sun(name='太阳1', mass=1.5e30, init_position=[849597870.700, 0, 0], init_velocity=[0, 7.0, 0],
-    #         size_scale=5e1, texture="sun.png"),  # 太阳放大 100 倍
-    #     Sun(name='太阳2', mass=2e30, init_position=[0, 0, 0], init_velocity=[0, -8.0, 0],
-    #         size_scale=5e1, texture="sun.png"),  # 太阳放大 100 倍
-    #     Sun(name='太阳3', mass=2.5e30, init_position=[0, -849597870.700, 0], init_velocity=[18.0, 0, 0],
-    #         size_scale=5e1, texture="sun.png"),  # 太阳放大 100 倍
-    #     Earth(name='地球', init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0],
-    #           size_scale=4e3, texture="earth.png", distance_scale=1),  # 地球放大 4000 倍，距离保持不变
-    # ]
     bodies = [
-
-        Sun(name='太阳2', mass=1.5e30, init_position=[0, 0, 0], init_velocity=[0, -8.0, 0],
+        Sun(name='太阳1', mass=1.5e30, init_position=[849597870.700, 0, 0], init_velocity=[0, 7.0, 0],
             size_scale=5e1, texture="sun.png"),  # 太阳放大 100 倍
-        Sun(name='太阳2', mass=1.5e30, init_position=[849597870.700, 0, 0], init_velocity=[0, -8.0, 0],
+        Sun(name='太阳2', mass=2e30, init_position=[0, 0, 0], init_velocity=[0, -8.0, 0],
             size_scale=5e1, texture="sun.png"),  # 太阳放大 100 倍
-        Sun(name='太阳2', mass=1.5e30, init_position=[0, -849597870.700, 0], init_velocity=[0, -8.0, 0],
+        Sun(name='太阳3', mass=2.5e30, init_position=[0, -849597870.700, 0], init_velocity=[18.0, 0, 0],
             size_scale=5e1, texture="sun.png"),  # 太阳放大 100 倍
-        Earth(name='地球',mass=5.97237e24, init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0],
+        Earth(name='地球', init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0],
               size_scale=4e3, texture="earth.png", distance_scale=1),  # 地球放大 4000 倍，距离保持不变
     ]
+    # bodies = [
+    #
+    #     Sun(name='太阳2', mass=1.5e30, init_position=[0, 0, 0], init_velocity=[0, -8.0, 0],
+    #         size_scale=5e1, texture="sun.png"),  # 太阳放大 100 倍
+    #     Sun(name='太阳2', mass=1.5e30, init_position=[849597870.700, 0, 0], init_velocity=[0, -8.0, 0],
+    #         size_scale=5e1, texture="sun.png"),  # 太阳放大 100 倍
+    #     Sun(name='太阳2', mass=1.5e30, init_position=[0, -849597870.700, 0], init_velocity=[0, -8.0, 0],
+    #         size_scale=5e1, texture="sun.png"),  # 太阳放大 100 倍
+    #     Earth(name='地球', mass=5.97237e24, init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0],
+    #           size_scale=4e3, texture="earth.png", distance_scale=1),  # 地球放大 4000 倍，距离保持不变
+    # ]
     body_sys = System(bodies)
     simulator = UrsinaSimulator(body_sys)
 
-    player = Player(ursina_views)
+    player = UrsinaPlayer((0, -849597870.700, 0))
 
 
     def update():
