@@ -56,16 +56,21 @@ class UrsinaPlayer(FirstPersonController):
 
 
 class Planet(Entity):
-    def __init__(self, name, texture, pos, scale=2):
+    def __init__(self, body_view: BodyView):
+        self.body_view = body_view
         self.angle = random.uniform(0.0005, 0.01)
         self.fastMode = 0
         self.rotation = (random.randint(0, 360) for i in range(3))
         self.rotspeed = random.uniform(0.25, 1.5)
-        self.rotMode = random.choice(["x", "y", "z"])
-        self.name = name
+        self.rotMode = 'x'  # random.choice(["x", "y", "z"])
+        self.name = body_view.name
+
+        pos = body_view.position * SCALE_FACTOR
+        scale = body_view.body.diameter * body_view.body.size_scale * SCALE_FACTOR
+
         # texture = eval(f"{_type}_texture")
         # e = os.path.exists(texture)
-        texture = load_texture(texture)
+        texture = load_texture(body_view.texture)
         super().__init__(model="sphere",
                          scale=scale,
                          texture=texture,
@@ -78,6 +83,10 @@ class Planet(Entity):
         #         angle *= 200
         # self.x = self.x * cos(radians(angle)) - self.y * sin(radians(angle))
         # self.y = self.x * sin(radians(angle)) + self.y * cos(radians(angle))
+        pos = self.body_view.position * SCALE_FACTOR
+        self.x = pos[0]
+        self.y = pos[1]
+        self.z = pos[2]
         exec(f"self.rotation_{self.rotMode}+=self.rotspeed")
 
     #
@@ -93,15 +102,13 @@ class UrsinaView(BodyView):
 
     def __init__(self, body: Body):
         BodyView.__init__(self, body)
-        pos = self.position * SCALE_FACTOR
-        size = body.diameter * body.size_scale * SCALE_FACTOR
-        self.entity = Planet(body.name, self.texture, pos, size)
+        self.planet = Planet(self)
 
     def update(self):
-        self.entity.turn(self.entity.angle)
+        self.planet.turn(self.planet.angle)
 
     def appear(self):
         pass
 
     def disappear(self):
-        self.entity.disable()
+        self.planet.disable()
