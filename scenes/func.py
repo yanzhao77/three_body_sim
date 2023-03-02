@@ -7,7 +7,7 @@
 # python_version  :3.8
 # ==============================================================================
 import matplotlib.pyplot as plt
-from common.consts import SECONDS_PER_WEEK
+from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY, SECONDS_PER_HALF_DAY
 from common.system import System
 
 
@@ -52,6 +52,33 @@ def mayavi_run(bodies, dt=SECONDS_PER_WEEK,
     mlab.show()
 
 
+update = None
+
+
+def ursina_run(bodies, dt=SECONDS_PER_HALF_DAY, position=(4000000, 800000000, 4000000)):
+    """
+
+    :param bodies:
+    :param dt:
+    :return:
+    """
+    global update
+
+    from simulators.ursina_simulator import UrsinaSimulator, UrsinaPlayer
+    body_sys = System(bodies)
+    simulator = UrsinaSimulator(body_sys)
+
+    player = UrsinaPlayer(position, simulator.ursina_views)
+
+    def callback_update():
+        for ursina_view in simulator.ursina_views:
+            simulator.check_and_evolve()
+            ursina_view.update()
+
+    update = callback_update
+    simulator.run(dt)
+
+
 def mpl_run(bodies, dt=SECONDS_PER_WEEK, gif_file_name=None, gif_max_frame=200):
     """
 
@@ -93,4 +120,5 @@ if __name__ == '__main__':
         Sun(size_scale=1.2e2),  # 太阳放大 120 倍
         Earth(size_scale=4e3, distance_scale=1),  # 地球放大 4000 倍，距离保持不变
     ]
-    mpl_run(bodies, SECONDS_PER_WEEK)
+    # mpl_run(bodies, SECONDS_PER_WEEK)
+    ursina_run(bodies, SECONDS_PER_WEEK)

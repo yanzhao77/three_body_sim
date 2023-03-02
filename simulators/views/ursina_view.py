@@ -248,7 +248,7 @@ class Planet(Entity):
         self.y = pos[2]
         self.z = pos[0]
 
-        # self.rotation_y -= self.rotspeed
+        self.rotation_y -= self.rotspeed
 
     def input(self, key):
         if key == "enter":
