@@ -95,36 +95,36 @@ class UrsinaPlayer(FirstPersonController):
         self.on_enable()
         self.rotation_speed = 80
 
-    def space_callback(self):
-        best_camera_position = self.best_camera_position()
-        if best_camera_position is None:
-            return
-        best_pos = np.array(best_camera_position[0]) * SCALE_FACTOR
-        camera.position, camera.rotation = best_pos, best_camera_position[1]
-
-    def best_camera_position(self):
-        if self.planets is None:
-            return None
-
-        min_x, max_x, min_y, max_y, min_z, max_z = None, None, None, None, None, None
-        for planet in self.planets:
-            if min_x is None or planet.x < min_x:
-                min_x = planet.x
-            if max_x is None or planet.x > max_x:
-                max_x = planet.x
-            if min_y is None or planet.y < min_y:
-                min_y = planet.y
-            if max_y is None or planet.y > max_y:
-                max_y = planet.y
-            if min_z is None or planet.z < min_z:
-                min_z = planet.z
-            if max_z is None or planet.z > max_z:
-                max_z = planet.z
-        x = (min_x + max_x) / 2
-        y = (min_y + max_y) / 2
-        z = (min_z + max_z) / 2
-        distance = max(max_x - min_x, max_y - min_y, max_z - min_z) * 1.5
-        return (x, y + distance, z - distance), (0, -90, 0)
+    # def space_callback(self):
+    #     best_camera_position = self.best_camera_position()
+    #     if best_camera_position is None:
+    #         return
+    #     best_pos = np.array(best_camera_position[0]) * SCALE_FACTOR
+    #     camera.position, camera.rotation = best_pos, best_camera_position[1]
+    #
+    # def best_camera_position(self):
+    #     if self.planets is None:
+    #         return None
+    #
+    #     min_x, max_x, min_y, max_y, min_z, max_z = None, None, None, None, None, None
+    #     for planet in self.planets:
+    #         if min_x is None or planet.x < min_x:
+    #             min_x = planet.x
+    #         if max_x is None or planet.x > max_x:
+    #             max_x = planet.x
+    #         if min_y is None or planet.y < min_y:
+    #             min_y = planet.y
+    #         if max_y is None or planet.y > max_y:
+    #             max_y = planet.y
+    #         if min_z is None or planet.z < min_z:
+    #             min_z = planet.z
+    #         if max_z is None or planet.z > max_z:
+    #             max_z = planet.z
+    #     x = (min_x + max_x) / 2
+    #     y = (min_y + max_y) / 2
+    #     z = (min_z + max_z) / 2
+    #     distance = max(max_x - min_x, max_y - min_y, max_z - min_z) * 1.5
+    #     return (x, y + distance, z - distance), (0, -90, 0)
 
     # def camera_adj(self, targets):
     #     # 创建一些物体
@@ -140,53 +140,56 @@ class UrsinaPlayer(FirstPersonController):
     #     camera.position = avg_pos + (0, 0, 20)
     #     camera.rotation_x = -90
 
+
+
     def input(self, key):
         if key == "escape":
             if mouse.locked:
                 self.on_disable()
             else:
                 sys.exit()
+        return super().input(key)
         # elif key == "space":
         #     self.space_callback()
         # Input.bind('space', space_callback)
 
-    def _update(self):
-        # # {'left mouse': 0, 'left': 0, 'left shift': 0, 'space': 1, 'w': 0, 's': 0, 'd': 0, 'a': 0, 'shift': 0})
-        # if held_keys["left mouse"]:
-        #     self.on_enable()
-        # if held_keys["left shift"]:
-        #     self.y -= self.vspeed
-        # if held_keys["space"]:
-        #     self.y += self.vspeed
-        # WASD keys
-
-        if held_keys['f']:
-            camera.fov += 1
-        if held_keys['r']:
-            camera.fov -= 1
-        # camera.position
-        # self.rotation_y += held_keys['d'] * self.rotation_speed * time.dt
-        # self.rotation_y -= held_keys['a'] * self.rotation_speed * time.dt
-        # self.rotation_x += held_keys['w'] * self.rotation_speed * time.dt
-        # self.rotation_x -= held_keys['s'] * self.rotation_speed * time.dt
-
-        forward = self.forward * (held_keys['w'] - held_keys['s'])
-        right = self.right * (held_keys['d'] - held_keys['a'])
-
-        self.position += (forward + right) * self.speed * time.dt
-        # if held_keys['w']:
-        #     camera.position += camera.forward * time.dt
-        # if held_keys['s']:
-        #     camera.position -= camera.forward * time.dt
-        # if held_keys['a']:
-        #     camera.position -= camera.right * time.dt
-        # if held_keys['d']:
-        #     camera.position += camera.right * time.dt
-        #
-        # # Mouse control
-        # camera.rotation_y += held_keys['right mouse'] * mouse.velocity[0] * 20
-        # camera.rotation_x -= held_keys['right mouse'] * mouse.velocity[1] * 20
-        # camera.rotation_x = clamp(camera.rotation_x, -90, 90)
+    # def _update(self):
+    #     # # {'left mouse': 0, 'left': 0, 'left shift': 0, 'space': 1, 'w': 0, 's': 0, 'd': 0, 'a': 0, 'shift': 0})
+    #     # if held_keys["left mouse"]:
+    #     #     self.on_enable()
+    #     # if held_keys["left shift"]:
+    #     #     self.y -= self.vspeed
+    #     # if held_keys["space"]:
+    #     #     self.y += self.vspeed
+    #     # WASD keys
+    #
+    #     if held_keys['f']:
+    #         camera.fov += 1
+    #     if held_keys['r']:
+    #         camera.fov -= 1
+    #     # camera.position
+    #     # self.rotation_y += held_keys['d'] * self.rotation_speed * time.dt
+    #     # self.rotation_y -= held_keys['a'] * self.rotation_speed * time.dt
+    #     # self.rotation_x += held_keys['w'] * self.rotation_speed * time.dt
+    #     # self.rotation_x -= held_keys['s'] * self.rotation_speed * time.dt
+    #
+    #     forward = self.forward * (held_keys['w'] - held_keys['s'])
+    #     right = self.right * (held_keys['d'] - held_keys['a'])
+    #
+    #     self.position += (forward + right) * self.speed * time.dt
+    #     # if held_keys['w']:
+    #     #     camera.position += camera.forward * time.dt
+    #     # if held_keys['s']:
+    #     #     camera.position -= camera.forward * time.dt
+    #     # if held_keys['a']:
+    #     #     camera.position -= camera.right * time.dt
+    #     # if held_keys['d']:
+    #     #     camera.position += camera.right * time.dt
+    #     #
+    #     # # Mouse control
+    #     # camera.rotation_y += held_keys['right mouse'] * mouse.velocity[0] * 20
+    #     # camera.rotation_x -= held_keys['right mouse'] * mouse.velocity[1] * 20
+    #     # camera.rotation_x = clamp(camera.rotation_x, -90, 90)
 
 
 class Planet(Entity):
@@ -241,9 +244,9 @@ class Planet(Entity):
         # self.y = self.x * sin(radians(angle)) + self.y * cos(radians(angle))
         pos = self.body_view.position * SCALE_FACTOR
 
-        # self.x = -pos[1]
-        # self.y = pos[2]
-        # self.z = pos[0]
+        self.x = -pos[1]
+        self.y = pos[2]
+        self.z = pos[0]
 
         # self.rotation_y -= self.rotspeed
 
