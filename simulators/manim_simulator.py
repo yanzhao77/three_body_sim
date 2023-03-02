@@ -6,4 +6,4 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-# pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com manimlib
+# pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com manim
