@@ -7,7 +7,7 @@
 # python_version  :3.8
 # ==============================================================================
 # pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina
-from ursina import Ursina, window, Entity, camera, color, mouse, Vec2, Vec3, load_texture, held_keys
+from ursina import Ursina, window, Entity, SmoothFollow, camera, color, mouse, Vec2, Vec3, load_texture, held_keys
 from math import sin, cos, radians
 from ursina.prefabs.first_person_controller import FirstPersonController
 import sys
@@ -20,21 +20,35 @@ import numpy as np
 from math import sin, cos, radians
 import os
 
-SCALE_FACTOR = 1e-6
+SCALE_FACTOR = 1e-7
 
 
 class UrsinaPlayer(FirstPersonController):
-    def __init__(self, position):
+    def __init__(self, position, targets=None):
         # global planets
         super().__init__()
         # pos = planets[0].position
         camera.fov = 100
+        if targets is not None:
+            # planets = []
+            # targets = [view.planet.parent for view in targets]
+            targets_parent = Entity()
+            for view in targets:
+                view.planet.parent = targets_parent
+                # planets.append(view.planet)
+
+            camera.add_script(SmoothFollow(targets_parent, offset=(0, 8, -20)))
         pos = np.array(position) * SCALE_FACTOR
         self.position = Vec3(pos[0], pos[1], pos[2])
-        # self.position = Vec3(pos[0], pos[1], pos[2])
+        # 将摄像机位置设置为 x=0、y=1、z=0 的位置
+        # camera.position = Vec3(pos[0], pos[1], pos[2])
+        self.position = Vec3(pos[0], pos[1], pos[2])
+        # 将摄像机的观察角度绕 x 轴旋转 45 度，绕 y 轴旋转 0 度，绕 z 轴旋转 0 度
+        camera.rotation = Vec3(45, 90, 0)
+
         self.gravity = 0
-        self.vspeed = 40
-        self.speed = 100
+        self.vspeed = 4000
+        self.speed = 10000
         self.mouse_sensitivity = Vec2(160, 160)
         self.on_enable()
 

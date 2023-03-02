@@ -93,14 +93,16 @@ from simulators.views.ursina_view import UrsinaView, UrsinaPlayer
 
 from simulators.simulator import Simulator
 from common.system import System
+import time
+import datetime
 
-ursina_views = []
 player = None
 
 
 class UrsinaSimulator(Simulator):
     def __init__(self, bodies_sys: System):
         self.app = Ursina()
+        self.ursina_views = []
         window.color = color.black
 
         super().__init__(bodies_sys, UrsinaView)
@@ -112,17 +114,31 @@ class UrsinaSimulator(Simulator):
             # pos = tuple(body.position)
             # ursina_view = UrsinaView(body)
             view.update()
-            ursina_views.append(view)
+            self.ursina_views.append(view)
             # planets.append(newPlanet)
             # x += cp[i] * 10
 
+    def check_elapsed_time(self):
+        """检查时间间隔是否已过"""
+        now = datetime.datetime.now()
+        elapsed_time = now - self.last_time
+        return elapsed_time >= self.interval
+
+    def check_and_evolve(self):
+        if self.check_elapsed_time():
+            super().evolve(self.evolve_dt)
+
     def run(self, dt, **kwargs):
+        self.evolve_dt = dt
+        # 设定时间间隔为1秒
+        self.interval = datetime.timedelta(seconds=1)
+        self.last_time = datetime.datetime.now()
         self.app.run()
 
 
 if __name__ == '__main__':
     from bodies import Sun, Earth
-    from common.consts import SECONDS_PER_WEEK
+    from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY
 
     """
     3个太阳、1个地球
@@ -151,16 +167,16 @@ if __name__ == '__main__':
     body_sys = System(bodies)
     simulator = UrsinaSimulator(body_sys)
 
-    player = UrsinaPlayer((0, -849597870.700, 0))
+    player = UrsinaPlayer((0, 0, 849597870.700),simulator.ursina_views)
 
 
     def update():
         # print('OK')
-        global ursina_views, player
-        for ursina_view in ursina_views:
+        for ursina_view in simulator.ursina_views:
+            simulator.check_and_evolve()
             ursina_view.update()
             # ursina_view.entity.turn(ursina_view.entity.angle)
         player._update()
 
 
-    simulator.run(SECONDS_PER_WEEK)
+    simulator.run(SECONDS_PER_DAY)
