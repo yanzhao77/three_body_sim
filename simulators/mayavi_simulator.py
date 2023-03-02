@@ -5,6 +5,7 @@
 # date            :2023-02-11
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
+# mayavi version  :4.8.1
 # ==============================================================================
 from mayavi import mlab
 from simulators.simulator import Simulator
