@@ -95,6 +95,7 @@ from simulators.simulator import Simulator
 from common.system import System
 import time
 import datetime
+from ursina import EditorCamera
 
 player = None
 
@@ -133,11 +134,12 @@ class UrsinaSimulator(Simulator):
         # 设定时间间隔为1秒
         self.interval = datetime.timedelta(seconds=1)
         self.last_time = datetime.datetime.now()
+        # EditorCamera()
         self.app.run()
 
 
 if __name__ == '__main__':
-    from bodies import Sun, Earth
+    from bodies import Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Moon
     from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY
 
     """
@@ -164,11 +166,24 @@ if __name__ == '__main__':
     #     Earth(name='地球', mass=5.97237e24, init_position=[0, -349597870.700, 0], init_velocity=[15.50, 0, 0],
     #           size_scale=4e3, texture="earth.png", distance_scale=1),  # 地球放大 4000 倍，距离保持不变
     # ]
+    bodies = [
+        # Sun(size_scale=0.8e2),                            # 太阳放大 80 倍
+        # Mercury(size_scale=4e3, distance_scale=1.3),      # 水星放大 4000 倍，距离放大 1.3 倍
+        # Venus(size_scale=4e3, distance_scale=1.3),        # 金星放大 4000 倍，距离放大 1.3 倍
+        # Earth(size_scale=4e3, distance_scale=1.3),        # 地球放大 4000 倍，距离放大 1.3 倍
+        # Mars(size_scale=4e3, distance_scale=1.3),         # 火星放大 4000 倍，距离放大 1.3 倍
+        # Jupiter(size_scale=0.68e3, distance_scale=0.65),  # 木星放大 680 倍，距离缩小到真实距离的 0.65
+        Saturn(size_scale=0.68e3, init_position=[0, 0, 0],
+                 init_velocity=[0, 0, 0],distance_scale=0.52),   # 土星放大 680 倍，距离缩小到真实距离的 0.52
+        # Uranus(size_scale=0.8e3, distance_scale=0.36),    # 天王星放大 800 倍，距离缩小到真实距离的 0.36
+        # Neptune(size_scale=1e3, distance_scale=0.27),     # 海王星放大 1000 倍，距离缩小到真实距离的 0.27
+        # Pluto(size_scale=10e3, distance_scale=0.23),      # 冥王星放大 10000 倍，距离缩小到真实距离的 0.23(从太阳系的行星中排除)
+    ]
     body_sys = System(bodies)
     simulator = UrsinaSimulator(body_sys)
 
-    player = UrsinaPlayer((0, 0, 849597870.700),simulator.ursina_views)
-
+    player = UrsinaPlayer((8495000, 8495000, 84950000),simulator.ursina_views)
+    # player = UrsinaPlayer((0, 0, 0), simulator.ursina_views)
 
     def update():
         # print('OK')
