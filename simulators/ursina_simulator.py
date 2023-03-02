@@ -175,6 +175,7 @@ if __name__ == '__main__':
         Mercury(size_scale=4e3, distance_scale=1.3),      # 水星放大 4000 倍，距离放大 1.3 倍
         Venus(size_scale=4e3, distance_scale=1.3),        # 金星放大 4000 倍，距离放大 1.3 倍
         Earth(size_scale=4e3, distance_scale=1.3),        # 地球放大 4000 倍，距离放大 1.3 倍
+        Moon(size_scale=4e3, distance_scale=1.3),
         Mars(size_scale=4e3, distance_scale=1.3),         # 火星放大 4000 倍，距离放大 1.3 倍
         Jupiter(size_scale=0.68e3, distance_scale=0.65),  # 木星放大 680 倍，距离缩小到真实距离的 0.65
         Saturn(size_scale=0.68e3, distance_scale=0.52),   # 土星放大 680 倍，距离缩小到真实距离的 0.52
@@ -182,6 +183,8 @@ if __name__ == '__main__':
         Neptune(size_scale=1e3, distance_scale=0.27),     # 海王星放大 1000 倍，距离缩小到真实距离的 0.27
         Pluto(size_scale=10e3, distance_scale=0.23),      # 冥王星放大 10000 倍，距离缩小到真实距离的 0.23(从太阳系的行星中排除)
     ]
+
+    # bodies.append(Moon(size_scale=4e3, distance_scale=1.3))  # 月球放大 10 倍，距离保持不变)
     # bodies = [
     #     Saturn(size_scale=0.68e3, init_position=[0, 0, 0],
     #            init_velocity=[0, 0, 0], distance_scale=0.52),  # 土星放大 680 倍，距离缩小到真实距离的 0.52
