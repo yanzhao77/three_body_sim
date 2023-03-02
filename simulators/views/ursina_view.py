@@ -34,12 +34,12 @@ class Planet(Entity):
                          position=pos)
 
     def turn(self, angle):
-        if self.name != "sun":
-            if self.fastMode:
-                angle *= 200
-            self.x = self.x * cos(radians(angle)) - self.y * sin(radians(angle))
-            self.y = self.x * sin(radians(angle)) + self.y * cos(radians(angle))
-            exec(f"self.rotation_{self.rotMode}+=self.rotspeed")
+        # if self.name != "sun":
+        #     if self.fastMode:
+        #         angle *= 200
+        # self.x = self.x * cos(radians(angle)) - self.y * sin(radians(angle))
+        # self.y = self.x * sin(radians(angle)) + self.y * cos(radians(angle))
+        exec(f"self.rotation_{self.rotMode}+=self.rotspeed")
 
     #
     def input(self, key):
@@ -51,16 +51,19 @@ class UrsinaView(BodyView):
     """
     ursina天体视图（天体效果展示用）
     """
+    SCALE = 1e-6
 
     def __init__(self, body: Body):
         BodyView.__init__(self, body)
-        self.entity = Planet(body.name, self.texture, tuple(self.position/1e4), body.size_scale)
+        pos = self.position * UrsinaView.SCALE
+        size = body.diameter * body.size_scale * UrsinaView.SCALE
+        self.entity = Planet(body.name, self.texture, pos, size)
 
     def update(self):
-        self.entity.turn(10)
+        self.entity.turn(self.entity.angle)
 
     def appear(self):
         pass
 
     def disappear(self):
-        pass
+        self.entity.disable()
