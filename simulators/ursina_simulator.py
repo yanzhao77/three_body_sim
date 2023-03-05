@@ -144,6 +144,7 @@ class UrsinaSimulator(Simulator):
         #                   rotation=(0, 0, 0))
 
     def run(self, dt, **kwargs):
+        from ursina import EditorCamera, PointLight, SpotLight, AmbientLight, DirectionalLight
         self.evolve_dt = dt
         # 设定时间间隔为1秒
         self.interval = datetime.timedelta(seconds=0.01)
@@ -152,7 +153,7 @@ class UrsinaSimulator(Simulator):
             if kwargs["light"]:
                 for v in self.ursina_views:
                     if v.body.is_fixed_star:
-                        PointLight(parent=v)
+                        v.light = PointLight(parent=v)
                 # PointLight(parent=camera, color=color.white, position=(0, 0, 0))
                 # AmbientLight(color=color.rgba(100, 100, 100, 0.1))
                 # DirectionalLight

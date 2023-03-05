@@ -35,6 +35,6 @@ if __name__ == '__main__':
     # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45)
 
     from scenes.func import ursina_run
-    light = False
+    light = True
     cosmic_bg = '../textures/cosmic1.png'
     ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0), light=light, cosmic_bg=cosmic_bg)

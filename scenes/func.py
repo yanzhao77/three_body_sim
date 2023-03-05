@@ -52,17 +52,13 @@ def mayavi_run(bodies, dt=SECONDS_PER_WEEK,
     mlab.show()
 
 
-# update = None
-
-
-def ursina_run(bodies, dt=SECONDS_PER_HALF_DAY, position=(4000000, 800000000, 4000000), light=False, cosmic_bg=None):
+def ursina_run(bodies, dt=SECONDS_PER_HALF_DAY, position=(4000000, 800000000, 4000000), light=True, cosmic_bg=None):
     """
 
     :param bodies:
     :param dt:
     :return:
     """
-    # global update
 
     from simulators.ursina_simulator import UrsinaSimulator, UrsinaPlayer
     from ursina import application, Sequence

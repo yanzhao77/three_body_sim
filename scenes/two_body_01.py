@@ -6,7 +6,6 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from mayavi import mlab
 from bodies import Sun, Earth
 from common.consts import SECONDS_PER_WEEK
 from scenes.func import mayavi_run

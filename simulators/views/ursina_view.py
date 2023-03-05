@@ -280,6 +280,11 @@ class UrsinaView(BodyView):
         if body.has_rings:
             self.create_rings()
 
+        # self.planet.clear_light()
+        if self.body.is_fixed_star:
+            # 如果是恒星（如：太阳），自身会发光，则需要关闭灯光
+            self.planet.set_light_off()
+
     def create_rings(self):
         ring = Entity(model='torus', texture='textures/saturnRings.jpg', scale=(4, 4), double_sided=True)
 
@@ -288,11 +293,9 @@ class UrsinaView(BodyView):
         ring.position = self.planet.position
 
     def update(self):
-        # self.planet.clear_light()
-        if self.body.is_fixed_star:
-            # 如果是恒星（如：太阳），自身会发光，则需要关闭灯光
-            self.planet.set_light_off()
         self.planet.turn()
+        if hasattr(self, "light"):
+            self.light.position = Vec3(self.planet.x, self.planet.y, self.planet.z)
 
     def appear(self):
         pass
