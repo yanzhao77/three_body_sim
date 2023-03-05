@@ -8,7 +8,7 @@
 # ==============================================================================
 from bodies import Sun, Earth
 from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY
-from scenes.func import mayavi_run
+from scenes.func import mayavi_run, ursina_run
 
 if __name__ == '__main__':
     """
@@ -20,7 +20,4 @@ if __name__ == '__main__':
     ]
     # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45)
 
-    from scenes.func import ursina_run
-    light = True
-    cosmic_bg = '../textures/cosmic1.png'
-    ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0), light=light, cosmic_bg=cosmic_bg)
+    ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0))

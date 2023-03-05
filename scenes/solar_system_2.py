@@ -7,8 +7,8 @@
 # python_version  :3.8
 # ==============================================================================
 from bodies import Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
-from common.consts import SECONDS_PER_WEEK
-from scenes.func import mayavi_run
+from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY
+from scenes.func import mayavi_run, ursina_run
 
 if __name__ == '__main__':
     # 八大行星：木星(♃)、土星(♄)、天王星(♅)、海王星(♆)、地球(⊕)、金星(♀)、火星(♂)、水星(☿)
@@ -36,4 +36,6 @@ if __name__ == '__main__':
     ]
     # endregion
 
-    mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45, view_distance=3e9, view_focalpoint=[5e2, 5e2, 5e2])
+    # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45, view_distance=3e9, view_focalpoint=[5e2, 5e2, 5e2])
+
+    ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0))
