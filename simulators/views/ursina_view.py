@@ -140,8 +140,6 @@ class UrsinaPlayer(FirstPersonController):
     #     camera.position = avg_pos + (0, 0, 20)
     #     camera.rotation_x = -90
 
-
-
     def input(self, key):
         if key == "escape":
             if mouse.locked:
@@ -198,7 +196,8 @@ class Planet(Entity):
         # self.angle = 0  # random.uniform(0.0005, 0.01)
         # self.fastMode = 0
         # self.rotation = (random.randint(0, 360) for i in range(3))
-        self.rotspeed = random.uniform(0.25, 1.5)
+        # 旋转速度和大小成反比（未使用真实数据）
+        self.rotspeed = 30000 / self.body_view.raduis  # random.uniform(1.0, 2.0)
         self.rotMode = 'x'  # random.choice(["x", "y", "z"])
         self.name = body_view.name
 
@@ -210,13 +209,16 @@ class Planet(Entity):
         # texture = self.__set_texture(body_view.texture)
         texture = load_texture(body_view.texture)
 
-        # 将贴图旋转90度
-        super().__init__(model="sphere",
-                         scale=scale,
-                         texture=texture,
-                         color=color.white,
-                         position=pos,
-                         rotation=(0, 0, 0))
+        # 将贴图旋转90度C:\ProgramData\Anaconda3\envs\tf_gpu\Lib\site-packages\ursina\models_compressed\diamond.ursinamesh
+        super().__init__(
+            # model=TorusMesh(radius=1e20, thickness=1.25e20, radial_segments=16, tubular_segments=32),
+            # model="sky_dome",
+            model="sphere",
+            scale=scale,
+            texture=texture,
+            color=color.white,
+            position=pos,
+            rotation=(0, 0, 0))
 
     # def __set_texture(self, image_file):
     #     """

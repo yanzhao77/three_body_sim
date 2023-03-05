@@ -96,7 +96,7 @@ from simulators.simulator import Simulator
 from common.system import System
 import time
 import datetime
-from ursina import EditorCamera
+from ursina import EditorCamera, PointLight, SpotLight, AmbientLight
 
 player = None
 
@@ -133,18 +133,35 @@ class UrsinaSimulator(Simulator):
         if self.check_elapsed_time():
             super().evolve(self.evolve_dt)
 
+    def cosmic_background(self, texture='../textures/cosmic1.jpg'):
+        texture = load_texture(texture)
+        sky_dome = Entity(model='sky_dome', texture=texture, scale=300,
+                          color=color.white,
+                          position=(0, 0, 0),
+                          rotation=(0, 0, 0))
+
     def run(self, dt, **kwargs):
         self.evolve_dt = dt
         # 设定时间间隔为1秒
         self.interval = datetime.timedelta(seconds=0.01)
         self.last_time = datetime.datetime.now() - datetime.timedelta(seconds=2)
+        if "light" in kwargs:
+            if kwargs["light"]:
+                li = PointLight()
+        # PointLight, SpotLight, AmbientLight
+        if "cosmic_bg" in kwargs:
+            cosmic_bg = kwargs["cosmic_bg"]
+            import os
+            if cosmic_bg is not None and os.path.exists(cosmic_bg):
+                self.cosmic_background(cosmic_bg)
+
         EditorCamera()
         self.app.run()
 
 
 if __name__ == '__main__':
     from bodies import Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Moon
-    from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY,SECONDS_PER_HALF_DAY
+    from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY, SECONDS_PER_HALF_DAY
 
     """
     3个太阳、1个地球
@@ -171,17 +188,17 @@ if __name__ == '__main__':
     #           size_scale=4e3, texture="earth.png", distance_scale=1),  # 地球放大 4000 倍，距离保持不变
     # ]
     bodies = [
-        Sun(size_scale=0.8e2),                            # 太阳放大 80 倍
-        Mercury(size_scale=4e3, distance_scale=1.3),      # 水星放大 4000 倍，距离放大 1.3 倍
-        Venus(size_scale=4e3, distance_scale=1.3),        # 金星放大 4000 倍，距离放大 1.3 倍
-        Earth(size_scale=4e3, distance_scale=1.3),        # 地球放大 4000 倍，距离放大 1.3 倍
+        Sun(size_scale=0.8e2),  # 太阳放大 80 倍
+        Mercury(size_scale=4e3, distance_scale=1.3),  # 水星放大 4000 倍，距离放大 1.3 倍
+        Venus(size_scale=4e3, distance_scale=1.3),  # 金星放大 4000 倍，距离放大 1.3 倍
+        Earth(size_scale=4e3, distance_scale=1.3),  # 地球放大 4000 倍，距离放大 1.3 倍
         Moon(size_scale=4e3, distance_scale=1.3),
-        Mars(size_scale=4e3, distance_scale=1.3),         # 火星放大 4000 倍，距离放大 1.3 倍
+        Mars(size_scale=4e3, distance_scale=1.3),  # 火星放大 4000 倍，距离放大 1.3 倍
         Jupiter(size_scale=0.68e3, distance_scale=0.65),  # 木星放大 680 倍，距离缩小到真实距离的 0.65
-        Saturn(size_scale=0.68e3, distance_scale=0.52),   # 土星放大 680 倍，距离缩小到真实距离的 0.52
-        Uranus(size_scale=0.8e3, distance_scale=0.36),    # 天王星放大 800 倍，距离缩小到真实距离的 0.36
-        Neptune(size_scale=1e3, distance_scale=0.27),     # 海王星放大 1000 倍，距离缩小到真实距离的 0.27
-        Pluto(size_scale=10e3, distance_scale=0.23),      # 冥王星放大 10000 倍，距离缩小到真实距离的 0.23(从太阳系的行星中排除)
+        Saturn(size_scale=0.68e3, distance_scale=0.52),  # 土星放大 680 倍，距离缩小到真实距离的 0.52
+        Uranus(size_scale=0.8e3, distance_scale=0.36),  # 天王星放大 800 倍，距离缩小到真实距离的 0.36
+        Neptune(size_scale=1e3, distance_scale=0.27),  # 海王星放大 1000 倍，距离缩小到真实距离的 0.27
+        Pluto(size_scale=10e3, distance_scale=0.23),  # 冥王星放大 10000 倍，距离缩小到真实距离的 0.23(从太阳系的行星中排除)
     ]
 
     # bodies.append(Moon(size_scale=4e3, distance_scale=1.3))  # 月球放大 10 倍，距离保持不变)
@@ -193,6 +210,8 @@ if __name__ == '__main__':
     simulator = UrsinaSimulator(body_sys)
 
     player = UrsinaPlayer((4000000, 800000000, 4000000), simulator.ursina_views)
+
+
     # player = FirstPersonController()
     # player = UrsinaPlayer((0, 0, 0), simulator.ursina_views)
 
@@ -205,4 +224,7 @@ if __name__ == '__main__':
         # player._update()
 
 
-    simulator.run(SECONDS_PER_DAY)
+    light = True
+    cosmic_bg = '../textures/cosmic1.jpg'
+    # cosmic_bg = None
+    simulator.run(SECONDS_PER_DAY, light=light, cosmic_bg=cosmic_bg)
