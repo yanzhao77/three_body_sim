@@ -163,6 +163,7 @@ class UrsinaSimulator(Simulator):
 
 if __name__ == '__main__':
     from bodies import Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Moon
+    from bodies.body import AU
     from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY, SECONDS_PER_HALF_DAY
 
     """
@@ -193,8 +194,10 @@ if __name__ == '__main__':
         Sun(size_scale=0.8e2),  # 太阳放大 80 倍
         Mercury(size_scale=4e3, distance_scale=1.3),  # 水星放大 4000 倍，距离放大 1.3 倍
         Venus(size_scale=4e3, distance_scale=1.3),  # 金星放大 4000 倍，距离放大 1.3 倍
-        Earth(size_scale=4e3, distance_scale=1.3),  # 地球放大 4000 倍，距离放大 1.3 倍
-        Moon(size_scale=4e3, distance_scale=1.3),
+        Earth(init_position=[1.12 * AU, 0, 0],
+              init_velocity=[0, 29.79, 0], size_scale=4e3, distance_scale=1.3),  # 地球放大 4000 倍，距离放大 1.3 倍
+        Moon(init_position=[363104 + 1.12 * AU, 0, 0],
+                 init_velocity=[-9, 29.79 + 1.023, 0], size_scale=4e3, distance_scale=1.3),
         Mars(size_scale=4e3, distance_scale=1.3),  # 火星放大 4000 倍，距离放大 1.3 倍
         Jupiter(size_scale=0.68e3, distance_scale=0.65),  # 木星放大 680 倍，距离缩小到真实距离的 0.65
         Saturn(size_scale=0.68e3, distance_scale=0.52),  # 土星放大 680 倍，距离缩小到真实距离的 0.52
