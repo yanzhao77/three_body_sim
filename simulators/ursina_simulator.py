@@ -150,8 +150,14 @@ class UrsinaSimulator(Simulator):
         self.last_time = datetime.datetime.now() - datetime.timedelta(seconds=2)
         if "light" in kwargs:
             if kwargs["light"]:
-                li = PointLight()
-        # PointLight, SpotLight, AmbientLight
+                for v in self.ursina_views:
+                    if v.body.is_fixed_star:
+                        PointLight(parent=v)
+                # PointLight(parent=camera, color=color.white, position=(0, 0, 0))
+                # AmbientLight(color=color.rgba(100, 100, 100, 0.1))
+                # DirectionalLight
+                # SpotLight
+
         if "cosmic_bg" in kwargs:
             cosmic_bg = kwargs["cosmic_bg"]
             if cosmic_bg is None:

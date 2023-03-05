@@ -207,7 +207,7 @@ class Planet(Entity):
         # texture = eval(f"{_type}_texture")
         # e = os.path.exists(texture)
         # texture = self.__set_texture(body_view.texture)
-        if hasattr(body_view,"texture"):
+        if hasattr(body_view, "texture"):
             texture = load_texture(body_view.texture)
         else:
             texture = None
@@ -288,6 +288,10 @@ class UrsinaView(BodyView):
         ring.position = self.planet.position
 
     def update(self):
+        # self.planet.clear_light()
+        if self.body.is_fixed_star:
+            # 如果是恒星（如：太阳），自身会发光，则需要关闭灯光
+            self.planet.set_light_off()
         self.planet.turn()
 
     def appear(self):
