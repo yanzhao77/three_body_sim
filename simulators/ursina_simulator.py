@@ -134,11 +134,14 @@ class UrsinaSimulator(Simulator):
             super().evolve(self.evolve_dt)
 
     def cosmic_background(self, texture='../textures/cosmic1.jpg'):
-        texture = load_texture(texture)
-        sky_dome = Entity(model='sky_dome', texture=texture, scale=10000,
-                          color=color.white,
-                          position=(0, 0, 0),
-                          rotation=(0, 0, 0))
+        # Add skybox
+        from ursina import Sky
+        Sky(texture=texture)
+        # texture = load_texture(texture)
+        # sky_dome = Entity(model='sky_dome', texture=texture, scale=10000,
+        #                   color=color.white,
+        #                   position=(0, 0, 0),
+        #                   rotation=(0, 0, 0))
 
     def run(self, dt, **kwargs):
         self.evolve_dt = dt
