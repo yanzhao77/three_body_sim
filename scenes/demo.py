@@ -46,6 +46,4 @@ if __name__ == '__main__':
     # mpl_run(bodies, SECONDS_PER_WEEK)
 
     # 使用 ursina 查看的运行效果
-    light = False
-    cosmic_bg = '../textures/cosmic1.png'
-    ursina_run(bodies, SECONDS_PER_WEEK, position=(0, 0, 0), light=light, cosmic_bg=cosmic_bg)
+    ursina_run(bodies, SECONDS_PER_WEEK, position=(0, 0, 0))

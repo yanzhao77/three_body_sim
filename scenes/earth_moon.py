@@ -26,6 +26,4 @@ if __name__ == '__main__':
     mayavi_run(bodies, SECONDS_PER_HALF_DAY / 2, view_azimuth=-45)
 
     # 使用 ursina 查看的运行效果
-    # light = False
-    # cosmic_bg = '../textures/cosmic1.png'
-    # ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0), light=light, cosmic_bg=cosmic_bg)
+    # ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0))
