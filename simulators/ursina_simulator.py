@@ -138,7 +138,7 @@ class UrsinaSimulator(Simulator):
         # 设定时间间隔为1秒
         self.interval = datetime.timedelta(seconds=0.01)
         self.last_time = datetime.datetime.now() - datetime.timedelta(seconds=2)
-        # EditorCamera()
+        EditorCamera()
         self.app.run()
 
 
