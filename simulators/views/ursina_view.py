@@ -25,7 +25,7 @@ from math import sin, cos, radians
 import os
 import matplotlib.pyplot as plt
 
-SCALE_FACTOR = 1e-7
+SCALE_FACTOR = 1e-6
 
 
 # 创建 TorusMesh
@@ -207,7 +207,10 @@ class Planet(Entity):
         # texture = eval(f"{_type}_texture")
         # e = os.path.exists(texture)
         # texture = self.__set_texture(body_view.texture)
-        texture = load_texture(body_view.texture)
+        if hasattr(body_view,"texture"):
+            texture = load_texture(body_view.texture)
+        else:
+            texture = None
 
         # 将贴图旋转90度C:\ProgramData\Anaconda3\envs\tf_gpu\Lib\site-packages\ursina\models_compressed\diamond.ursinamesh
         super().__init__(

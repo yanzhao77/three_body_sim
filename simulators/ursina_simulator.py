@@ -135,7 +135,7 @@ class UrsinaSimulator(Simulator):
 
     def cosmic_background(self, texture='../textures/cosmic1.jpg'):
         texture = load_texture(texture)
-        sky_dome = Entity(model='sky_dome', texture=texture, scale=500,
+        sky_dome = Entity(model='sky_dome', texture=texture, scale=10000,
                           color=color.white,
                           position=(0, 0, 0),
                           rotation=(0, 0, 0))
@@ -151,6 +151,8 @@ class UrsinaSimulator(Simulator):
         # PointLight, SpotLight, AmbientLight
         if "cosmic_bg" in kwargs:
             cosmic_bg = kwargs["cosmic_bg"]
+            if cosmic_bg is None:
+                cosmic_bg = '../textures/cosmic1.png'
             import os
             if cosmic_bg is not None and os.path.exists(cosmic_bg):
                 self.cosmic_background(cosmic_bg)

@@ -7,7 +7,7 @@
 # python_version  :3.8
 # ==============================================================================
 from bodies import Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Moon
-from common.consts import SECONDS_PER_WEEK
+from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY
 from scenes.func import mayavi_run
 
 if __name__ == '__main__':
@@ -31,4 +31,10 @@ if __name__ == '__main__':
         Neptune(size_scale=1e3),    # 海王星放大 1000 倍，距离保持不变
         Pluto(size_scale=10e3),     # 冥王星放大 10000 倍，距离保持不变(从太阳系的行星中排除)
     ]
-    mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45)
+
+    # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45)
+
+    from scenes.func import ursina_run
+    light = False
+    cosmic_bg = '../textures/cosmic1.png'
+    ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0), light=light, cosmic_bg=cosmic_bg)

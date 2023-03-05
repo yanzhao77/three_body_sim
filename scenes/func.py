@@ -52,19 +52,20 @@ def mayavi_run(bodies, dt=SECONDS_PER_WEEK,
     mlab.show()
 
 
-update = None
+# update = None
 
 
-def ursina_run(bodies, dt=SECONDS_PER_HALF_DAY, position=(4000000, 800000000, 4000000)):
+def ursina_run(bodies, dt=SECONDS_PER_HALF_DAY, position=(4000000, 800000000, 4000000), light=False, cosmic_bg=None):
     """
 
     :param bodies:
     :param dt:
     :return:
     """
-    global update
+    # global update
 
     from simulators.ursina_simulator import UrsinaSimulator, UrsinaPlayer
+    from ursina import application, Sequence
     body_sys = System(bodies)
     simulator = UrsinaSimulator(body_sys)
 
@@ -74,9 +75,11 @@ def ursina_run(bodies, dt=SECONDS_PER_HALF_DAY, position=(4000000, 800000000, 40
         for ursina_view in simulator.ursina_views:
             simulator.check_and_evolve()
             ursina_view.update()
+        # print('....')
 
-    update = callback_update
-    simulator.run(dt)
+    import sys
+    sys.modules["__main__"].update = callback_update
+    simulator.run(dt, light=light, cosmic_bg=cosmic_bg)
 
 
 def mpl_run(bodies, dt=SECONDS_PER_WEEK, gif_file_name=None, gif_max_frame=200):
