@@ -135,7 +135,7 @@ class UrsinaSimulator(Simulator):
 
     def cosmic_background(self, texture='../textures/cosmic1.jpg'):
         texture = load_texture(texture)
-        sky_dome = Entity(model='sky_dome', texture=texture, scale=300,
+        sky_dome = Entity(model='sky_dome', texture=texture, scale=500,
                           color=color.white,
                           position=(0, 0, 0),
                           rotation=(0, 0, 0))
@@ -225,6 +225,6 @@ if __name__ == '__main__':
 
 
     light = True
-    cosmic_bg = '../textures/cosmic1.jpg'
+    cosmic_bg = '../textures/cosmic1.png'
     # cosmic_bg = None
     simulator.run(SECONDS_PER_DAY, light=light, cosmic_bg=cosmic_bg)
