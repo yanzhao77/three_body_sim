@@ -12,93 +12,11 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 
 from simulators.views.ursina_view import UrsinaView, UrsinaPlayer
 
-# # -------------------------------------------------------------------------------
-# app = Ursina()
-# # window.fullscreen = True
-# window.color = color.black
-#
-# planets = []
-#
-#
-# class Planet(Entity):
-#     def __init__(self, _type, pos, texture, scale=2):
-#         self.angle = rd.uniform(0.0005, 0.01)
-#         self.fastMode = 0
-#         self.rotation = (rd.randint(0, 360) for i in range(3))
-#         self.rotspeed = rd.uniform(0.25, 1.5)
-#         self.rotMode = rd.choice(["x", "y", "z"])
-#         self._type = _type
-#         # texture = eval(f"{_type}_texture")
-#         texture = load_texture(texture)
-#         super().__init__(model="sphere",
-#                          scale=scale,
-#                          texture=texture,
-#                          color=color.white,
-#                          position=pos)
-#
-#     def turn(self, angle):
-#         # if self._type != "sun":
-#         #     if self.fastMode:
-#         #         angle *= 200
-#         # self.x = self.x * cos(radians(angle)) - self.y * sin(radians(angle))
-#         # self.y = self.x * sin(radians(angle)) + self.y * cos(radians(angle))
-#         exec(f"self.rotation_{self.rotMode}+=self.rotspeed")
-#     #
-#     def input(self, key):
-#         if key == "enter":
-#             self.fastMode = 1 - self.fastMode
-#
-#
-#
-#
-#
-# def update():
-#     global planets, player
-#     for planet in planets:
-#         planet.turn(planet.angle)
-#     player._update()
-#
-# # os.chdir("../")
-#
-#
-# # sun_texture = load_texture(texture_root + "sun.png")
-# # mercury_texture = load_texture(texture_root + "mercury.png")
-# # venus_texture = load_texture(texture_root + "venus.png")
-# # earth_texture = load_texture(texture_root + "earth.png")
-# # mars_texture = load_texture(texture_root + "mars.png")
-# # jupiter_texture = load_texture(texture_root + "jupiter.png")
-# # saturn_texture = load_texture(texture_root + "saturn.png")
-# # uranus_texture = load_texture(texture_root + "uranus.png")
-# # neptune_texture = load_texture(texture_root + "neptune.png")
-#
-# texture_root = "../textures/"
-# ps = ["sun", "mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune"]
-# cp = [200, 15, 35, 42, 20, 160, 145, 90, 80]  # 大小缩放
-# x, y, z = 0, 0, 0
-# for i, p in enumerate(ps):
-#     # _type, pos, texture, scale=2
-#     newPlanet = Planet(p, (x, y, z),texture_root+f"{p}.png", cp[i])
-#     planets.append(newPlanet)
-#     x += cp[i] * 10
-#
-# player = Player(planets)
-#
-# if __name__ == '__main__':
-#     # os.chdir("../")
-#     # sun_texture = os.path.join(texture_root, "sun.png")
-#     # print(os.path.exists(sun_texture))
-#     app.run()
-#
-# # ---------------------------------------------------------------------------
-
-
 from simulators.simulator import Simulator
 from common.system import System
 import time
 import datetime
 from ursina import EditorCamera, PointLight, SpotLight, AmbientLight
-
-player = None
 
 
 class UrsinaSimulator(Simulator):
@@ -134,6 +52,11 @@ class UrsinaSimulator(Simulator):
             super().evolve(self.evolve_dt)
 
     def cosmic_background(self, texture='../textures/cosmic1.jpg'):
+        """
+        加入宇宙背景
+        :param texture:
+        :return:
+        """
         # Add skybox
         from ursina import Sky
         Sky(texture=texture)
@@ -207,7 +130,7 @@ if __name__ == '__main__':
         Earth(init_position=[1.12 * AU, 0, 0],
               init_velocity=[0, 29.79, 0], size_scale=4e3, distance_scale=1.3),  # 地球放大 4000 倍，距离放大 1.3 倍
         Moon(init_position=[363104 + 1.12 * AU, 0, 0],
-                 init_velocity=[-9, 29.79 + 1.023, 0], size_scale=4e3, distance_scale=1.3),
+             init_velocity=[-9, 29.79 + 1.023, 0], size_scale=4e3, distance_scale=1.3),
         Mars(size_scale=4e3, distance_scale=1.3),  # 火星放大 4000 倍，距离放大 1.3 倍
         Jupiter(size_scale=0.68e3, distance_scale=0.65),  # 木星放大 680 倍，距离缩小到真实距离的 0.65
         Saturn(size_scale=0.68e3, distance_scale=0.52),  # 土星放大 680 倍，距离缩小到真实距离的 0.52
