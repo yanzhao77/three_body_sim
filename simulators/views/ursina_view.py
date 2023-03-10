@@ -50,16 +50,16 @@ class UrsinaPlayer(FirstPersonController):
         self.position = Vec3(pos[0], pos[1], pos[2])
         # 将摄像机位置设置为 x=0、y=1、z=0 的位置
         # camera.position = Vec3(pos[0], pos[1], pos[2])
-        self.position = Vec3(pos[0], pos[1], pos[2])
+        # self.position = Vec3(pos[0], pos[1], pos[2])
         # 将摄像机的观察角度绕 x 轴旋转 45 度，绕 y 轴旋转 0 度，绕 z 轴旋转 0 度
         camera.rotation = Vec3(45, 90, 0)
 
-        self.gravity = 0
-        self.vspeed = 400
-        self.speed = 1000
-        self.mouse_sensitivity = Vec2(160, 160)
+        # self.gravity = 0
+        # self.vspeed = 400
+        # self.speed = 1000
+        # self.mouse_sensitivity = Vec2(160, 160)
         self.on_enable()
-        self.rotation_speed = 80
+        # self.rotation_speed = 80
 
     def input(self, key):
         if key == "escape":
