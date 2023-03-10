@@ -28,6 +28,27 @@ import matplotlib.pyplot as plt
 SCALE_FACTOR = 1e-6
 
 
+class Ring(Entity):
+    def __init__(self, thickness=0.2, inner_radius=0.5, outer_radius=3, texture=None, position=None, **kwargs):
+        super().__init__(**kwargs)
+
+        inner_circle = Entity(parent=self, model='circle', texture=texture, scale=inner_radius,
+                              position=position)
+        outer_circle = Entity(parent=self, model='circle', texture=texture, scale=outer_radius,
+                              position=position)
+
+        self.children.append(inner_circle)
+        self.children.append(outer_circle)
+        inner_circle.parent = self
+        outer_circle.parent = self
+        inner_circle.set_light_off()
+        outer_circle.set_light_off()
+
+        # inner_circle.y += thickness / 2
+        # outer_circle.y -= thickness / 2
+        # self.scale_y = thickness
+
+
 # 创建 TorusMesh
 class TorusMesh(Mesh):
     def __init__(self, radius=1, thickness=.25, radial_segments=16, tubular_segments=32):
@@ -286,16 +307,26 @@ class UrsinaView(BodyView):
             self.planet.set_light_off()
 
     def create_rings(self):
-        ring = Entity(model='torus', texture='textures/saturnRings.jpg', scale=(4, 4), double_sided=True)
+        from ursina import Cylinder
+        scale = 3 * self.body.diameter * self.body.size_scale * SCALE_FACTOR
+        pos = self.planet.position
+        # self.ring = Entity(model='sphere', texture='textures/saturnRings.jpg', scale=scale,  position=pos,double_sided=True)
+        self.ring = Entity(model="circle", texture='../textures/saturnRings.jpg', scale=scale, position=pos,
+                           rotation=(70, 0, 0), double_sided=True)
+        # self.ring2 = Entity(model="circle", texture='../textures/saturnRings.jpg', scale=scale, position=pos,
+        #                     rotation=(180 + 70, 0, 0))
 
-        # ring = Entity(model=TorusMesh(radius=self.body.diameter * 100, thickness=.5), texture='textures/saturnRings.jpg', scale=3)
-        ring.world_parent = self.planet
-        ring.position = self.planet.position
+        self.ring.set_light_off()
+        # self.ring2.set_light_off()
 
     def update(self):
         self.planet.turn()
         if hasattr(self, "light"):
             self.light.position = Vec3(self.planet.x, self.planet.y, self.planet.z)
+        if hasattr(self, "ring"):
+            self.ring.position = Vec3(self.planet.x, self.planet.y, self.planet.z)
+        # if hasattr(self, "ring2"):
+        #     self.ring2.position = Vec3(self.planet.x, self.planet.y, self.planet.z)
 
     def appear(self):
         pass
