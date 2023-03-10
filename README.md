@@ -47,7 +47,7 @@ https://gitcode.net/pythoncr/three_body_sim
 pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina pyqt5 pyglet mayavi
 ```
 
-# 支持两种模拟器
+# 支持三种模拟器
 ```shell script
 # 进入当前代码的根目录
 cd e:\three_body_sim\
@@ -58,6 +58,9 @@ python simulators\mpl_simulator.py
 
 # mayavi模拟器
 python simulators\mayavi_simulator.py
+
+# ursina模拟器
+python simulators\ursina_simulator.py
 ```
 
 # 模拟场景运行

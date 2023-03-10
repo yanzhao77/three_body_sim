@@ -17,6 +17,7 @@ from common.system import System
 import time
 import datetime
 from ursina import EditorCamera, PointLight, SpotLight, AmbientLight
+from scenes.func import ursina_run
 
 
 class UrsinaSimulator(Simulator):
@@ -139,30 +140,4 @@ if __name__ == '__main__':
         Pluto(size_scale=10e3, distance_scale=0.23),  # 冥王星放大 10000 倍，距离缩小到真实距离的 0.23(从太阳系的行星中排除)
     ]
 
-    # bodies.append(Moon(size_scale=4e3, distance_scale=1.3))  # 月球放大 10 倍，距离保持不变)
-    # bodies = [
-    #     Saturn(size_scale=0.68e3, init_position=[0, 0, 0],
-    #            init_velocity=[0, 0, 0], distance_scale=0.52),  # 土星放大 680 倍，距离缩小到真实距离的 0.52
-    #  ]
-    body_sys = System(bodies)
-    simulator = UrsinaSimulator(body_sys)
-
-    player = UrsinaPlayer((4000000, 800000000, 4000000), simulator.ursina_views)
-
-
-    # player = FirstPersonController()
-    # player = UrsinaPlayer((0, 0, 0), simulator.ursina_views)
-
-    def update():
-        # print('OK')
-        for ursina_view in simulator.ursina_views:
-            simulator.check_and_evolve()
-            ursina_view.update()
-            # ursina_view.entity.turn(ursina_view.entity.angle)
-        # player._update()
-
-
-    light = True
-    cosmic_bg = '../textures/cosmic1.png'
-    # cosmic_bg = None
-    simulator.run(SECONDS_PER_DAY, light=light, cosmic_bg=cosmic_bg)
+    ursina_run(bodies, SECONDS_PER_DAY, position=(AU * 2, AU * 2, AU * 3))
