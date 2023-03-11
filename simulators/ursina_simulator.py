@@ -7,7 +7,8 @@
 # python_version  :3.8
 # ==============================================================================
 # pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina
-from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application, color, mouse, Vec2, Vec3, load_texture, held_keys
+from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application, color, mouse, Vec2, Vec3, \
+    load_texture, held_keys
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 from simulators.views.ursina_view import UrsinaView, UrsinaPlayer
@@ -90,7 +91,16 @@ class UrsinaSimulator(Simulator):
             if kwargs["light"]:
                 for v in self.ursina_views:
                     if v.body.is_fixed_star:
-                        v.light = PointLight(parent=v)
+                        # v.light = PointLight(parent=v, intensity=10, range=10, color=color.white)
+                        # v.light.brightness = 10
+                        lights = []
+                        for i in range(1):  # 可以增加多个光源
+                            light = PointLight(parent=v, intensity=10, range=10, color=color.white)
+                            light.brightness = 10
+                            lights.append(light)
+                        v.lights = lights
+                        pass
+
                 # PointLight(parent=camera, color=color.white, position=(0, 0, 0))
                 # AmbientLight(color=color.rgba(100, 100, 100, 0.1))
                 # DirectionalLight
@@ -134,7 +144,7 @@ class UrsinaSimulator(Simulator):
         pause_handler.input = pause_handler_input
         # 加载中文字体文件
         Text.default_font = 'simsun.ttc'
-        key_info_str = "方位控制[QWEASD + 鼠标] 暂停控制[空格] 移动速度[Tab]"
+        key_info_str = "方位控制[QWEASD + 鼠标] 暂停控制[空格] 摄像机移动速度[Tab]"
         key_info = Text(text=key_info_str, position=(-0.8, 0.5), origin=(-1, 1), background=True)
         self.app.run()
 
