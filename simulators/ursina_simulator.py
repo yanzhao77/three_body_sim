@@ -7,7 +7,7 @@
 # python_version  :3.8
 # ==============================================================================
 # pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina
-from ursina import Ursina, window, Entity, camera, color, mouse, Vec2, Vec3, load_texture, held_keys
+from ursina import Ursina, window, Entity, Grid, Mesh, camera, color, mouse, Vec2, Vec3, load_texture, held_keys
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 from simulators.views.ursina_view import UrsinaView, UrsinaPlayer
@@ -18,6 +18,19 @@ import time
 import datetime
 from ursina import EditorCamera, PointLight, SpotLight, AmbientLight
 from scenes.func import ursina_run
+
+
+class WorldGrid(Entity):  # Entity # 定义构造方法
+    def __init__(self):
+        super().__init__()
+        s = 100
+        grid = Entity(model=Grid(s, s), scale=s * 20, color=color.color(0, 0, .1, 1), rotation_x=90,
+                      position=(0, -80, 0))
+        vertsx = ((0, 0, 0), (10, 0, 0))
+        Entity(model=Mesh(vertices=vertsx, mode='line', thickness=3), color=color.cyan).set_light_off()
+        vertsyz = [(0, 0, 0), (0, 10, 0), (0, 0, 0), (0, 0, 10)]
+        Entity(model=Mesh(vertices=vertsyz, mode='line', thickness=3), color=color.yellow).set_light_off()
+        grid.set_light_off()
 
 
 class UrsinaSimulator(Simulator):
@@ -83,6 +96,10 @@ class UrsinaSimulator(Simulator):
                 # DirectionalLight
                 # SpotLight
 
+        if "show_grid" in kwargs:
+            if kwargs["show_grid"]:
+                WorldGrid()
+
         if "cosmic_bg" in kwargs:
             cosmic_bg = kwargs["cosmic_bg"]
             if cosmic_bg is None:
@@ -140,4 +157,4 @@ if __name__ == '__main__':
         Pluto(size_scale=10e3, distance_scale=0.23),  # 冥王星放大 10000 倍，距离缩小到真实距离的 0.23(从太阳系的行星中排除)
     ]
 
-    ursina_run(bodies, SECONDS_PER_DAY, position=(AU * 2, AU * 2, AU * 3))
+    ursina_run(bodies, SECONDS_PER_DAY, position=(AU * 2, AU * 2, AU * 3), show_grid=True)

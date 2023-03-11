@@ -52,7 +52,12 @@ def mayavi_run(bodies, dt=SECONDS_PER_WEEK,
     mlab.show()
 
 
-def ursina_run(bodies, dt=SECONDS_PER_HALF_DAY, position=(4000000, 800000000, 4000000), light=True, cosmic_bg=None):
+def ursina_run(bodies,
+               dt=SECONDS_PER_HALF_DAY,
+               position=(4000000, 800000000, 4000000),
+               light=True,
+               cosmic_bg=None,
+               show_grid=True):
     """
 
     :param bodies:
@@ -75,7 +80,7 @@ def ursina_run(bodies, dt=SECONDS_PER_HALF_DAY, position=(4000000, 800000000, 40
 
     import sys
     sys.modules["__main__"].update = callback_update
-    simulator.run(dt, light=light, cosmic_bg=cosmic_bg)
+    simulator.run(dt, light=light, cosmic_bg=cosmic_bg, show_grid=show_grid)
 
 
 def mpl_run(bodies, dt=SECONDS_PER_WEEK, gif_file_name=None, gif_max_frame=200):
