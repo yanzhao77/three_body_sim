@@ -97,7 +97,8 @@ class UrsinaSimulator(Simulator):
                         lights = []
                         for i in range(1):  # 可以增加多个光源
                             light = PointLight(parent=v, intensity=10, range=10, color=color.white)
-                            light.brightness = 10
+                            # light.brightness = 10
+                            # light.attenuation = Vec3(1, 0.1, 0.01)
                             lights.append(light)
                         v.lights = v.lights + lights
                         pass
