@@ -27,10 +27,11 @@ class WorldGrid(Entity):  # Entity # 定义构造方法
         s = 100
         grid = Entity(model=Grid(s, s), scale=s * 20, color=color.rgba(255, 255, 255, 20), rotation_x=90,
                       position=(0, -80, 0))
-        vertsx = ((0, 0, 0), (10, 0, 0))
-        Entity(model=Mesh(vertices=vertsx, mode='line', thickness=3), color=color.cyan).set_light_off()
-        vertsyz = [(0, 0, 0), (0, 10, 0), (0, 0, 0), (0, 0, 10)]
-        Entity(model=Mesh(vertices=vertsyz, mode='line', thickness=3), color=color.yellow).set_light_off()
+        # 坐标轴
+        # vertsx = ((0, 0, 0), (10, 0, 0))
+        # Entity(model=Mesh(vertices=vertsx, mode='line', thickness=3), color=color.cyan).set_light_off()
+        # vertsyz = [(0, 0, 0), (0, 10, 0), (0, 0, 0), (0, 0, 10)]
+        # Entity(model=Mesh(vertices=vertsyz, mode='line', thickness=3), color=color.yellow).set_light_off()
         grid.set_light_off()
 
 
