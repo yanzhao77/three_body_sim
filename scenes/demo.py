@@ -8,7 +8,7 @@
 # ==============================================================================
 from bodies import Sun, Earth
 from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY
-from scenes.func import mayavi_run, mpl_run
+from scenes.func import mayavi_run, mpl_run, ursina_run
 from bodies.body import Body, AU
 
 if __name__ == '__main__':
@@ -40,7 +40,10 @@ if __name__ == '__main__':
               texture="pythoncr.jpg", size_scale=5e3, distance_scale=1.0),
     ]
     # 使用 mayavi 查看的运行效果
-    mayavi_run(bodies, SECONDS_PER_DAY, view_azimuth=135)
+    # mayavi_run(bodies, SECONDS_PER_DAY, view_azimuth=135)
 
     # 使用 matplotlib 查看运行效果
     # mpl_run(bodies, SECONDS_PER_WEEK)
+
+    # 使用 ursina 查看的运行效果
+    ursina_run(bodies, SECONDS_PER_WEEK, position=(0, 0, 0))

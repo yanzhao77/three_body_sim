@@ -6,10 +6,9 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from mayavi import mlab
 from bodies import Sun, Earth
-from common.consts import SECONDS_PER_WEEK
-from scenes.func import mayavi_run, mpl_run
+from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY
+from scenes.func import mayavi_run, mpl_run, ursina_run
 
 if __name__ == '__main__':
     """
@@ -51,5 +50,11 @@ if __name__ == '__main__':
     初始速度：(-3.0, 1.0, -2.0) km/s
     质量：2.8 x 10^30 kg
     """
+    # 使用 mayavi 查看的运行效果
     # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=0)
+
+    # 使用 matplotlib 查看运行效果
     mpl_run(bodies, SECONDS_PER_WEEK)
+
+    # 使用 ursina 查看的运行效果
+    # ursina_run(bodies, SECONDS_PER_WEEK, position=(0, 0, 0))

@@ -9,6 +9,7 @@
 我们可以自己通过调整天体的初始坐标、质量和矢量速度等等参数来自定义各种场景来控制天体的运行效果。
 
 # 效果图
+<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/dev/images/solar_system_3.png" width="80.7%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_1.png" width="40%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_2.png" width="40%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_1.png" width="40%">
@@ -44,10 +45,10 @@ https://gitcode.net/pythoncr/three_body_sim
 # 安装 Python 库
 ```shell script
 # 先安装基础包
-pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com pyqt5 mayavi
+pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina pyqt5 pyglet mayavi
 ```
 
-# 支持两种模拟器
+# 支持三种模拟器
 ```shell script
 # 进入当前代码的根目录
 cd e:\three_body_sim\
@@ -58,6 +59,9 @@ python simulators\mpl_simulator.py
 
 # mayavi模拟器
 python simulators\mayavi_simulator.py
+
+# ursina模拟器
+python simulators\ursina_simulator.py
 ```
 
 # 模拟场景运行
