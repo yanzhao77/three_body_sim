@@ -7,7 +7,8 @@
 # python_version  :3.8
 # ==============================================================================
 # pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina
-from ursina import Ursina, window, Entity, Grid, Mesh, camera, color, mouse, Vec2, Vec3, load_texture, held_keys
+from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application, color, mouse, Vec2, Vec3, \
+    load_texture, held_keys
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 from simulators.views.ursina_view import UrsinaView, UrsinaPlayer
@@ -24,12 +25,13 @@ class WorldGrid(Entity):  # Entity # 定义构造方法
     def __init__(self):
         super().__init__()
         s = 100
-        grid = Entity(model=Grid(s, s), scale=s * 20, color=color.color(0, 0, .1, 1), rotation_x=90,
+        grid = Entity(model=Grid(s, s), scale=s * 20, color=color.rgba(255, 255, 255, 20), rotation_x=90,
                       position=(0, -80, 0))
-        vertsx = ((0, 0, 0), (10, 0, 0))
-        Entity(model=Mesh(vertices=vertsx, mode='line', thickness=3), color=color.cyan).set_light_off()
-        vertsyz = [(0, 0, 0), (0, 10, 0), (0, 0, 0), (0, 0, 10)]
-        Entity(model=Mesh(vertices=vertsyz, mode='line', thickness=3), color=color.yellow).set_light_off()
+        # 坐标轴
+        # vertsx = ((0, 0, 0), (10, 0, 0))
+        # Entity(model=Mesh(vertices=vertsx, mode='line', thickness=3), color=color.cyan).set_light_off()
+        # vertsyz = [(0, 0, 0), (0, 10, 0), (0, 0, 0), (0, 0, 10)]
+        # Entity(model=Mesh(vertices=vertsyz, mode='line', thickness=3), color=color.yellow).set_light_off()
         grid.set_light_off()
 
 
@@ -90,7 +92,16 @@ class UrsinaSimulator(Simulator):
             if kwargs["light"]:
                 for v in self.ursina_views:
                     if v.body.is_fixed_star:
-                        v.light = PointLight(parent=v)
+                        # v.light = PointLight(parent=v, intensity=10, range=10, color=color.white)
+                        # v.light.brightness = 10
+                        lights = []
+                        for i in range(1):  # 可以增加多个光源
+                            light = PointLight(parent=v, intensity=10, range=10, color=color.white)
+                            light.brightness = 10
+                            lights.append(light)
+                        v.lights = lights
+                        pass
+
                 # PointLight(parent=camera, color=color.white, position=(0, 0, 0))
                 # AmbientLight(color=color.rgba(100, 100, 100, 0.1))
                 # DirectionalLight
@@ -110,6 +121,32 @@ class UrsinaSimulator(Simulator):
                 self.cosmic_background(cosmic_bg)
 
         EditorCamera()
+
+        pause_handler = Entity(ignore_paused=True)
+
+        # 按空格键则暂停
+        def pause_handler_input(key):
+            time_scales = [1, 10, 20, 30]
+            if key == 'space':
+                application.paused = not application.paused  # Pause/unpause the game.
+            elif key == 'tab':
+                # application.time_scale 属性控制游戏时间流逝的速度。
+                # 具体来说，它是一个浮点数，用于调整游戏时间流逝速度的比例，其默认值为 1.0，表示正常速度。
+                # 当你将它设置为小于 1.0 的值时，游戏时间会变慢，而设置为大于 1.0 的值时，游戏时间则会变快。
+                for idx, time_scale in enumerate(time_scales):
+                    if int(application.time_scale) == time_scale:
+                        if idx < len(time_scales) - 1:
+                            application.time_scale = time_scales[idx + 1]
+                            break
+                        else:
+                            application.time_scale = 1
+                print(application.time_scale)
+
+        pause_handler.input = pause_handler_input
+        # 加载中文字体文件
+        Text.default_font = 'simsun.ttc'
+        key_info_str = "方位控制[QWEASD + 鼠标] 暂停控制[空格] 摄像机移动速度[Tab]"
+        key_info = Text(text=key_info_str, position=(-0.8, 0.5), origin=(-1, 1), background=True)
         self.app.run()
 
 

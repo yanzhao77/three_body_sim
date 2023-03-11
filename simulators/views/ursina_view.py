@@ -141,6 +141,10 @@ class UrsinaView(BodyView):
         self.planet.turn()
         if hasattr(self, "light"):
             self.light.position = Vec3(self.planet.x, self.planet.y, self.planet.z)
+        if hasattr(self, "lights"):
+            for light in self.lights:
+                light.position = Vec3(self.planet.x, self.planet.y, self.planet.z)
+
         if hasattr(self, "ring"):
             self.ring.position = Vec3(self.planet.x, self.planet.y, self.planet.z)
 
