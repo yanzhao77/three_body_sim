@@ -124,6 +124,14 @@ class UrsinaView(BodyView):
         if self.body.is_fixed_star:
             # 如果是恒星（如：太阳），自身会发光，则需要关闭灯光
             self.planet.set_light_off()
+            self.lights = []
+            self.create_light_sphere()
+
+    def create_light_sphere(self):
+        for i in range(5):
+            light = Entity(parent=self.planet, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
+                           scale=math.pow(1.03, i), alpha=0.2)
+            # self.lights.append(light)
 
     def create_rings(self):
         """

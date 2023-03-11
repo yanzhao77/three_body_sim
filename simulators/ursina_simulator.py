@@ -99,7 +99,7 @@ class UrsinaSimulator(Simulator):
                             light = PointLight(parent=v, intensity=10, range=10, color=color.white)
                             light.brightness = 10
                             lights.append(light)
-                        v.lights = lights
+                        v.lights = v.lights + lights
                         pass
 
                 # PointLight(parent=camera, color=color.white, position=(0, 0, 0))
