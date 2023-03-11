@@ -25,7 +25,7 @@ class WorldGrid(Entity):  # Entity # 定义构造方法
     def __init__(self):
         super().__init__()
         s = 100
-        grid = Entity(model=Grid(s, s), scale=s * 20, color=color.color(0, 0, .1, 1), rotation_x=90,
+        grid = Entity(model=Grid(s, s), scale=s * 20, color=color.rgba(255, 255, 255, 20), rotation_x=90,
                       position=(0, -80, 0))
         vertsx = ((0, 0, 0), (10, 0, 0))
         Entity(model=Mesh(vertices=vertsx, mode='line', thickness=3), color=color.cyan).set_light_off()
