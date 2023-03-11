@@ -103,7 +103,8 @@ class UrsinaSimulator(Simulator):
         if "cosmic_bg" in kwargs:
             cosmic_bg = kwargs["cosmic_bg"]
             if cosmic_bg is None:
-                cosmic_bg = '../textures/cosmic1.png'
+                # cosmic_bg = '../textures/cosmic1.png'
+                cosmic_bg = '../textures/cosmic2.jpg'
             import os
             if cosmic_bg is not None and os.path.exists(cosmic_bg):
                 self.cosmic_background(cosmic_bg)
