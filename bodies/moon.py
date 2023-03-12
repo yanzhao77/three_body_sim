@@ -41,17 +41,17 @@ class Moon(Body):
         }
         super().__init__(**params)
 
-    def ignore_gravity(self, body):
-        """
-        是否忽略引力
-        :param body:
-        :return:
-        """
-        # 月球只对地球有引力，忽略其他的引力
-        if isinstance(body, Earth):
-            return False
-
-        return True
+    # def ignore_gravity(self, body):
+    #     """
+    #     是否忽略引力
+    #     :param body:
+    #     :return:
+    #     """
+    #     # 月球只对地球有引力，忽略其他的引力
+    #     if isinstance(body, Earth):
+    #         return False
+    #
+    #     return True
 
 
 if __name__ == '__main__':
