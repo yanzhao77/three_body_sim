@@ -18,7 +18,7 @@ from common.system import System
 import time
 import datetime
 import math
-from ursina import EditorCamera, PointLight, SpotLight, AmbientLight
+from ursina import EditorCamera, PointLight, SpotLight, AmbientLight, DirectionalLight  # , SunLight
 from scenes.func import ursina_run
 
 
@@ -137,6 +137,11 @@ class UrsinaSimulator(Simulator):
         # 创建 PointLight 对象，作为恒星的灯光源
         light = PointLight(parent=entity, intensity=10, range=10, color=color.white)
         lights.append(light)
+
+        # light = DirectionalLight(shadows=True, direction=Vec3(0, 0, 1), color=color.white)
+        # light.look_at(Vec3(0, 0, -1))
+        # light = SpotLight(parent=entity,shadows=True, direction=Vec3(1,1,1), color=color.white)
+
         return lights
 
     def run(self, dt, **kwargs):
@@ -167,7 +172,7 @@ class UrsinaSimulator(Simulator):
             if cosmic_bg is not None and os.path.exists(cosmic_bg):
                 self.cosmic_background(cosmic_bg)
 
-        EditorCamera()
+        EditorCamera(ignore_paused=True)
 
         pause_handler = Entity(ignore_paused=True)
         # 加载中文字体文件
@@ -186,7 +191,7 @@ class UrsinaSimulator(Simulator):
         def pause_handler_input(key):
             nonlocal text_time_scale_info
             time_scales = [0.05, 0.1, 0.2, 0.5, 1, 5, 10, 20, 30]
-            print(key)
+            # print(key)
             if key == 'space':
                 application.paused = not application.paused  # Pause/unpause the game.
             elif key == 'tab':
