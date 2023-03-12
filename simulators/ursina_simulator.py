@@ -17,6 +17,7 @@ from simulators.simulator import Simulator
 from common.system import System
 import time
 import datetime
+import math
 from ursina import EditorCamera, PointLight, SpotLight, AmbientLight
 from scenes.func import ursina_run
 
@@ -67,7 +68,7 @@ class UrsinaSimulator(Simulator):
         if self.check_elapsed_time():
             super().evolve(self.evolve_dt)
 
-    def cosmic_background(self, texture='../textures/cosmic1.jpg'):
+    def cosmic_background(self, texture='../textures/cosmic2.jpg'):
         """
         加入宇宙背景
         :param texture:
@@ -75,12 +76,66 @@ class UrsinaSimulator(Simulator):
         """
         # Add skybox
         from ursina import Sky
-        Sky(texture=texture)
+        Sky(texture=texture).scale = 10000
+
         # texture = load_texture(texture)
         # sky_dome = Entity(model='sky_dome', texture=texture, scale=10000,
         #                   color=color.white,
         #                   position=(0, 0, 0),
         #                   rotation=(0, 0, 0))
+
+    def __add_glow(self, entity, intensity=2, light_color=color.white, attenuation=3):
+        """
+        未用，保留代码
+        :param entity:
+        :param intensity:
+        :param light_color:
+        :param attenuation:
+        :return:
+        """
+        lights = []
+        import math
+        for i in range(5):
+            glow_entity = Entity(parent=entity, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
+                                 scale=math.pow(1.03, i), alpha=0.2)
+            lights.append(glow_entity)
+        # 创建一个新的 Entity 对象，作为光晕的容器
+        # glow_entity = Entity(parent=entity, model='sphere', scale=entity.scale * 1.2)
+        # 创建 PointLight 对象，并设置它的属性
+        light = PointLight(parent=lights[0], intensity=intensity, color=light_color, attenuation=attenuation)
+        lights.append(light)
+
+        # 把 Entity 对象放到星星的后面，使得光晕看起来像是从星星发出来的
+        glow_entity.world_position = entity.world_position
+        glow_entity.world_parent = entity.parent
+        glow_entity.y += entity.scale_y * 0.1
+        glow_entity.depth_test = False
+        return lights
+
+    def create_fixed_star_lights(self, entity):
+        """
+        创建恒星的发光的效果、并作为灯光源
+        :param entity:
+        :return:
+        """
+
+        # 如果是恒星（如：太阳），自身会发光，则需要关闭灯光
+        entity.set_light_off()
+
+        # if hasattr(self, "sun"):
+        #     return
+        # self.sun = "sun"
+        lights = []
+        # 创建多个新的 Entity 对象，作为光晕的容器
+        for i in range(5):
+            glow_entity = Entity(parent=entity, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
+                                 scale=math.pow(1.03, i), alpha=0.2)
+
+            lights.append(glow_entity)
+        # 创建 PointLight 对象，作为恒星的灯光源
+        light = PointLight(parent=entity, intensity=10, range=10, color=color.white)
+        lights.append(light)
+        return lights
 
     def run(self, dt, **kwargs):
         from ursina import EditorCamera, PointLight, SpotLight, AmbientLight, DirectionalLight
@@ -92,21 +147,7 @@ class UrsinaSimulator(Simulator):
             if kwargs["light"]:
                 for v in self.ursina_views:
                     if v.body.is_fixed_star:
-                        # v.light = PointLight(parent=v, intensity=10, range=10, color=color.white)
-                        # v.light.brightness = 10
-                        lights = []
-                        for i in range(1):  # 可以增加多个光源
-                            light = PointLight(parent=v, intensity=10, range=10, color=color.white)
-                            # light.brightness = 10
-                            # light.attenuation = Vec3(1, 0.1, 0.01)
-                            lights.append(light)
-                        v.lights = v.lights + lights
-                        pass
-
-                # PointLight(parent=camera, color=color.white, position=(0, 0, 0))
-                # AmbientLight(color=color.rgba(100, 100, 100, 0.1))
-                # DirectionalLight
-                # SpotLight
+                        self.lights = self.create_fixed_star_lights(v.planet)
 
         if "show_grid" in kwargs:
             if kwargs["show_grid"]:

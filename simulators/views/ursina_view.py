@@ -22,7 +22,7 @@ from simulators.views.body_view import BodyView
 import numpy as np
 import math
 
-SCALE_FACTOR = 1e-6
+SCALE_FACTOR = 5e-7
 
 
 class UrsinaPlayer(FirstPersonController):
@@ -103,9 +103,9 @@ class Planet(Entity):
 
         self.rotation_y -= self.rotspeed
 
-    def input(self, key):
-        if key == "enter":
-            self.fastMode = 1 - self.fastMode
+    # def input(self, key):
+    #     if key == "enter":
+    #         self.fastMode = 1 - self.fastMode
 
 
 class UrsinaView(BodyView):
@@ -121,40 +121,32 @@ class UrsinaView(BodyView):
         if body.has_rings:
             self.create_rings()
 
-        if self.body.is_fixed_star:
-            # 如果是恒星（如：太阳），自身会发光，则需要关闭灯光
-            self.planet.set_light_off()
-            self.lights = []
-            self.create_light_sphere()
-
-    def create_light_sphere(self):
-        for i in range(5):
-            light = Entity(parent=self.planet, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
-                           scale=math.pow(1.03, i), alpha=0.2)
-            # self.lights.append(light)
-
     def create_rings(self):
         """
-        创建星环（使用土星贴图）
+        创建行星环（使用土星贴图）
         :return:
         """
-        scale = 3 * self.body.diameter * self.body.size_scale * SCALE_FACTOR
-        pos = self.planet.position
-        self.ring = Entity(model="circle", texture='../textures/saturnRings.jpg', scale=scale, position=pos,
-                           rotation=(70, 0, 0), double_sided=True)
-        # 假设星环自身会发光
+        # 行星环偏移角度
+        self.ring_rotation_x = 70
+        # 创建行星环
+        self.ring = Entity(parent=self.planet, model="circle", texture='../textures/saturnRings.jpg', scale=2,
+                           rotation=(self.ring_rotation_x, 0, 0), double_sided=True)
+
+        # 设置行星环不受灯光影响，否则看不清行星环
         self.ring.set_light_off()
 
     def update(self):
-        self.planet.turn()
-        if hasattr(self, "light"):
-            self.light.position = Vec3(self.planet.x, self.planet.y, self.planet.z)
-        if hasattr(self, "lights"):
-            for light in self.lights:
-                light.position = Vec3(self.planet.x, self.planet.y, self.planet.z)
+        """
 
+        :return:
+        """
+        self.planet.turn()
+        # 如果有行星环
         if hasattr(self, "ring"):
-            self.ring.position = Vec3(self.planet.x, self.planet.y, self.planet.z)
+            # 如果有行星环，则不让行星环跟随行星转动
+            self.ring.rotation = -Vec3(self.planet.rotation_x - self.ring_rotation_x,
+                                       self.planet.rotation_y,
+                                       self.planet.rotation_z)
 
     def appear(self):
         pass
