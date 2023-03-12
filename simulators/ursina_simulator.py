@@ -26,7 +26,7 @@ class WorldGrid(Entity):  # Entity # 定义构造方法
     def __init__(self):
         super().__init__()
         s = 100
-        grid = Entity(model=Grid(s, s), scale=s*20, color=color.rgba(255, 255, 255, 20), rotation_x=90,
+        grid = Entity(model=Grid(s, s), scale=s * 20, color=color.rgba(255, 255, 255, 20), rotation_x=90,
                       position=(0, -80, 0))
         # 坐标轴
         # vertsx = ((0, 0, 0), (10, 0, 0))
@@ -170,10 +170,23 @@ class UrsinaSimulator(Simulator):
         EditorCamera()
 
         pause_handler = Entity(ignore_paused=True)
+        # 加载中文字体文件
+        Text.default_font = 'simsun.ttc'
+        # text_time_scale = "1"
+        text_time_scale_info = None
+
+        def show_text_time_scale_info():
+            nonlocal text_time_scale_info
+            if text_time_scale_info is not None:
+                text_time_scale_info.disable()
+            text_time_scale = "控制倍率:" + str(application.time_scale).ljust(4, " ")
+            text_time_scale_info = Text(text=text_time_scale, position=(-0.8, 0.5), origin=(-1, 1), background=True)
 
         # 按空格键则暂停
         def pause_handler_input(key):
-            time_scales = [1, 10, 20, 30]
+            nonlocal text_time_scale_info
+            time_scales = [0.05, 0.1, 0.2, 0.5, 1, 5, 10, 20, 30]
+            print(key)
             if key == 'space':
                 application.paused = not application.paused  # Pause/unpause the game.
             elif key == 'tab':
@@ -181,18 +194,28 @@ class UrsinaSimulator(Simulator):
                 # 具体来说，它是一个浮点数，用于调整游戏时间流逝速度的比例，其默认值为 1.0，表示正常速度。
                 # 当你将它设置为小于 1.0 的值时，游戏时间会变慢，而设置为大于 1.0 的值时，游戏时间则会变快。
                 for idx, time_scale in enumerate(time_scales):
-                    if int(application.time_scale) == time_scale:
+                    if float(application.time_scale) == time_scale:
                         if idx < len(time_scales) - 1:
                             application.time_scale = time_scales[idx + 1]
                             break
                         else:
-                            application.time_scale = 1
-                print(application.time_scale)
+                            application.time_scale = time_scales[0]
+            elif key == '+' or key == "= up":
+                if application.time_scale in time_scales:
+                    idx = time_scales.index(application.time_scale)
+                    if idx < len(time_scales) - 1:
+                        application.time_scale = time_scales[idx + 1]
+            elif key == '-' or key == "- up":
+                if application.time_scale in time_scales:
+                    idx = time_scales.index(application.time_scale)
+                    if idx > 0:
+                        application.time_scale = time_scales[idx - 1]
+
+            show_text_time_scale_info()
 
         pause_handler.input = pause_handler_input
-        # 加载中文字体文件
-        Text.default_font = 'simsun.ttc'
-        key_info_str = "方位控制[QWEASD + 鼠标] 暂停控制[空格] 摄像机移动速度[Tab]"
+        show_text_time_scale_info()
+        key_info_str = "退出[按2次ESC] 方位控制[鼠标QWEASD] 开始暂停[空格] 控制倍率[Tab - +]"
         key_info = Text(text=key_info_str, position=(-0.8, 0.5), origin=(-1, 1), background=True)
         self.app.run()
 

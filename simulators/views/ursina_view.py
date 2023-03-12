@@ -50,12 +50,13 @@ class UrsinaPlayer(FirstPersonController):
             #
             # camera.add_script(SmoothFollow(targets_parent, offset=(0, 8, -20)))
         pos = np.array(position) * SCALE_FACTOR
-        self.position = Vec3(pos[0], pos[1], pos[2])
+        # self.position = Vec3(pos[0], pos[1], pos[2])
         # 将摄像机位置设置为 x=0、y=1、z=0 的位置
-        # camera.position = Vec3(pos[0], pos[1], pos[2])
+        camera.position = Vec3(pos[0], pos[1], pos[2])
         # self.position = Vec3(pos[0], pos[1], pos[2])
         # 将摄像机的观察角度绕 x 轴旋转 45 度，绕 y 轴旋转 0 度，绕 z 轴旋转 0 度
-        camera.rotation = Vec3(45, 90, 0)
+        # camera.rotation = Vec3(45, 90, 0)
+        camera.rotation = Vec3(0, 0, 0)
 
         # self.gravity = 0
         # self.vspeed = 400
