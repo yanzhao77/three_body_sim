@@ -14,7 +14,7 @@ class Uranus(Body):
     天王星
     ------------------------
       转轴倾角: 97.77°
-      自转周期: 17时14分24秒
+      自转周期: 17.24 小时，自转角速度约为 -20.8816 度/小时（逆时针自转） = 360/(17.24)
     远日点距离: 20.11 天文单位
     近日点距离: 18.33 天文单位
       逃逸速度: 21.3 km/s
@@ -26,7 +26,8 @@ class Uranus(Body):
     def __init__(self, name="Uranus", mass=8.681e25,
                  init_position=[19 * AU, 0, 0],
                  init_velocity=[0, 6.81, 0],
-                 texture="uranus.jpg", size_scale=1.0, distance_scale=1.0):
+                 texture="uranus.jpg", size_scale=1.0, distance_scale=1.0,
+                 rotation_speed=-20.8816):
         params = {
             "name": name,
             "mass": mass,
@@ -36,7 +37,8 @@ class Uranus(Body):
             "color": (94, 124, 193),
             "texture": texture,
             "size_scale": size_scale,
-            "distance_scale": distance_scale
+            "distance_scale": distance_scale,
+            "rotation_speed": rotation_speed
         }
         super().__init__(**params)
 

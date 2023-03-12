@@ -14,7 +14,7 @@ class Saturn(Body):
     土星
     ------------------------
       自转倾角: 26.73 度
-      自转周期: 10小时33分38秒
+      自转周期: 10.66 小时，自转角速度约为 33.7711 度/小时 = 360/(10.66)
     远日点距离: 10.1238 天文单位
     近日点距离: 9.0412 天文单位
       逃逸速度: 35.49 km/s
@@ -26,7 +26,8 @@ class Saturn(Body):
     def __init__(self, name="Saturn", mass=5.6834e26,
                  init_position=[10 * AU, 0, 0],
                  init_velocity=[0, 9.64, 0],
-                 texture="saturn.jpg", size_scale=1.0, distance_scale=1.0):
+                 texture="saturn.jpg", size_scale=1.0, distance_scale=1.0,
+                 rotation_speed=33.7711):
         params = {
             "name": name,
             "mass": mass,
@@ -36,7 +37,8 @@ class Saturn(Body):
             "color": (219, 189, 159),
             "texture": texture,
             "size_scale": size_scale,
-            "distance_scale": distance_scale
+            "distance_scale": distance_scale,
+            "rotation_speed": rotation_speed
         }
         super().__init__(**params)
 

@@ -44,6 +44,7 @@ class Simulator(metaclass=ABCMeta):
         self.bodies_sys.evolve(dt)
         for idx, view in enumerate(self.body_views):
             body = self.bodies_sys.bodies[idx]
+            body.dt = dt
             view.appeared = body.appeared
             if not view.appeared:
                 view.disappear()

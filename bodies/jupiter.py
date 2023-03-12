@@ -14,7 +14,7 @@ class Jupiter(Body):
     木星
     ------------------------
       转轴倾角: 3.13°
-      自转周期: 9小时55分30秒(赤道略短，两极略长)
+      自转周期: 9.93 小时，自转角速度约为 36.2537 度/小时 = 360/(9.93)
     远日点距离: 5.4588 天文单位
     近日点距离: 4.9501 天文单位
       逃逸速度: 59.5 km/s
@@ -26,7 +26,8 @@ class Jupiter(Body):
     def __init__(self, name="Jupiter", mass=1.8982e27,
                  init_position=[5.2 * AU, 0, 0],
                  init_velocity=[0, 13.06, 0],
-                 texture="jupiter1.jpg", size_scale=1.0, distance_scale=1.0):
+                 texture="jupiter1.jpg", size_scale=1.0, distance_scale=1.0,
+                 rotation_speed=36.2537):
         params = {
             "name": name,
             "mass": mass,
@@ -36,7 +37,8 @@ class Jupiter(Body):
             "color": (173, 121, 92),
             "texture": texture,
             "size_scale": size_scale,
-            "distance_scale": distance_scale
+            "distance_scale": distance_scale,
+            "rotation_speed": rotation_speed
         }
         super().__init__(**params)
 

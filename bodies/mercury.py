@@ -14,7 +14,7 @@ class Mercury(Body):
     水星
     ------------------------
       转轴倾角: 0.034°
-      自转周期: 58.65天
+      自转周期: 58.65 地球日，自转角速度约为 0.2558 度/小时 = 360/(58.65*24)
     远日点距离: 0.466697 天文单位
     近日点距离: 0.307499 天文单位
       逃逸速度: 4.25 km/s
@@ -26,7 +26,8 @@ class Mercury(Body):
     def __init__(self, name="Mercury", mass=3.3011e23,
                  init_position=[0.4 * AU, 0, 0],
                  init_velocity=[0, 47.87, 0],
-                 texture="mercury.jpg", size_scale=1.0, distance_scale=1.0):
+                 texture="mercury.jpg", size_scale=1.0, distance_scale=1.0,
+                 rotation_speed=0.2558):
         params = {
             "name": name,
             "mass": mass,
@@ -36,7 +37,8 @@ class Mercury(Body):
             "color": (1, 89, 162),
             "texture": texture,
             "size_scale": size_scale,
-            "distance_scale": distance_scale
+            "distance_scale": distance_scale,
+            "rotation_speed": rotation_speed
         }
         super().__init__(**params)
 

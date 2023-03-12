@@ -20,7 +20,8 @@ class Body(metaclass=ABCMeta):
 
     def __init__(self, name, mass, init_position, init_velocity,
                  density=5e3, color=(125 / 255, 125 / 255, 125 / 255),
-                 texture=None, size_scale=1.0, distance_scale=1.0):
+                 texture=None, size_scale=1.0, distance_scale=1.0,
+                 rotation_speed=None):
         """
         天体类
         :param name: 天体名称
@@ -32,11 +33,14 @@ class Body(metaclass=ABCMeta):
         :param texture: 纹理图片
         :param size_scale: 尺寸缩放
         :param distance_scale: 距离缩放
+        :param rotation_speed: 自旋速度（度/小时）
         """
         self.__his_pos = []
         self.__his_vel = []
         self.__his_acc = []
         self.__his_reserved_num = 100
+        # 是否忽略质量（如果为True，则计算引力）
+        self.ignore_mass = False
 
         if name is None:
             name = getattr(self.__class__, '__name__')
@@ -51,6 +55,7 @@ class Body(metaclass=ABCMeta):
         self.__velocity = self.init_velocity
 
         self.__density = density
+        self.__rotation_speed = rotation_speed
 
         self.color = color
         self.texture = texture
@@ -193,6 +198,14 @@ class Body(metaclass=ABCMeta):
         :return:
         """
         return self.__mass
+
+    @property
+    def rotation_speed(self):
+        """
+        自旋速度（度/小时）
+        :return:
+        """
+        return self.__rotation_speed
 
     @property
     def density(self):

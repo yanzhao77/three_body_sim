@@ -14,7 +14,7 @@ class Mars(Body):
     火星
     ------------------------
       转轴倾角: 25.19°
-      自转周期: 24小时37分22.7秒
+      自转周期: 24.62 小时，自转角速度约为 14.6223 度/小时 = 360/(24.62)
     远日点距离: 1.666 天文单位
     近日点距离: 1.382 天文单位
       逃逸速度: 5.027 km/s
@@ -25,7 +25,8 @@ class Mars(Body):
     def __init__(self, name="Mars", mass=6.4171e23,
                  init_position=[1.5 * AU, 0, 0],
                  init_velocity=[0, 24.13, 0],
-                 texture="mars.jpg", size_scale=1.0, distance_scale=1.0):
+                 texture="mars.jpg", size_scale=1.0, distance_scale=1.0,
+                 rotation_speed=14.6223):
         params = {
             "name": name,
             "mass": mass,
@@ -35,7 +36,8 @@ class Mars(Body):
             "color": (213, 97, 59),
             "texture": texture,
             "size_scale": size_scale,
-            "distance_scale": distance_scale
+            "distance_scale": distance_scale,
+            "rotation_speed": rotation_speed
         }
         super().__init__(**params)
 

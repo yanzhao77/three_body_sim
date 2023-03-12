@@ -91,10 +91,14 @@ class System(object):
         # self.bodies = list(filter(valid_body, self.bodies))
 
         for body1 in self.bodies:
+            if body1.ignore_mass:
+                continue
             if not valid_body(body1):
                 continue
             acceleration = np.zeros(3)
             for body2 in self.bodies:
+                if body2.ignore_mass:
+                    continue
                 if self.max_distance > 0:
                     if calculate_distance(body1.position) > self.max_distance:  # 超过了max_distance距离，则消失
                         body1.appeared = False

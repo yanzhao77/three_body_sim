@@ -14,7 +14,7 @@ class Earth(Body):
     地球
     ------------------------
       转轴倾角: 23.44°
-      自转周期: 23小时56分4秒(恒星日)
+      自转周期: 23.93 小时，自转角速度约为 15 度/小时
     远日点距离: 152097701 km
     近日点距离: 147098074 km
     　逃逸速度: 11.186 km/s
@@ -26,7 +26,8 @@ class Earth(Body):
     def __init__(self, name="Earth", mass=5.97237e24,
                  init_position=[1.12 * AU, 0, 0],
                  init_velocity=[0, 29.79, 0],
-                 texture="earth1.jpg", size_scale=1.0, distance_scale=1.0):
+                 texture="earth1.jpg", size_scale=1.0, distance_scale=1.0,
+                 rotation_speed=15):
         params = {
             "name": name,
             "mass": mass,
@@ -36,7 +37,8 @@ class Earth(Body):
             "color": (1, 89, 162),
             "texture": texture,
             "size_scale": size_scale,
-            "distance_scale": distance_scale
+            "distance_scale": distance_scale,
+            "rotation_speed": rotation_speed
         }
         super().__init__(**params)
 

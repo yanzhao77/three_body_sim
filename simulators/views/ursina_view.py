@@ -22,7 +22,7 @@ from simulators.views.body_view import BodyView
 import numpy as np
 import math
 
-SCALE_FACTOR = 5e-7
+SCALE_FACTOR = 5e-6
 
 
 class UrsinaPlayer(FirstPersonController):
@@ -73,8 +73,7 @@ class UrsinaPlayer(FirstPersonController):
 class Planet(Entity):
     def __init__(self, body_view: BodyView):
         self.body_view = body_view
-        # 旋转速度和大小成反比（未使用真实数据）
-        self.rotspeed = 30000 / self.body_view.raduis  # random.uniform(1.0, 2.0)
+        self.rotation_speed = self.body_view.body.rotation_speed
         self.rotMode = 'x'  # random.choice(["x", "y", "z"])
         self.name = body_view.name
 
@@ -100,6 +99,22 @@ class Planet(Entity):
         self.x = -pos[1]
         self.y = pos[2]
         self.z = pos[0]
+
+        dt = 0
+        if hasattr(self.body_view.body, "dt"):
+            dt = self.body_view.body.dt
+        if self.rotation_speed is None or dt == 0:
+            self.rotspeed = 0
+            # 旋转速度和大小成反比（未使用真实数据）
+            # self.rotspeed = 30000 / self.body_view.raduis  # random.uniform(1.0, 2.0)
+        else:
+            # 4.60e-6 是通过月球保持一面面对地球，调整得到
+            # self.rotspeed = self.rotation_speed * dt * 4.60e-6
+            # (self.rotation_speed * dt * 4.60e-6),(self.rotation_speed * (dt / 3600))/60
+
+            self.rotspeed = self.rotation_speed * (dt / 3600) / 2.4  # / 60 / 24
+            # self.rotspeed = self.rotation_speed * (dt / 3600) / 3.65e7
+            # rotation_speed 度/小时  dt 秒 = (dt / 3600)小时
 
         self.rotation_y -= self.rotspeed
 

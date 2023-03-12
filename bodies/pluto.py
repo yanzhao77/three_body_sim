@@ -14,7 +14,7 @@ class Pluto(Body):
     冥王星
     ------------------------
       转轴倾角: 119.591±0.014°
-      自转周期: 6日9小时17分36秒(逆自转)
+      自转周期: 6.39 地球日，自转角速度约为 -2.3474 度/小时（逆时针自转） = 360/(6.39*24)
     远日点距离: 49.305 天文单位(73.760 亿千米)
     近日点距离: 29.658 天文单位(44.368 亿千米)
       逃逸速度: 1.212 km/s
@@ -26,7 +26,8 @@ class Pluto(Body):
     def __init__(self, name="Pluto", mass=1.303e22,
                  init_position=[40 * AU, 0, 0],
                  init_velocity=[0, 4.7, 0],
-                 texture="pluto2.jpg", size_scale=1.0, distance_scale=1.0):
+                 texture="pluto2.jpg", size_scale=1.0, distance_scale=1.0,
+                 rotation_speed=-2.3474):
         params = {
             "name": name,
             "mass": mass,
@@ -36,7 +37,8 @@ class Pluto(Body):
             "color": (67, 28, 7),
             "texture": texture,
             "size_scale": size_scale,
-            "distance_scale": distance_scale
+            "distance_scale": distance_scale,
+            "rotation_speed": rotation_speed
         }
         super().__init__(**params)
 

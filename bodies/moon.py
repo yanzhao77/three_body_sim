@@ -14,8 +14,8 @@ class Moon(Body):
     """
     月球
     ------------------------
-    　自转周期: 27.32天(自西向东逆时针方向自转)
-    距地距离约 363104 至 405696 km
+    　自转周期: 27.32 地球日，自转角速度约为 0.5487 度/小时 = 360/(27.32*24)
+    距地距离约: 363104 至 405696 km
     　逃逸速度: 2.4 km/s
     　公转速度: 1.023 km/s + (地球)29.79 km/s
     　天体质量: 7.342✕10²² kg
@@ -25,7 +25,8 @@ class Moon(Body):
     def __init__(self, name="Moon", mass=7.342e22,
                  init_position=[363104 + 1.12 * AU, 0, 0],
                  init_velocity=[0, 29.79 + 1.023, 0],
-                 texture="moon.jpg", size_scale=1.0, distance_scale=1.0):
+                 texture="moon.jpg", size_scale=1.0, distance_scale=1.0,
+                 rotation_speed=0.5487):
         params = {
             "name": name,
             "mass": mass,
@@ -35,7 +36,8 @@ class Moon(Body):
             "color": (162, 162, 162),
             "texture": texture,
             "size_scale": size_scale,
-            "distance_scale": distance_scale
+            "distance_scale": distance_scale,
+            "rotation_speed": rotation_speed
         }
         super().__init__(**params)
 

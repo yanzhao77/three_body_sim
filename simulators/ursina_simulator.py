@@ -139,9 +139,11 @@ class UrsinaSimulator(Simulator):
 
     def run(self, dt, **kwargs):
         from ursina import EditorCamera, PointLight, SpotLight, AmbientLight, DirectionalLight
-        self.evolve_dt = dt
-        # 设定时间间隔为1秒
-        self.interval = datetime.timedelta(seconds=0.01)
+        # 设定时间间隔为0.01秒
+        interval = 0.01
+        self.evolve_dt = dt * interval
+        self.interval = datetime.timedelta(seconds=interval)
+
         self.last_time = datetime.datetime.now() - datetime.timedelta(seconds=2)
         if "light" in kwargs:
             if kwargs["light"]:
