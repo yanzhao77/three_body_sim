@@ -22,7 +22,10 @@ from simulators.views.body_view import BodyView
 import numpy as np
 import math
 
-SCALE_FACTOR = 5e-6
+SCALE_FACTOR = 5e-7
+# 旋转因子为1，则为正常的转速
+ROTATION_SPEED_FACTOR = 1.0
+# ROTATION_SPEED_FACTOR = 0.1
 
 
 class UrsinaPlayer(FirstPersonController):
@@ -108,12 +111,8 @@ class Planet(Entity):
             # 旋转速度和大小成反比（未使用真实数据）
             # self.rotspeed = 30000 / self.body_view.raduis  # random.uniform(1.0, 2.0)
         else:
-            # 4.60e-6 是通过月球保持一面面对地球，调整得到
-            # self.rotspeed = self.rotation_speed * dt * 4.60e-6
-            # (self.rotation_speed * dt * 4.60e-6),(self.rotation_speed * (dt / 3600))/60
-
-            self.rotspeed = self.rotation_speed * (dt / 3600) / 2.4  # / 60 / 24
-            # self.rotspeed = self.rotation_speed * (dt / 3600) / 3.65e7
+            # 是通过月球保持一面面对地球，调整得到
+            self.rotspeed = self.rotation_speed * (dt / 3600) / 2.4 * ROTATION_SPEED_FACTOR # / 60 / 24
             # rotation_speed 度/小时  dt 秒 = (dt / 3600)小时
 
         self.rotation_y -= self.rotspeed

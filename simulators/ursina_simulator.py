@@ -26,7 +26,7 @@ class WorldGrid(Entity):  # Entity # 定义构造方法
     def __init__(self):
         super().__init__()
         s = 100
-        grid = Entity(model=Grid(s, s), scale=s * 20, color=color.rgba(255, 255, 255, 20), rotation_x=90,
+        grid = Entity(model=Grid(s, s), scale=s*20, color=color.rgba(255, 255, 255, 20), rotation_x=90,
                       position=(0, -80, 0))
         # 坐标轴
         # vertsx = ((0, 0, 0), (10, 0, 0))
@@ -127,9 +127,11 @@ class UrsinaSimulator(Simulator):
         # self.sun = "sun"
         lights = []
         # 创建多个新的 Entity 对象，作为光晕的容器
-        for i in range(5):
+        for i in range(10):
+            # glow_entity = Entity(parent=entity, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
+            #                      scale=math.pow(1.03, i), alpha=0.2)
             glow_entity = Entity(parent=entity, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
-                                 scale=math.pow(1.03, i), alpha=0.2)
+                                 scale=math.pow(1.03, i), alpha=0.1)
 
             lights.append(glow_entity)
         # 创建 PointLight 对象，作为恒星的灯光源
@@ -159,7 +161,8 @@ class UrsinaSimulator(Simulator):
             cosmic_bg = kwargs["cosmic_bg"]
             if cosmic_bg is None:
                 # cosmic_bg = '../textures/cosmic1.png'
-                cosmic_bg = '../textures/cosmic2.jpg'
+                # cosmic_bg = '../textures/cosmic2.jpg'
+                cosmic_bg = '../textures/cosmic3.jpg'
             import os
             if cosmic_bg is not None and os.path.exists(cosmic_bg):
                 self.cosmic_background(cosmic_bg)

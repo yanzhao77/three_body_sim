@@ -7,7 +7,7 @@
 # python_version  :3.8
 # ==============================================================================
 from bodies import Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
-from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY
+from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY, SECONDS_PER_MONTH, SECONDS_PER_YEAR
 from scenes.func import mayavi_run, ursina_run
 
 if __name__ == '__main__':
@@ -38,4 +38,4 @@ if __name__ == '__main__':
 
     # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45, view_distance=3e9, view_focalpoint=[5e2, 5e2, 5e2])
 
-    ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0))
+    ursina_run(bodies, SECONDS_PER_YEAR, position=(0, 0, 0))
