@@ -1,5 +1,5 @@
 <p align="center">
-  <strong>Python三体模拟器</strong>
+  <strong>Python太阳系、三体模拟器</strong>
 </p> 
 
 # 介绍
@@ -8,7 +8,7 @@
 
 我们可以自己通过调整天体的初始坐标、质量和矢量速度等等参数来自定义各种场景来控制天体的运行效果。
 
-# 效果图
+# 三个模拟器效果图
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_3.png" width="80.7%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_1.png" width="40%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_2.png" width="40%">
