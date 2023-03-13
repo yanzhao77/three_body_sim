@@ -32,4 +32,4 @@ if __name__ == '__main__':
     # mayavi_run(bodies, SECONDS_PER_HALF_DAY / 2, view_azimuth=-45)
 
     # 使用 ursina 查看的运行效果
-    ursina_run(bodies, SECONDS_PER_WEEK, position=(0, 0, 0))
+    ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0))

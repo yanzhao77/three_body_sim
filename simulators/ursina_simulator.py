@@ -102,8 +102,9 @@ class UrsinaSimulator(Simulator):
         # 创建一个新的 Entity 对象，作为光晕的容器
         # glow_entity = Entity(parent=entity, model='sphere', scale=entity.scale * 1.2)
         # 创建 PointLight 对象，并设置它的属性
-        light = PointLight(parent=lights[0], intensity=intensity, color=light_color, attenuation=attenuation)
-        lights.append(light)
+        for i in range(2):
+            light = PointLight(parent=lights[0], intensity=intensity, color=light_color, attenuation=attenuation)
+            lights.append(light)
 
         # 把 Entity 对象放到星星的后面，使得光晕看起来像是从星星发出来的
         glow_entity.world_position = entity.world_position
@@ -134,9 +135,10 @@ class UrsinaSimulator(Simulator):
                                  scale=math.pow(1.03, i), alpha=0.1)
 
             lights.append(glow_entity)
-        # 创建 PointLight 对象，作为恒星的灯光源
-        light = PointLight(parent=entity, intensity=10, range=10, color=color.white)
-        lights.append(light)
+        for i in range(2):
+            # 创建 PointLight 对象，作为恒星的灯光源
+            light = PointLight(parent=entity, intensity=10, range=10, color=color.white)
+            lights.append(light)
 
         # light = DirectionalLight(shadows=True, direction=Vec3(0, 0, 1), color=color.white)
         # light.look_at(Vec3(0, 0, -1))
