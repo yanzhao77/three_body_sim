@@ -143,21 +143,54 @@ def create_torus(inner_radius, outer_radius, subdivisions):
 
     # create uvs
     uvs = []
+    # for i in range(len(verts)):
+    #     # 计算纹理坐标
+    #     u = -i / subdivisions
+    #     v = i / subdivisions
+    #
+    #     # angle = i * (360 / (subdivisions * 2))
+    #     # u = -angle / 360
+    #     # v = angle / 360
+    #
+    #
+    #     # angle = i * (360 / (subdivisions * 2))
+    #     # u = angle / 360
+    #     # v = -(outer_radius - inner_radius) / outer_radius * 0.5
+    #     uvs.append((u, v))
+    uvs = []
+    # for i in range(len(verts)):
+    #     angle = i * (360 / (subdivisions * 2))
+    #     u = angle / 360
+    #     phi = u * 2 * math.pi
+    #     v = phi / (2 * math.pi)
+    #     uvs.append((u, v))
+    # for i in range(len(verts)):
+    #     angle = i * (360 / (subdivisions * 2))
+    #     u = (outer_radius + inner_radius * math.cos(angle)) / (2 * outer_radius)
+    #     v = i / len(verts)
+    #     uvs.append((u, v))
     for i in range(len(verts)):
-        # 计算纹理坐标
-        u = i / subdivisions
-        v = i / subdivisions
-
         angle = i * (360 / (subdivisions * 2))
-        u = -angle / 360
-        # v = angle / 360
+        u = (outer_radius + inner_radius * math.cos(angle)) / (2 * outer_radius)
+        v = i / len(verts)
+        uvs.append((v, 1 - u))
+    # uvs = []
+    # for i in range(subdivisions):
+    #     for j in range(subdivisions):
+    #         u = i / subdivisions
+    #         v = j / subdivisions
+    #         uvs.append((u, v))
+            # uvs.append((v, 1 - u))
+    # uvs= []
+    # for i in range(subdivisions):
+    #     theta = i * 2 * math.pi / subdivisions
+    #     for j in range(subdivisions):
+    #         phi = j * 2 * math.pi / subdivisions
+    #         u = i / subdivisions * 2
+    #         v = j / subdivisions
+    #         uvs.append((u, v))
 
-
-        # angle = i * (360 / (subdivisions * 2))
-        # u = angle / 360
-        # v = -(outer_radius - inner_radius) / outer_radius * 0.5
-        uvs.append((u, v))
-
+    # uvs = [(u, v /0) for u, v in uvs]
     # create normals
     normals = []
     for i in range(len(verts)):
@@ -189,22 +222,17 @@ if __name__ == '__main__':
     #                      scale=2.1, alpha=0.1)
     #
 
-    torus = create_body_torus(0.8, 2, 64)
-    textureRings = load_texture(textureRings)
-    # textureRings.wrap_x = 'repeat'
-    # textureRings.wrap_y = 'repeat'
-    # # 将纹理重复 2 次
-    # textureRings.uv_scale = (2, 2)
+
+
+    # torus = create_body_torus(0.8, 2, 64)
+    # textureRings = load_texture(textureRings)
+    # entity = Entity(model=torus, texture=textureRings, rotation=(0, 0, 0), double_sided=True)
+
+
+
     torus = create_torus(1.5, 3, 64)
     entity = Entity(model=torus, texture=textureRings, rotation=(85, 0, 0), double_sided=True)
-    # entity.texture.repeat = 2
-    # entity.texture.apply()
-    # entity.texture.wrap_v = 'repeat'
-    # entity.texture.uv_scale = (2, 2)
 
-    # entity.texture.wrap = Texture.repeat
-    entity.texture.wrap_x = 2
-    entity.texture.wrap_y = 2
 
     EditorCamera()
     app.run()
