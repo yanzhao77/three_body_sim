@@ -7,7 +7,8 @@
 # python_version  :3.8
 # ==============================================================================
 # pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina
-from ursina import Ursina, window, Entity, Mesh, SmoothFollow, Texture, clamp, time, camera, color, mouse, Vec2, Vec3, \
+from ursina import Ursina, window, Entity, Mesh, SmoothFollow, Texture, clamp, time, \
+    camera, color, mouse, Vec2, Vec3, Vec4,\
     load_texture, held_keys
 
 # from ursina.camera import OrthographicCamera
@@ -18,7 +19,9 @@ import random as rd
 import os
 from bodies import Body
 import random
+
 from simulators.views.body_view import BodyView
+from simulators.views.ursina_mesh import create_sphere, create_body_torus
 import numpy as np
 import math
 
@@ -32,6 +35,8 @@ class UrsinaPlayer(FirstPersonController):
     """
 
     """
+    body_rotation_speed_control = 1.0
+
 
     def __init__(self, position, targets=None):
         super().__init__()
@@ -74,82 +79,6 @@ class UrsinaPlayer(FirstPersonController):
         return super().input(key)
 
 
-from math import pi, sin, cos
-
-
-# def create_sphere(radius, subdivisions):
-#     # 生成球体的顶点、UV坐标、法线和三角面
-#     # radius = 1
-#     # subdivisions = 16
-#     theta = np.linspace(0, 2 * np.pi, subdivisions + 1)
-#     phi = np.linspace(0, np.pi, subdivisions + 1)
-#     u = np.linspace(0, 1, subdivisions + 1)
-#     v = np.linspace(0, 1, subdivisions + 1)
-#     verts = []
-#     uvs = []
-#     normals = []
-#     for i in range(len(theta)):
-#         for j in range(len(phi)):
-#             x = radius * np.sin(phi[j]) * np.cos(theta[i])
-#             y = radius * np.sin(phi[j]) * np.sin(theta[i])
-#             z = radius * np.cos(phi[j])
-#             verts.append((x, y, z))
-#             uvs.append((u[i], v[j]))
-#             normals.append((x / radius, y / radius, z / radius))
-#
-#     tris = []
-#     for i in range(len(theta)):
-#         for j in range(len(phi)):
-#             a = i * (subdivisions + 1) + j
-#             b = (i + 1) * (subdivisions + 1) + j
-#             tris.append((a, b, a + 1))
-#             tris.append((a + 1, b, b + 1))
-#
-#     # # 反转面法线
-#     # for i in range(len(tris)):
-#     #     a, b, c = tris[i]
-#     #     tris[i] = (c, b, a)
-#     #     normals[a], normals[b], normals[c] = -Vec3(*normals[a]), -Vec3(*normals[b]), -Vec3(*normals[c])
-#     #     normals[a], normals[b], normals[c] = -Vec3(*normals[a]), -Vec3(*normals[b]), -Vec3(*normals[c])
-#
-#     # 创建球体 Mesh 对象并设置材质
-#     sphere_mesh = Mesh(vertices=verts, uvs=uvs, normals=normals, triangles=tris, mode='triangle')
-#     return sphere_mesh
-
-def create_sphere(radius, subdivisions):
-    verts = []
-    tris = []
-    normals = []
-    uvs = []
-
-    for y in range(subdivisions + 1):
-        for x in range(subdivisions + 1):
-            x_segment = x / subdivisions
-            y_segment = y / subdivisions
-            x_pos = cos(x_segment * 2 * pi) * sin(y_segment * pi)
-            y_pos = cos(y_segment * pi)
-            z_pos = sin(x_segment * 2 * pi) * sin(y_segment * pi)
-
-            verts.append(Vec3(x_pos, y_pos, z_pos) * radius)
-            uvs.append(Vec2(x_segment, y_segment))
-            normals.append(Vec3(x_pos, y_pos, z_pos))
-
-    for y in range(subdivisions):
-        for x in range(subdivisions):
-            first = (y * (subdivisions + 1)) + x
-            second = first + subdivisions + 1
-            tris.append((first, second + 1, second))
-            tris.append((first, first + 1, second + 1))
-
-    # 反转面法线
-    for i in range(len(tris)):
-        a, b, c = tris[i]
-        tris[i] = (c, b, a)
-        # normals[a], normals[b], normals[c] = -Vec3(*normals[a]), -Vec3(*normals[b]), -Vec3(*normals[c])
-
-    return Mesh(vertices=verts, triangles=tris, normals=normals, uvs=uvs, mode='triangle')
-
-
 class Planet(Entity):
     def __init__(self, body_view: BodyView):
         self.body_view = body_view
@@ -160,7 +89,7 @@ class Planet(Entity):
         pos = body_view.position * body_view.body.distance_scale * SCALE_FACTOR
         scale = body_view.body.diameter * body_view.body.size_scale * SCALE_FACTOR
 
-        subdivisions = 32 # int(scale*20)
+        subdivisions = 32  # int(scale*20)
 
         if hasattr(body_view, "texture"):
             texture = load_texture(body_view.texture)
@@ -174,7 +103,8 @@ class Planet(Entity):
             texture=texture,
             color=color.white,
             position=pos,
-            rotation=(0, 0, 0))
+            rotation=(0, 0, 0),
+            double_sided=True)
 
     def turn(self):
         pos = self.body_view.position * SCALE_FACTOR
@@ -215,16 +145,36 @@ class UrsinaView(BodyView):
         if body.has_rings:
             self.create_rings()
 
+    #     self.create_glow()
+    #
+    # def create_glow(self):
+    #     # self.body.color
+    #     # for i in range(1):
+    #     b_color = self.body.color
+    #     color = Vec4(b_color[0], b_color[1], b_color[2], 0.2)
+    #         # glow_entity = Entity(parent=self.planet, model='sphere', color=color,
+    #         #                      scale=math.pow(1.2, i), alpha=0.2)
+    #
+    #     glow_entity = Entity(parent=self.planet, model='sphere', color=color,
+    #                          scale=1.01, alpha=0.1)
+    #     glow_entity.set_light_off()
+
     def create_rings(self):
         """
         创建行星环（使用土星贴图）
         :return:
         """
-        # 行星环偏移角度
-        self.ring_rotation_x = 75
-        # 创建行星环
-        self.ring = Entity(parent=self.planet, model="circle", texture='../textures/saturnRings.jpg', scale=2,
+        # # # 行星环偏移角度
+        # self.ring_rotation_x = 80
+        # # 创建行星环
+        # self.ring = Entity(parent=self.planet, model='circle', texture='../textures/saturnRings.jpg', scale=3.5,
+        #                    rotation=(self.ring_rotation_x, 0, 0), double_sided=True)
+
+        self.ring_rotation_x = 0
+        torus = create_body_torus(0.3, 1, 32)
+        self.ring = Entity(parent=self.planet, model=torus, texture='../textures/saturnRings.jpg', scale=1,
                            rotation=(self.ring_rotation_x, 0, 0), double_sided=True)
+
 
         # 设置行星环不受灯光影响，否则看不清行星环
         self.ring.set_light_off()
