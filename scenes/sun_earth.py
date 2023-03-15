@@ -15,9 +15,12 @@ if __name__ == '__main__':
     太阳、地球
     """
     bodies = [
-        Sun(size_scale=1.2e2),                    # 太阳放大 120 倍
+        Sun(size_scale=5e1),                      # 太阳放大 50 倍
         Earth(size_scale=2e3, distance_scale=1),  # 地球放大 2000 倍，距离保持不变
     ]
+
+    # 使用 mayavi 查看的运行效果
     # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45)
 
-    ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0))
+    # 使用 ursina 查看的运行效果
+    ursina_run(bodies, SECONDS_PER_WEEK, position=(0, 0, 0))

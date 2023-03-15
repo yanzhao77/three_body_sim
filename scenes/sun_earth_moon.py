@@ -29,6 +29,7 @@ if __name__ == '__main__':
              init_velocity=[-1.023, EARTH_INIT_VELOCITY, 0],
              size_scale=2e1)  # 月球放大 20 倍，距离保持不变
     ]
+    # 使用 mayavi 查看的运行效果
     # mayavi_run(bodies, SECONDS_PER_HALF_DAY / 2, view_azimuth=-45)
 
     # 使用 ursina 查看的运行效果

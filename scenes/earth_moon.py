@@ -16,13 +16,13 @@ if __name__ == '__main__':
     地球、月球
     """
     # 地球的Y方向初始速度
-    EARTH_INIT_VELOCITY = -0  # 20m/s
+    EARTH_INIT_VELOCITY = 0
     bodies = [
         # sun,
         Earth(init_position=[0, 0, 0],
-              init_velocity=[0, EARTH_INIT_VELOCITY, 0], size_scale=1),  # 地球放大 10 倍，距离保持不变
+              init_velocity=[0, EARTH_INIT_VELOCITY, 0], size_scale=0.5e1),  # 地球放大 5 倍，距离保持不变
         Moon(init_position=[363104, 0, 0],  # 距地距离约: 363104 至 405696 km
-             init_velocity=[0, EARTH_INIT_VELOCITY + 1.023, 0], size_scale=1)  # 月球放大 10 倍，距离保持不变
+             init_velocity=[0, EARTH_INIT_VELOCITY + 1.023, 0], size_scale=1e1)  # 月球放大 10 倍，距离保持不变
     ]
     # mayavi_run(bodies, SECONDS_PER_HALF_DAY / 2, view_azimuth=-45)
 

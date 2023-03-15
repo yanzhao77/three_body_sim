@@ -8,15 +8,20 @@
 # ==============================================================================
 from bodies import Sun, Earth, Jupiter
 from common.consts import SECONDS_PER_WEEK
-from scenes.func import mayavi_run
+from scenes.func import mayavi_run, ursina_run
 
 if __name__ == '__main__':
     """
     太阳、地球、木星
     """
     bodies = [
-        Sun(size_scale=1.2e2),                        # 太阳放大 120 倍
-        Earth(size_scale=4e3, distance_scale=1),      # 地球放大 4000 倍，距离保持不变
-        Jupiter(size_scale=1e3, distance_scale=0.5),  # 木星放大 1000 倍，距离缩小到真实距离的 0.5
+        Sun(size_scale=5e1),                        # 太阳放大 50 倍
+        Earth(size_scale=2e3, distance_scale=1),    # 地球放大 2000 倍，距离保持不变
+        Jupiter(size_scale=5e2, distance_scale=1),  # 木星放大 500 倍，距离保持不变
     ]
-    mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45)
+
+    # 使用 mayavi 查看的运行效果
+    # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45)
+
+    # 使用 ursina 查看的运行效果
+    ursina_run(bodies, SECONDS_PER_WEEK, position=(0, 0, 0))

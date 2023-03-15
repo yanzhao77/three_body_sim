@@ -36,6 +36,8 @@ if __name__ == '__main__':
     ]
     # endregion
 
+    # 使用 mayavi 查看的运行效果
     # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45, view_distance=3e9, view_focalpoint=[5e2, 5e2, 5e2])
 
+    # 使用 ursina 查看的运行效果
     ursina_run(bodies, SECONDS_PER_WEEK, position=(0, 0, 0))

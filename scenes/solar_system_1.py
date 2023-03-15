@@ -32,6 +32,8 @@ if __name__ == '__main__':
         Pluto(size_scale=10e3),     # 冥王星放大 10000 倍，距离保持不变(从太阳系的行星中排除)
     ]
 
+    # 使用 mayavi 查看的运行效果
     # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45)
 
+    # 使用 ursina 查看的运行效果
     ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0))

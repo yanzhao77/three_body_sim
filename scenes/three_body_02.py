@@ -29,4 +29,6 @@ if __name__ == '__main__':
         Earth(init_position=[0, -249597870.700, 0], init_velocity=[15.50, 0, 0],
               size_scale=4e3, distance_scale=1),  # 地球放大 4000 倍，距离保持不变
     ]
+
+    # 使用 mayavi 查看的运行效果
     mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=0)
