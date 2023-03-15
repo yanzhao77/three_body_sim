@@ -126,11 +126,19 @@ def create_torus(inner_radius, outer_radius, subdivisions):
         # create vertices for inner radius
         inner_x = x * inner_radius
         inner_y = y * inner_radius
-        verts.append((inner_x, inner_y, 0))
-
         # create vertices for outer radius
         outer_x = x * outer_radius
         outer_y = y * outer_radius
+
+        if angle == 0:
+            verts.append((inner_x, inner_y, 0))
+            verts.append((outer_x, outer_y, 0))
+            uvs.append((1.0, 0.0))
+            uvs.append((1.0, 1.0))
+
+        verts.append((inner_x, inner_y, 0))
+
+
         verts.append((outer_x, outer_y, 0))
 
         # create uvs
@@ -188,6 +196,7 @@ if __name__ == '__main__':
 
     body_torus = create_torus(9, 10, 64)
     entities = Entity(model=body_torus, texture=textureAsteroids, rotation=(85, 0, 0), double_sided=True)
+    entities.set_light_off()
 
     EditorCamera()
     app.run()
