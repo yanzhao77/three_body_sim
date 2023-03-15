@@ -118,11 +118,6 @@ def create_torus(inner_radius, outer_radius, subdivisions):
     tris = []
     uvs = []
 
-    # verts.append((inner_x, inner_y, 0))
-    # uvs.append((u, 0))
-    # verts.append((outer_x, outer_y, 0))
-    # uvs.append((u, 1))
-
     for i in range(subdivisions):
         angle = i * (360 / subdivisions)
         x = np.cos(angle * np.pi / 180)
@@ -132,21 +127,16 @@ def create_torus(inner_radius, outer_radius, subdivisions):
         inner_x = x * inner_radius
         inner_y = y * inner_radius
         verts.append((inner_x, inner_y, 0))
-        u = angle / 360
-        uvs.append((u, 0.0))
-        if angle == 0.0:
-            verts.append((inner_x, inner_y, 0))
-            u = angle / 360
-            uvs.append((1.0, 0.0))
 
         # create vertices for outer radius
         outer_x = x * outer_radius
         outer_y = y * outer_radius
         verts.append((outer_x, outer_y, 0))
+
+        # create uvs
+        u = angle / 360
+        uvs.append((u, 0.0))
         uvs.append((u, 1.0))
-        if angle == 0.0:
-            verts.append((outer_x, outer_y, 0))
-            uvs.append((1.0, 1.0))
 
         # create triangles
         first_index = i * 2
@@ -156,40 +146,6 @@ def create_torus(inner_radius, outer_radius, subdivisions):
 
         tris.append((first_index, second_index, third_index))
         tris.append((third_index, second_index, fourth_index))
-
-    # create uvs
-    # uvs = []
-    # for i in range(len(verts)):
-    #     # 计算纹理坐标
-    #     angle = i * (360 / (subdivisions * 2))
-    #     u = angle / 360
-    #     v = -(outer_radius - inner_radius) * math.cos(angle)/ outer_radius * 0.5
-    #     uvs.append((u, v))
-
-    # uvs = []
-    # for i in range(len(verts)):
-    #     angle = i * (360 / (subdivisions * 2))
-    #     u = angle / 360
-    #     phi = u * 2 * math.pi
-    #     v = phi / (2 * math.pi)
-    #     uvs.append((u, v))
-    # for i in range(len(verts)):
-    #     angle = i * (360 / (subdivisions * 2))
-    #     u = (outer_radius + inner_radius * math.cos(angle)) / (2 * outer_radius)
-    #     v = i / len(verts)
-    #     uvs.append((u, v))
-    # for i in range(len(verts)):
-    #     for j in range(len(verts)):
-    #         u = i / (2 * math.pi * (outer_radius - inner_radius))
-    #         v = j / subdivisions
-    #         uvs.append(( v,1-u))
-
-    # uvs = []
-    # for i in range(len(verts)):
-    #     angle = i * (360 / (subdivisions * 2))
-    #     u = (outer_radius + inner_radius * math.cos(angle)) / (2 * outer_radius)
-    #     v = i / len(verts)
-    #     uvs.append((v, 1 - u))
 
     # create normals
     normals = []
