@@ -8,7 +8,7 @@
 # ==============================================================================
 # pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina
 from ursina import Ursina, window, Entity, Mesh, SmoothFollow, Texture, clamp, time, \
-    camera, color, mouse, Vec2, Vec3, Vec4,\
+    camera, color, mouse, Vec2, Vec3, Vec4, \
     load_texture, held_keys
 
 # from ursina.camera import OrthographicCamera
@@ -36,7 +36,6 @@ class UrsinaPlayer(FirstPersonController):
 
     """
     body_rotation_speed_control = 1.0
-
 
     def __init__(self, position, targets=None):
         super().__init__()
@@ -164,17 +163,18 @@ class UrsinaView(BodyView):
         创建行星环（使用土星贴图）
         :return:
         """
-        # # # 行星环偏移角度
+        # 行星环偏移角度
         # self.ring_rotation_x = 80
-        # # 创建行星环
+        # 创建行星环
         # self.ring = Entity(parent=self.planet, model='circle', texture='../textures/saturnRings.jpg', scale=3.5,
         #                    rotation=(self.ring_rotation_x, 0, 0), double_sided=True)
 
+        # 行星环偏移角度
         self.ring_rotation_x = 0
-        torus = create_body_torus(0.3, 1, 32)
+        # 创建行星环
+        torus = create_body_torus(0.3, 1, 64)
         self.ring = Entity(parent=self.planet, model=torus, texture='../textures/saturnRings.jpg', scale=1,
                            rotation=(self.ring_rotation_x, 0, 0), double_sided=True)
-
 
         # 设置行星环不受灯光影响，否则看不清行星环
         self.ring.set_light_off()
