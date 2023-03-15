@@ -38,7 +38,7 @@ class Body(metaclass=ABCMeta):
         self.__his_pos = []
         self.__his_vel = []
         self.__his_acc = []
-        self.__his_reserved_num = 100
+        self.__his_reserved_num = 200
         # 是否忽略质量（如果为True，则计算引力）
         self.ignore_mass = False
 

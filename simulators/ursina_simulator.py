@@ -146,6 +146,20 @@ class UrsinaSimulator(Simulator):
 
         return lights
 
+    def create_asteroids(self):
+        """
+        小行星
+        :return:
+        """
+        from simulators.views.ursina_mesh import create_torus,create_body_torus
+        textureAsteroids = '../textures/asteroids.png'
+        body_torus = create_torus(9, 10, 64)
+        asteroids = Entity(model=body_torus, texture=textureAsteroids, scale=10, rotation=(90, 0, 0), double_sided=True)
+        asteroids.x = 0
+        asteroids.y = 0
+        asteroids.z = 0
+        asteroids.set_light_off()
+
     def run(self, dt, **kwargs):
         from ursina import EditorCamera, PointLight, SpotLight, AmbientLight, DirectionalLight
         # 设定时间间隔为0.01秒
@@ -173,6 +187,8 @@ class UrsinaSimulator(Simulator):
             import os
             if cosmic_bg is not None and os.path.exists(cosmic_bg):
                 self.cosmic_background(cosmic_bg)
+
+        # self.create_asteroids()
 
         EditorCamera(ignore_paused=True)
 

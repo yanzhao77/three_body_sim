@@ -6,7 +6,7 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
+from bodies import Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Asteroids
 from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY, SECONDS_PER_MONTH, SECONDS_PER_YEAR
 from scenes.func import mayavi_run, ursina_run
 
@@ -27,6 +27,7 @@ if __name__ == '__main__':
         Mercury(size_scale=4e3, distance_scale=1.3),        # 水星放大 4000 倍，距离放大 1.3 倍
         Venus(size_scale=4e3, distance_scale=1.3),          # 金星放大 4000 倍，距离放大 1.3 倍
         Earth(size_scale=4e3, distance_scale=1.3),          # 地球放大 4000 倍，距离放大 1.3 倍
+        Asteroids(size_scale=3e2),  # 小行星模拟
         Mars(size_scale=4e3, distance_scale=1.3),           # 火星放大 4000 倍，距离放大 1.3 倍
         Jupiter(size_scale=0.68e3, distance_scale=0.65),    # 木星放大 680 倍，距离缩小到真实距离的 0.65
         Saturn(size_scale=0.68e3, distance_scale=0.52),     # 土星放大 680 倍，距离缩小到真实距离的 0.52

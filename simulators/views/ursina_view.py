@@ -21,7 +21,7 @@ from bodies import Body
 import random
 
 from simulators.views.body_view import BodyView
-from simulators.views.ursina_mesh import create_sphere, create_body_torus
+from simulators.views.ursina_mesh import create_sphere, create_torus, create_body_torus
 import numpy as np
 import math
 
@@ -85,6 +85,10 @@ class Planet(Entity):
         self.rotMode = 'x'  # random.choice(["x", "y", "z"])
         self.name = body_view.name
 
+        self.tails = {}
+        b_color = self.body_view.body.color
+        self.tail_color = Vec4(b_color[0], b_color[1], b_color[2], 0.1)
+
         pos = body_view.position * body_view.body.distance_scale * SCALE_FACTOR
         scale = body_view.body.diameter * body_view.body.size_scale * SCALE_FACTOR
 
@@ -95,15 +99,62 @@ class Planet(Entity):
         else:
             texture = None
 
+        if hasattr(self.body_view.body, "torus_starts"):
+            model = create_torus(0.86, 1.02, 64)
+            rotation = (90, 0, 0)
+        else:
+            model = create_sphere(0.5, subdivisions)
+            rotation = (0, 0, 0)
+
         super().__init__(
             # model="sphere",
-            model=create_sphere(0.5, subdivisions),
+            model=model,
             scale=scale,
             texture=texture,
             color=color.white,
             position=pos,
-            rotation=(0, 0, 0),
+            rotation=rotation,
             double_sided=True)
+
+        if hasattr(self.body_view.body, "torus_starts"):
+            self.set_light_off()
+
+    def create_tails(self):
+        tail_keys = []
+        his_pos = self.body_view.body.his_position()
+        for pos in his_pos:
+            tail_key = str(pos)
+            tail_keys.append(tail_key)
+
+        tail_more = len(self.tails) - len(his_pos)
+
+        # 先删除超过的 tail entity
+        if tail_more > 0:
+            for key, entity in self.tails.items():
+                entity.visible = False
+                entity.disable()
+                del entity
+                tail_more -= 1
+                if tail_more <= 0:
+                    break
+
+        # 再增加
+        for pos in his_pos:
+            tail_key = str(pos)
+            if tail_key not in self.tails.keys():
+                # pass
+                self.tails[tail_key] = self.create_tail(pos)
+
+    def create_tail(self, pos):
+        pos = pos * SCALE_FACTOR
+        # sphere = create_sphere(0.5, 10)
+        scale = self.body_view.planet.scale_x / 5
+        tail = Entity(model="diamond", color=self.tail_color, scale=scale)  # ,
+        tail.x = -pos[1]
+        tail.y = pos[2]
+        tail.z = pos[0]
+        tail.set_light_off()
+        return tail
 
     def turn(self):
         pos = self.body_view.position * SCALE_FACTOR
@@ -125,6 +176,8 @@ class Planet(Entity):
             # rotation_speed 度/小时  dt 秒 = (dt / 3600)小时
 
         self.rotation_y -= self.rotspeed
+
+        # self.create_tails()
 
     # def input(self, key):
     #     if key == "enter":
@@ -170,9 +223,9 @@ class UrsinaView(BodyView):
         #                    rotation=(self.ring_rotation_x, 0, 0), double_sided=True)
 
         # 行星环偏移角度
-        self.ring_rotation_x = 0
+        self.ring_rotation_x = 80
         # 创建行星环
-        torus = create_body_torus(0.3, 1, 64)
+        torus = create_torus(0.7, 1.2, 64)
         self.ring = Entity(parent=self.planet, model=torus, texture='../textures/saturnRings.jpg', scale=1,
                            rotation=(self.ring_rotation_x, 0, 0), double_sided=True)
 

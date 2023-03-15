@@ -32,9 +32,10 @@ def get_dominant_colors(infile, resize=(20, 20)):
     # 找到主要的颜色
     palette = result.getpalette()
     color_counts = sorted(result.getcolors(), reverse=True)
+
     colors = list()
 
-    for i in range(10):
+    for i in range(min(10,len(color_counts))):
         palette_index = color_counts[i][1]
         dominant_color = palette[palette_index * 3: palette_index * 3 + 3]
         colors.append(tuple(dominant_color))

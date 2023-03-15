@@ -79,7 +79,7 @@ def create_body_torus(inner_radius, outer_radius, subdivisions):
 
             # 计算圆环顶点位置
             x = (outer_radius + inner_radius * math.cos(phi)) * math.cos(theta)
-            y = inner_radius * math.sin(phi) * (inner_radius / 20)
+            y = inner_radius * math.sin(phi) * (inner_radius) /2
             z = (outer_radius + inner_radius * math.cos(phi)) * math.sin(theta)
 
             # 计算圆环顶点法向量
@@ -169,10 +169,11 @@ if __name__ == '__main__':
     # # 使用 Mesh 类创建球体
     texture = "../../textures/saturn.jpg"
     textureRings = '../../textures/saturnRings.jpg'
+    textureAsteroids = '../../textures/asteroids.png'
 
     # 创建球体
-    sphere = create_sphere(1, 32)
-    entity = Entity(model=sphere, texture=texture, color=color.white)
+    # sphere = create_sphere(1, 32)
+    # entity = Entity(model=sphere, texture=texture, color=color.white)
     # 创建光晕
     # glow_entity = Entity(parent=entity, model='sphere', color=color.rgb(1,1,1,0.1),
     #                      scale=2.1, alpha=0.1)
@@ -182,8 +183,11 @@ if __name__ == '__main__':
     # textureRings = load_texture(textureRings)
     # entity = Entity(model=torus, texture=textureRings, rotation=(0, 0, 0), double_sided=True)
 
-    torus = create_torus(1.5, 3, 64)
-    entity = Entity(model=torus, texture=textureRings, rotation=(85, 0, 0), double_sided=True)
+    # torus = create_torus(1.5, 3, 64)
+    # entity = Entity(model=torus, texture=textureRings, rotation=(85, 0, 0), double_sided=True)
+
+    body_torus = create_torus(9, 10, 64)
+    entities = Entity(model=body_torus, texture=textureAsteroids, rotation=(85, 0, 0), double_sided=True)
 
     EditorCamera()
     app.run()
