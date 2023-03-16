@@ -9,51 +9,32 @@
 from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application, color, mouse, Vec2, Vec3, \
     load_texture, held_keys, Button
 from ursina.prefabs.first_person_controller import FirstPersonController
+
+from simulators.ursina.ui_component import UiSlider, SwithButton
 from simulators.ursina.ursina_config import UrsinaConfig
 from simulators.ursina.ursina_event import UrsinaEvent
 from ursina import WindowPanel, InputField, Button, Slider, ButtonGroup
 
 
 class UrsinaUI:
-    def __init__(self):
+
+    def ui_component_init(self):
         Text.default_font = 'simsun.ttc'
-
-        # self.pause_handler = Entity(ignore_paused=True)
-        # 加载中文字体文件
-
-        # text_time_scale = "1"
-        # self.text_time_scale_info = None
-        # self.pause_handler.input = self.pause_handler_input
-        # self.show_text_time_scale_info()
-        # key_info_str = "退出[按2次ESC] 方位控制[鼠标QWEASD] 开始暂停[空格] 控制倍率[Tab - +]"
-        # key_info = Text(text=key_info_str, position=(-0.8, 0.5), origin=(-1, 1), background=True)
-        # # self.show_button()
-        self.slider_body_spin_factor = Slider(text="自转速度", y=-.6, step=.01, min=0.01, max=3, default=1,
-                                              color=color.rgba(0.0, 0.0, 0.0, 0.5))
-        self.slider_run_speed_factor = Slider(text="运行速度", y=-.1, step=.01, min=0.01, max=500, default=1,
-                                              color=color.rgba(0.0, 0.0, 0.0, 0.5))
         application.time_scale = 0.5
-        self.slider_control_speed_factor = Slider(text="控制速度", y=-.1, step=.01, min=0.01, max=30, default=0.5,
-                                                  color=color.rgba(0.0, 0.0, 0.0, 0.5))
+        self.slider_body_spin_factor = UiSlider(text='自转速度', min=0.01, max=30, default=1)
+        self.slider_run_speed_factor = UiSlider(text="运行速度", min=0.01, max=800, default=1)
+        self.slider_control_speed_factor = UiSlider(text="控制速度", min=0.01, max=30, default=application.time_scale)
+        self.slider_trail_length = UiSlider(text="拖尾长度", min=30, max=500, default=UrsinaConfig.trail_length)
 
         self.slider_body_spin_factor.on_value_changed = self.on_slider_body_spin_changed
         self.slider_run_speed_factor.on_value_changed = self.on_slider_run_speed_changed
         self.slider_control_speed_factor.on_value_changed = self.on_slider_control_speed_changed
-
-        self.slider_trail_length = Slider(text="拖尾长度", y=-.1, step=1, min=30, max=500, default=UrsinaConfig.trail_length,
-                                                  color=color.rgba(0.0, 0.0, 0.0, 0.5))
         self.slider_trail_length.on_value_changed = self.on_slider_trail_length_changed
 
-
-        self.on_off_switch = ButtonGroup(('||', '○'), min_selection=1, y=0, default='○',
-                                         selected_color=color.green, ignore_paused=True,
-                                         color=color.rgba(0.0, 0.0, 0.0, 0.5))
+        self.on_off_switch = SwithButton(('||', '○'), default='○')
         self.on_off_switch.selected_color = color.red
 
-        self.on_off_trail = ButtonGroup((' ', '...'), min_selection=1, y=0, default=' ',
-                                         selected_color=color.green, ignore_paused=True,
-                                         color=color.rgba(0.0, 0.0, 0.0, 0.5))
-
+        self.on_off_trail = SwithButton((' ', '...'), default=' ')
         self.on_off_trail.on_value_changed = self.on_off_trail_changed
 
         self.point_button = Button(text='寻找', origin=(0, 0), y=2,
@@ -61,6 +42,7 @@ class UrsinaUI:
         self.reset_button = Button(text='重置', origin=(0, 0), y=2,
                                    on_click=self.on_reset_button_click, color=color.rgba(0.0, 0.0, 0.0, 0.5))
         self.on_off_switch.on_value_changed = self.on_off_switch_changed
+
         wp = WindowPanel(
             title='',
             content=(
@@ -79,8 +61,27 @@ class UrsinaUI:
             ), ignore_paused=True, color=color.rgba(0.0, 0.0, 0.0, 0.5)
         )
         wp.y = 0.5  # wp.panel.scale_y / 2 * wp.scale_y  # center the window panel
-        wp.x = -wp.scale_x
+        wp.x = 0.6 # wp.scale_x + 0.1
+        # wp.x = 0#wp.panel.scale_x / 2 * wp.scale_x
         self.wp = wp
+
+    def __init__(self):
+        self.ui_component_init()
+
+        # self.pause_handler = Entity(ignore_paused=True)
+        # 加载中文字体文件
+
+        # text_time_scale = "1"
+        # self.text_time_scale_info = None
+        # self.pause_handler.input = self.pause_handler_input
+        # self.show_text_time_scale_info()
+        # key_info_str = "退出[按2次ESC] 方位控制[鼠标QWEASD] 开始暂停[空格] 控制倍率[Tab - +]"
+        # key_info = Text(text=key_info_str, position=(-0.8, 0.5), origin=(-1, 1), background=True)
+        # # self.show_button()
+        # slider_text = Text(text='自转速度', scale=1, position=(-0.6, 0.3))
+        # slider = Slider(scale=0.5, position=(-0.6, 0), min=0, max=10, step=1, text=slider_text)
+
+
 
     def on_off_trail_changed(self):
         if self.on_off_trail.value == "...":

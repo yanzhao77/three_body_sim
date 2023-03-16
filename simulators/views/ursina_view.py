@@ -160,6 +160,7 @@ class Planet(Entity):
         try:
             pos = self.position
         except Exception as e:
+            print(self.body_view.body)
             self.destroy_all()
             return
         trails_keys = self.trails.keys()
@@ -226,6 +227,7 @@ class Planet(Entity):
             # 天体旋转
             self.rotation_y -= self.rotspeed
         except Exception as e:
+            print(self.body_view.body)
             self.destroy_all()
             return
 
@@ -281,6 +283,7 @@ class Planet(Entity):
         # 删除拖尾
         for entity, pos in self.trails.items():
             destroy(entity)
+        self.trails.clear()
 
     def destroy_all(self):
         # 从天体系统中移除自己（TODO:暂时还不能移除）
@@ -290,6 +293,8 @@ class Planet(Entity):
         # 如果有行星环，则删除行星环
         if hasattr(self, "ring"):
             destroy(self.ring)
+        self.body_view.body.appeared = False
+        self.body_view.appeared = False
         # 最后删除自己
         destroy(self)
 

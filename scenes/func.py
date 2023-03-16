@@ -75,7 +75,8 @@ def ursina_run(bodies,
     def callback_update():
         for ursina_view in simulator.ursina_views:
             simulator.check_and_evolve()
-            ursina_view.update()
+            if ursina_view.appeared:
+                ursina_view.update()
         # print('....')
 
     import sys
