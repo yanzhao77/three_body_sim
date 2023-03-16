@@ -20,6 +20,7 @@ import os
 from bodies import Body
 import random
 
+from common.color_utils import adjust_brightness, to_vec4_color
 from simulators.views.body_view import BodyView
 from simulators.views.ursina_mesh import create_sphere, create_torus, create_body_torus
 import numpy as np
@@ -87,11 +88,11 @@ class Planet(Entity):
 
         self.trails = {}
         self.trail_len = 100
-        b_color = self.body_view.body.color
-        trail_color = Vec4(b_color[0], b_color[1], b_color[2], 1) / 255  # 255 是原色，200会更亮一些
-        self.trail_color = color.rgba(trail_color[0], trail_color[1], trail_color[2], 0.3)
 
-        self.trail_color *= 1.5
+        # 根据天体的颜色获取拖尾的颜色
+        trail_color = to_vec4_color(self.body_view.body.color)
+        trail_color = adjust_brightness(trail_color, 0.4)
+        self.trail_color = color.rgba(trail_color[0], trail_color[1], trail_color[2], 0.3)
 
         pos = body_view.position * body_view.body.distance_scale * SCALE_FACTOR
         scale = body_view.body.diameter * body_view.body.size_scale * SCALE_FACTOR
