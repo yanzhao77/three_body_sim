@@ -92,7 +92,7 @@ class Planet(Entity):
         # 根据天体的颜色获取拖尾的颜色
         trail_color = to_vec4_color(self.body_view.body.color)
         trail_color = adjust_brightness(trail_color, 0.4)
-        self.trail_color = color.rgba(trail_color[0], trail_color[1], trail_color[2], 0.3)
+        self.trail_color = color.rgba(trail_color[0], trail_color[1], trail_color[2], 0.6)
 
         pos = body_view.position * body_view.body.distance_scale * SCALE_FACTOR
         scale = body_view.body.diameter * body_view.body.size_scale * SCALE_FACTOR
