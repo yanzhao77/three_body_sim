@@ -39,10 +39,23 @@ class UrsinaUI:
         self.slider_body_spin_factor.on_value_changed = self.on_slider_body_spin_changed
         self.slider_run_speed_factor.on_value_changed = self.on_slider_run_speed_changed
         self.slider_control_speed_factor.on_value_changed = self.on_slider_control_speed_changed
+
+        self.slider_trail_length = Slider(text="拖尾长度", y=-.1, step=1, min=30, max=500, default=UrsinaConfig.trail_length,
+                                                  color=color.rgba(0.0, 0.0, 0.0, 0.5))
+        self.slider_trail_length.on_value_changed = self.on_slider_trail_length_changed
+
+
         self.on_off_switch = ButtonGroup(('||', '○'), min_selection=1, y=0, default='○',
                                          selected_color=color.green, ignore_paused=True,
                                          color=color.rgba(0.0, 0.0, 0.0, 0.5))
         self.on_off_switch.selected_color = color.red
+
+        self.on_off_trail = ButtonGroup((' ', '...'), min_selection=1, y=0, default=' ',
+                                         selected_color=color.green, ignore_paused=True,
+                                         color=color.rgba(0.0, 0.0, 0.0, 0.5))
+
+        self.on_off_trail.on_value_changed = self.on_off_trail_changed
+
         self.point_button = Button(text='寻找', origin=(0, 0), y=2,
                                    on_click=self.on_point_button_click, color=color.rgba(0.0, 0.0, 0.0, 0.5))
         self.reset_button = Button(text='重置', origin=(0, 0), y=2,
@@ -57,6 +70,8 @@ class UrsinaUI:
                 self.point_button,
                 self.reset_button,
                 self.on_off_switch,
+                self.on_off_trail,
+                self.slider_trail_length,
                 self.slider_body_spin_factor,
                 self.slider_run_speed_factor,
                 self.slider_control_speed_factor
@@ -66,6 +81,12 @@ class UrsinaUI:
         wp.y = 0.5  # wp.panel.scale_y / 2 * wp.scale_y  # center the window panel
         wp.x = -wp.scale_x
         self.wp = wp
+
+    def on_off_trail_changed(self):
+        if self.on_off_trail.value == "...":
+            UrsinaConfig.show_trail = True
+        else:
+            UrsinaConfig.show_trail = False
 
     def on_point_button_click(self):
         pass
@@ -80,6 +101,9 @@ class UrsinaUI:
         else:
             self.on_off_switch.selected_color = color.red
             application.paused = False
+
+    def on_slider_trail_length_changed(self):
+        UrsinaConfig.trail_length = int(self.slider_trail_length.value)
 
     def on_slider_control_speed_changed(self):
         application.time_scale = self.slider_control_speed_factor.value

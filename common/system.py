@@ -80,11 +80,11 @@ class System(object):
             """
             if not body.appeared:  # 不显示
                 return False
-            if self.max_distance > 0:
-                # 超过了 max_distance 距离，则不显示，并消失
-                if calculate_distance(body.position) > self.max_distance:
-                    body.appeared = False
-                    return False
+            # if self.max_distance > 0:
+            #     # 超过了 max_distance 距离，则不显示，并消失
+            #     if calculate_distance(body.position) > self.max_distance:
+            #         body.appeared = False
+            #         return False
 
             return True
 

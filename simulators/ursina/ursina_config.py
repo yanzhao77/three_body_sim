@@ -28,6 +28,10 @@ class UrsinaConfig:
 
     __on_reset_funcs = []
 
+    show_trail = False
+    # 拖尾球体的数量
+    trail_length = 200
+
     @property
     @classmethod
     def run_speed_factor(cls):

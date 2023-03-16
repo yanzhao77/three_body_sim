@@ -76,18 +76,8 @@ class Planet(Entity):
 
     def on_reset(self):
         # 删除拖尾
-        for entity, pos in self.trails.items():
-            destroy(entity)
+        self.clear_trails()
         self.body_view.body.reset()
-
-        # pos = body.init_position * body.distance_scale * UrsinaConfig.SCALE_FACTOR
-        # vel = body.init_velocity
-        # self.x = -pos[1]
-        # self.y = pos[2]
-        # self.z = pos[0]
-        # self.x = pos[0]
-        # self.y = pos[1]
-        # self.z = pos[2]
 
     def __init__(self, body_view: BodyView):
         self.body_view = body_view
@@ -139,8 +129,6 @@ class Planet(Entity):
         """
         # 存放拖尾球体
         self.trails = {}
-        # 拖尾球体的数量
-        self.trail_len = 100
 
         # 根据天体的颜色获取拖尾的颜色
         trail_color = conv_to_vec4_color(self.body_view.body.color)
@@ -190,7 +178,7 @@ class Planet(Entity):
         self.trails[self.create_trail(pos)] = pos
 
         # 计算拖尾球体超过的数量
-        trail_overflow_count = len(self.trails) - self.trail_len
+        trail_overflow_count = len(self.trails) - UrsinaConfig.trail_length
 
         if trail_overflow_count > 0:
             # 如果拖尾球体超过的数量，就删除之前的拖尾球体
@@ -248,9 +236,12 @@ class Planet(Entity):
                                        self.rotation_y,
                                        self.rotation_z)
 
-        # 有时候第一个位置不正确，所以判断一下有历史记录后在创建
-        if len(self.body_view.body.his_position()) > 1:
-            self.create_trails()
+        if UrsinaConfig.show_trail:
+            # 有时候第一个位置不正确，所以判断一下有历史记录后在创建
+            if len(self.body_view.body.his_position()) > 1:
+                self.create_trails()
+        else:
+            self.clear_trails()
 
     def follow_parent(self):
         if not hasattr(self.body_view, "bodies_system"):
@@ -284,13 +275,18 @@ class Planet(Entity):
         # 设置行星环不受灯光影响，否则看不清行星环
         self.ring.set_light_off()
 
-    def destroy_all(self):
-        # 从天体系统中移除自己（TODO:暂时还不能移除）
-        # self.body_view.bodies_system.bodies.remove(self.body_view.body)
-
+    def clear_trails(self):
+        if not hasattr(self, "trails"):
+            return
         # 删除拖尾
         for entity, pos in self.trails.items():
             destroy(entity)
+
+    def destroy_all(self):
+        # 从天体系统中移除自己（TODO:暂时还不能移除）
+        # self.body_view.bodies_system.bodies.remove(self.body_view.body)
+        # 删除拖尾
+        self.clear_trails()
         # 如果有行星环，则删除行星环
         if hasattr(self, "ring"):
             destroy(self.ring)
