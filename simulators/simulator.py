@@ -32,7 +32,7 @@ class Simulator(metaclass=ABCMeta):
         :return:
         """
         for body in self.bodies_sys.bodies:
-            view = viewer_type(body)
+            view = viewer_type(body, self.bodies_sys)
             self.body_views.append(view)
 
     def evolve(self, dt: int):
@@ -64,8 +64,8 @@ class Simulator(metaclass=ABCMeta):
 
             view.update()
 
-        self.bodies_sys.bodies = list(filter(lambda b:b.appeared, self.bodies_sys.bodies))
-        self.body_views = list(filter(lambda b:b.appeared, self.body_views))
+        self.bodies_sys.bodies = list(filter(lambda b: b.appeared, self.bodies_sys.bodies))
+        self.body_views = list(filter(lambda b: b.appeared, self.body_views))
 
     @abstractmethod
     def run(self, dt: int, **kwargs):

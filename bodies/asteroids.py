@@ -29,7 +29,9 @@ class Asteroids(Body):
     def __init__(self, name="Asteroids", mass=1.9891e30,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 texture="asteroids.png", size_scale=1.0, distance_scale=1.0,rotation_speed=0.6130):
+                 texture="asteroids.png", size_scale=1.0,
+                 distance_scale=1.0, rotation_speed=0.6130,
+                 parent=None):
         params = {
             "name": name,
             "mass": mass,
@@ -40,7 +42,8 @@ class Asteroids(Body):
             "texture": texture,
             "size_scale": size_scale,
             "distance_scale": distance_scale,
-            "rotation_speed": rotation_speed
+            "rotation_speed": rotation_speed,
+            "parent": parent
         }
         super().__init__(**params)
         # 环状星群

@@ -153,7 +153,7 @@ class Planet(Entity):
         try:
             pos = self.position
         except Exception as e:
-            self.destroy_me()
+            self.destroy_all()
             return
         trails_keys = self.trails.keys()
         # 如果有拖尾
@@ -193,10 +193,12 @@ class Planet(Entity):
 
     def turn(self):
         pos = self.body_view.position * UrsinaConfig.SCALE_FACTOR
-
-        self.x = -pos[1]
-        self.y = pos[2]
-        self.z = pos[0]
+        if self.body_view.body.parent is None:
+            self.x = -pos[1]
+            self.y = pos[2]
+            self.z = pos[0]
+        else:
+            self.follow_parent()
 
         dt = 0
         if hasattr(self.body_view.body, "dt"):
@@ -217,7 +219,7 @@ class Planet(Entity):
             # 天体旋转
             self.rotation_y -= self.rotspeed
         except Exception as e:
-            self.destroy_me()
+            self.destroy_all()
             return
 
         # 如果有行星环
@@ -230,6 +232,18 @@ class Planet(Entity):
         # 有时候第一个位置不正确，所以判断一下有历史记录后在创建
         if len(self.body_view.body.his_position()) > 1:
             self.create_trails()
+
+
+    def follow_parent(self):
+        if not hasattr(self.body_view, "bodies_system"):
+            return
+        sys = self.body_view.bodies_system
+        for b in sys.bodies:
+            if self.body_view.body.parent == b:
+                pos = b.position * UrsinaConfig.SCALE_FACTOR
+                self.x = -pos[1]
+                self.y = pos[2]
+                self.z = pos[0]
 
     def create_rings(self):
         """
@@ -252,11 +266,17 @@ class Planet(Entity):
         # 设置行星环不受灯光影响，否则看不清行星环
         self.ring.set_light_off()
 
-    def destroy_me(self):
+    def destroy_all(self):
+        # 从天体系统中移除自己（TODO:暂时还不能移除）
+        # self.body_view.bodies_system.bodies.remove(self.body_view.body)
+
+        # 删除拖尾
         for entity, pos in self.trails.items():
             destroy(entity)
+        # 如果有行星环，则删除行星环
         if hasattr(self, "ring"):
             destroy(self.ring)
+        # 最后删除自己
         destroy(self)
 
 
@@ -265,8 +285,8 @@ class UrsinaView(BodyView):
     ursina天体视图（天体效果展示用）
     """
 
-    def __init__(self, body: Body):
-        BodyView.__init__(self, body)
+    def __init__(self, body: Body, bodies_system):
+        BodyView.__init__(self, body, bodies_system)
         self.velocity = body.velocity
 
         self.planet = Planet(self)
@@ -281,9 +301,9 @@ class UrsinaView(BodyView):
         """
         self.planet.turn()
 
-
     def appear(self):
         pass
 
     def disappear(self):
-        self.planet.destroy_me()
+        self.planet.destroy_all()
+        self.appeared = False

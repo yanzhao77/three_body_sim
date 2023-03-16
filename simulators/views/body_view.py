@@ -18,8 +18,9 @@ class BodyView(metaclass=ABCMeta):
     天体视图（天体效果展示用）
     """
 
-    def __init__(self, body: Body):
+    def __init__(self, body: Body, bodies_system):
         self.body = body
+        self.bodies_system = bodies_system
         self.sphere = None
         if self.body.texture is None or self.body.texture == '':
             self.color = tuple(np.array(body.color) / 255)

@@ -21,7 +21,7 @@ class Body(metaclass=ABCMeta):
     def __init__(self, name, mass, init_position, init_velocity,
                  density=5e3, color=(125 / 255, 125 / 255, 125 / 255),
                  texture=None, size_scale=1.0, distance_scale=1.0,
-                 rotation_speed=None):
+                 rotation_speed=None, parent=None):
         """
         天体类
         :param name: 天体名称
@@ -70,6 +70,7 @@ class Body(metaclass=ABCMeta):
 
         # 是否显示
         self.appeared = True
+        self.parent = parent
 
     @property
     def has_rings(self):
