@@ -100,7 +100,7 @@ class Planet(Entity):
             texture = None
 
         if hasattr(self.body_view.body, "torus_starts"):
-            model = create_torus(0.86, 1.02, 64)
+            model = create_torus(0.86, 1.02, 64, 4)
             rotation = (90, 0, 0)
         else:
             model = create_sphere(0.5, subdivisions)

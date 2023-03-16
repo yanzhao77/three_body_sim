@@ -79,7 +79,7 @@ def create_body_torus(inner_radius, outer_radius, subdivisions):
 
             # 计算圆环顶点位置
             x = (outer_radius + inner_radius * math.cos(phi)) * math.cos(theta)
-            y = inner_radius * math.sin(phi) * (inner_radius) /2
+            y = inner_radius * math.sin(phi) * (inner_radius) / 2
             z = (outer_radius + inner_radius * math.cos(phi)) * math.sin(theta)
 
             # 计算圆环顶点法向量
@@ -113,7 +113,7 @@ def create_body_torus(inner_radius, outer_radius, subdivisions):
     return mesh
 
 
-def create_torus(inner_radius, outer_radius, subdivisions):
+def create_torus(inner_radius, outer_radius, subdivisions, repeat=1):
     verts = []
     tris = []
     uvs = []
@@ -130,21 +130,22 @@ def create_torus(inner_radius, outer_radius, subdivisions):
         outer_x = x * outer_radius
         outer_y = y * outer_radius
 
-        if angle == 0:
+        if i % int(subdivisions / repeat) == 0:
             verts.append((inner_x, inner_y, 0))
             verts.append((outer_x, outer_y, 0))
-            uvs.append((1.0, 0.0))
-            uvs.append((1.0, 1.0))
-
-        verts.append((inner_x, inner_y, 0))
-
-
-        verts.append((outer_x, outer_y, 0))
-
-        # create uvs
-        u = angle / 360
-        uvs.append((u, 0.0))
-        uvs.append((u, 1.0))
+            uvs.append((0.999, 0.0))
+            uvs.append((0.999, 0.999))
+            verts.append((inner_x, inner_y, 0))
+            verts.append((outer_x, outer_y, 0))
+            uvs.append((0.001, 0.0))
+            uvs.append((0.001, 0.999))
+        else:
+            verts.append((inner_x, inner_y, 0))
+            verts.append((outer_x, outer_y, 0))
+            # create uvs
+            u = angle * repeat / 360 % 1
+            uvs.append((u, 0.0))
+            uvs.append((u, 0.999))
 
         # create triangles
         first_index = i * 2
