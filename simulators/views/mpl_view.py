@@ -23,7 +23,9 @@ class MplView(BodyView):
         pass
 
     def appear(self):
-        pass
+        if hasattr(self.body, "torus_stars"):
+            # 暂不支持环状小行星群
+            return
 
     def disappear(self):
         pass

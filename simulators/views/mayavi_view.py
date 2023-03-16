@@ -85,6 +85,10 @@ class MayaviView(BodyView):
         天体显示的操作，比如：构建天体视图对象
         :return:
         """
+        if hasattr(self.body, "torus_stars"):
+            # 暂不支持环状小行星群
+            return
+
         if not hasattr(self, "sphere") or self.sphere is None:
             scale_factor = self.body.size_scale * self.body.diameter
             sphere = mlab.points3d(self.body.position[0], self.body.position[1], self.body.position[2],
@@ -130,7 +134,7 @@ class MayaviView(BodyView):
         :param image_file:
         :return:
         """
-        outfile = image_file.replace('.jpg', '_flipped.jpg')
+        outfile = image_file.replace('.jpg', '_flipped.jpg').replace('.png', '_flipped.jpg')
         if os.path.exists(outfile):
             image_file = outfile
         else:

@@ -94,6 +94,10 @@ class MplSimulator(Simulator):
             update_ax(ax, styles)
 
         for idx, body in enumerate(bodies):
+            if hasattr(body, "torus_stars"):
+                # 暂不支持环状小行星群
+                continue
+
             if body.is_fixed_star:
                 color = 'red'
             else:
@@ -116,7 +120,7 @@ class MplSimulator(Simulator):
                 ax.plot3D(_his_pos[0], _his_pos[1], _his_pos[2], color=color, alpha=0.5)
 
             z_range = ax.get_zlim()[1] - ax.get_zlim()[0]
-            ax.text(pos[0], pos[1], pos[2] + size*(z_range/5000), s=body.name, color=color, fontsize=12)
+            ax.text(pos[0], pos[1], pos[2] + size * (z_range / 5000), s=body.name, color=color, fontsize=12)
 
         if pause > 0:
             plt.pause(pause)
