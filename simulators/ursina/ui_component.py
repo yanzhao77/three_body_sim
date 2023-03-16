@@ -7,7 +7,7 @@
 # python_version  :3.8
 # ==============================================================================
 from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application, color, mouse, Vec2, Vec3, \
-    load_texture, held_keys, Button
+    load_texture, held_keys, Button, Tooltip
 from ursina.prefabs.first_person_controller import FirstPersonController
 from simulators.ursina.ursina_config import UrsinaConfig
 from simulators.ursina.ursina_event import UrsinaEvent
@@ -36,14 +36,19 @@ class UiSlider(Slider):
 
 
 class SwithButton(ButtonGroup):
-    def __init__(self, options, default):
+    def __init__(self, options, default, tooltips=None):
         super().__init__(options, min_selection=1, y=0, default=default,
-                         selected_color=color.green, ignore_paused=True,
+                         selected_color=color.rgba(0.1, 0.6, 0.1, 1.0), ignore_paused=True,
                          color=color.rgba(0.0, 0.0, 0.0, 0.5))
         # self.label.scale = 0.8
         # self.label.font = UrsinaConfig.CN_FONT
-        for button in self.buttons:
+        for i, button in enumerate(self.buttons):
             button.text_entity.font = UrsinaConfig.CN_FONT
+            if tooltips is not None:
+                if len(tooltips) > i:
+                    tooltip = Tooltip(tooltips[i])
+                    tooltip.font = UrsinaConfig.CN_FONT
+                    button.tooltip = tooltip
 
 
 class UiButton(Button):

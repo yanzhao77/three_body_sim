@@ -13,15 +13,17 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 from simulators.ursina.ui_component import UiSlider, SwithButton, UiButton
 from simulators.ursina.ursina_config import UrsinaConfig
 from simulators.ursina.ursina_event import UrsinaEvent
-from ursina import WindowPanel, InputField, Button, Slider, ButtonGroup
+from ursina import WindowPanel, InputField, Button, Slider, ButtonGroup, Panel
 
 
 class UrsinaUI:
 
     def ui_component_init(self):
 
-        self.start_button_text = "●" # 》●▲○◎
-        self.pause_button_text = "〓" #  〓 || ‖
+        self.start_button_text = "●"  # 》●▲○◎
+        self.pause_button_text = "〓"  # 〓 || ‖
+        self.no_trail_button_text = "○ "
+        self.trail_button_text = "○--"
 
         application.time_scale = 0.5
         self.slider_body_spin_factor = UiSlider(text='自转速度', min=0.01, max=30, default=1)
@@ -37,20 +39,27 @@ class UrsinaUI:
         self.slider_trail_length.on_value_changed = self.on_slider_trail_length_changed
 
         self.on_off_switch = SwithButton((self.pause_button_text,
-                                          self.start_button_text), default=self.start_button_text)
+                                          self.start_button_text),
+                                         default=self.start_button_text,
+                                         tooltips=('暂停', '运行'))
         self.on_off_switch.selected_color = color.red
 
-        self.on_off_trail = SwithButton((' ', '...'), default=' ')
+        self.on_off_trail = SwithButton((self.no_trail_button_text, self.trail_button_text),
+                                        default=self.no_trail_button_text,
+                                        tooltips=('天体运行无轨迹', '天体运行有拖尾轨迹'))
         self.on_off_trail.on_value_changed = self.on_off_trail_changed
 
         self.point_button = UiButton(text='寻找', on_click=self.on_point_button_click)
         self.reset_button = UiButton(text='重置', on_click=self.on_reset_button_click)
-        self.on_off_switch.on_value_changed = self.on_off_switch_changed
 
+        self.point_button.scale_x = -0.2
+        self.reset_button.scale_x = 0.2
+
+        self.on_off_switch.on_value_changed = self.on_off_switch_changed
         wp = WindowPanel(
             title='',
             content=(
-                Text('方位控制: Q W E A S D + 鼠标右键',font='msyhl.ttc'),
+                Text('方位控制: Q W E A S D + 鼠标右键', font='msyhl.ttc'),
                 # InputField(name='name_field'),
                 # Button(text='Submit', color=color.azure),
                 self.point_button,
@@ -66,7 +75,7 @@ class UrsinaUI:
             ), ignore_paused=True, color=color.rgba(0.0, 0.0, 0.0, 0.5)
         )
         wp.y = 0.5  # wp.panel.scale_y / 2 * wp.scale_y  # center the window panel
-        wp.x = 0.6 # wp.scale_x + 0.1
+        wp.x = 0.6  # wp.scale_x + 0.1
         # wp.x = 0#wp.panel.scale_x / 2 * wp.scale_x
         self.wp = wp
 
@@ -86,10 +95,8 @@ class UrsinaUI:
         # slider_text = Text(text='自转速度', scale=1, position=(-0.6, 0.3))
         # slider = Slider(scale=0.5, position=(-0.6, 0), min=0, max=10, step=1, text=slider_text)
 
-
-
     def on_off_trail_changed(self):
-        if self.on_off_trail.value == "...":
+        if self.on_off_trail.value == self.trail_button_text:
             UrsinaConfig.show_trail = True
         else:
             UrsinaConfig.show_trail = False
