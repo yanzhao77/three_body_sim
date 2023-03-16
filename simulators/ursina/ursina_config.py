@@ -15,7 +15,7 @@ class UrsinaConfig:
     SCALE_FACTOR = 5e-10
     # 旋转因子为1，则为正常的转速
     ROTATION_SPEED_FACTOR = 1.0
-    ROTATION_SPEED_FACTOR = 0.01
+    # ROTATION_SPEED_FACTOR = 0.01
 
     # 速度的倍数
     __run_speed_factor = 1.0
@@ -25,6 +25,8 @@ class UrsinaConfig:
 
     # 摄像机
     __camera_factor = 1.0
+
+    __on_reset_funcs = []
 
     @property
     @classmethod
@@ -45,6 +47,15 @@ class UrsinaConfig:
     @classmethod
     def body_spin_factor(cls, value):
         cls.__body_spin_factor = value
+
+    @classmethod
+    def on_reset_subscription(cls, fun):
+        cls.__on_reset_funcs.append(fun)
+
+    @classmethod
+    def on_reset(cls):
+        for f in cls.__on_reset_funcs:
+            f()
 
 
 # 初始化

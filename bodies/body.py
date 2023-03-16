@@ -11,6 +11,7 @@ import json
 import numpy as np
 import math
 from common.consts import AU
+import copy
 
 
 class Body(metaclass=ABCMeta):
@@ -51,8 +52,8 @@ class Body(metaclass=ABCMeta):
         self.init_position = np.array(init_position, dtype='float32')
         self.init_velocity = np.array(init_velocity, dtype='float32')
 
-        self.__position = self.init_position
-        self.__velocity = self.init_velocity
+        self.__position = copy.deepcopy(self.init_position)
+        self.__velocity = copy.deepcopy(self.init_velocity)
 
         self.__density = density
         self.__rotation_speed = rotation_speed
@@ -278,8 +279,8 @@ class Body(metaclass=ABCMeta):
         重新设置初始速度和初始位置
         :return:
         """
-        self.position = self.init_position
-        self.velocity = self.init_velocity
+        self.position = copy.deepcopy(self.init_position)
+        self.velocity = copy.deepcopy(self.init_velocity)
 
     # def kinetic_energy(self):
     #     """

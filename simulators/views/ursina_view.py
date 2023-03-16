@@ -16,6 +16,7 @@ import sys
 from bodies import Body
 
 from simulators.ursina.ursina_config import UrsinaConfig
+from simulators.ursina.ursina_event import UrsinaEvent
 from common.color_utils import adjust_brightness, conv_to_vec4_color
 from simulators.views.body_view import BodyView
 from simulators.views.ursina_mesh import create_sphere, create_torus
@@ -58,19 +59,35 @@ class UrsinaPlayer(FirstPersonController):
         # self.vspeed = 400
         # self.speed = 1000
         # self.mouse_sensitivity = Vec2(160, 160)
-        self.on_enable()
+        # self.on_enable()
         # self.rotation_speed = 80
+        self.on_disable()
 
-    def input(self, key):
-        if key == "escape":
-            if mouse.locked:
-                self.on_disable()
-            else:
-                sys.exit()
-        return super().input(key)
+    # def input(self, key):
+    #     if key == "escape":
+    #         if mouse.locked:
+    #             self.on_disable()
+    #         else:
+    #             sys.exit()
+    #     return super().input(key)
 
 
 class Planet(Entity):
+
+    def on_reset(self):
+        # 删除拖尾
+        for entity, pos in self.trails.items():
+            destroy(entity)
+        self.body_view.body.reset()
+
+        # pos = body.init_position * body.distance_scale * UrsinaConfig.SCALE_FACTOR
+        # vel = body.init_velocity
+        # self.x = -pos[1]
+        # self.y = pos[2]
+        # self.z = pos[0]
+        # self.x = pos[0]
+        # self.y = pos[1]
+        # self.z = pos[2]
 
     def __init__(self, body_view: BodyView):
         self.body_view = body_view
@@ -94,6 +111,8 @@ class Planet(Entity):
             # 创建一个天体
             model = create_sphere(0.5, 32)
             rotation = (0, 0, 0)
+
+        UrsinaEvent.on_reset_subscription(self.on_reset)
 
         super().__init__(
             # model="sphere",
@@ -232,7 +251,6 @@ class Planet(Entity):
         # 有时候第一个位置不正确，所以判断一下有历史记录后在创建
         if len(self.body_view.body.his_position()) > 1:
             self.create_trails()
-
 
     def follow_parent(self):
         if not hasattr(self.body_view, "bodies_system"):
