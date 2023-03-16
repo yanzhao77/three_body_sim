@@ -12,7 +12,7 @@ from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 from simulators.views.ursina_view import UrsinaView, UrsinaPlayer
-
+from simulators.ursina.ursina_config import UrsinaConfig
 from simulators.simulator import Simulator
 from common.system import System
 import time
@@ -66,7 +66,8 @@ class UrsinaSimulator(Simulator):
 
     def check_and_evolve(self):
         if self.check_elapsed_time():
-            super().evolve(self.evolve_dt)
+            run_speed_factor = UrsinaConfig.run_speed_factor
+            super().evolve(self.evolve_dt * run_speed_factor)
 
     def cosmic_background(self, texture='../textures/cosmic2.jpg'):
         """
@@ -123,14 +124,9 @@ class UrsinaSimulator(Simulator):
         # 如果是恒星（如：太阳），自身会发光，则需要关闭灯光
         entity.set_light_off()
 
-        # if hasattr(self, "sun"):
-        #     return
-        # self.sun = "sun"
         lights = []
         # 创建多个新的 Entity 对象，作为光晕的容器
         for i in range(10):
-            # glow_entity = Entity(parent=entity, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
-            #                      scale=math.pow(1.03, i), alpha=0.2)
             glow_entity = Entity(parent=entity, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
                                  scale=math.pow(1.03, i), alpha=0.1)
 
@@ -146,19 +142,19 @@ class UrsinaSimulator(Simulator):
 
         return lights
 
-    def create_asteroids(self):
-        """
-        小行星
-        :return:
-        """
-        from simulators.views.ursina_mesh import create_torus,create_body_torus
-        textureAsteroids = '../textures/asteroids.png'
-        body_torus = create_torus(9, 10, 64)
-        asteroids = Entity(model=body_torus, texture=textureAsteroids, scale=10, rotation=(90, 0, 0), double_sided=True)
-        asteroids.x = 0
-        asteroids.y = 0
-        asteroids.z = 0
-        asteroids.set_light_off()
+    # def create_asteroids(self):
+    #     """
+    #     小行星
+    #     :return:
+    #     """
+    #     from simulators.views.ursina_mesh import create_torus,create_body_torus
+    #     textureAsteroids = '../textures/asteroids.png'
+    #     body_torus = create_torus(9, 10, 64)
+    #     asteroids = Entity(model=body_torus, texture=textureAsteroids, scale=10, rotation=(90, 0, 0), double_sided=True)
+    #     asteroids.x = 0
+    #     asteroids.y = 0
+    #     asteroids.z = 0
+    #     asteroids.set_light_off()
 
     def run(self, dt, **kwargs):
         from ursina import EditorCamera, PointLight, SpotLight, AmbientLight, DirectionalLight
@@ -223,16 +219,22 @@ class UrsinaSimulator(Simulator):
                             break
                         else:
                             application.time_scale = time_scales[0]
-            elif key == '+' or key == "= up":
-                if application.time_scale in time_scales:
-                    idx = time_scales.index(application.time_scale)
-                    if idx < len(time_scales) - 1:
-                        application.time_scale = time_scales[idx + 1]
-            elif key == '-' or key == "- up":
-                if application.time_scale in time_scales:
-                    idx = time_scales.index(application.time_scale)
-                    if idx > 0:
-                        application.time_scale = time_scales[idx - 1]
+            elif key == '+':
+                UrsinaConfig.run_speed_factor *= 2
+            elif key == "= up":
+                UrsinaConfig.body_spin_factor  *= 2
+                # if application.time_scale in time_scales:
+                #     idx = time_scales.index(application.time_scale)
+                #     if idx < len(time_scales) - 1:
+                #         application.time_scale = time_scales[idx + 1]
+            elif key == '-':
+                UrsinaConfig.run_speed_factor *= 0.5
+            elif key == "- up":
+                UrsinaConfig.body_spin_factor *= 0.5
+                # if application.time_scale in time_scales:
+                #     idx = time_scales.index(application.time_scale)
+                #     if idx > 0:
+                #         application.time_scale = time_scales[idx - 1]
 
             show_text_time_scale_info()
 
