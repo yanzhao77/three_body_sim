@@ -87,7 +87,7 @@ class Planet(Entity):
 
         pos = body_view.position * body_view.body.distance_scale * UrsinaConfig.SCALE_FACTOR
         scale = body_view.body.diameter * body_view.body.size_scale * UrsinaConfig.SCALE_FACTOR
-
+        self.init_scale = scale
         if hasattr(body_view, "texture"):
             texture = load_texture(body_view.texture)
         else:
@@ -200,6 +200,9 @@ class Planet(Entity):
         return trail
 
     def turn(self):
+
+        self.scale = self.init_scale * UrsinaConfig.body_size_factor
+
         pos = self.body_view.position * UrsinaConfig.SCALE_FACTOR
         if self.body_view.body.parent is None:
             self.x = -pos[1]

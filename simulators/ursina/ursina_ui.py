@@ -22,10 +22,12 @@ class UrsinaUI:
         Text.default_font = 'simsun.ttc'
         application.time_scale = 0.5
         self.slider_body_spin_factor = UiSlider(text='自转速度', min=0.01, max=30, default=1)
+        self.slider_body_size_factor = UiSlider(text='天体缩放', min=0.01, max=10, default=1)
         self.slider_run_speed_factor = UiSlider(text="运行速度", min=0.01, max=800, default=1)
         self.slider_control_speed_factor = UiSlider(text="控制速度", min=0.01, max=30, default=application.time_scale)
         self.slider_trail_length = UiSlider(text="拖尾长度", min=30, max=500, default=UrsinaConfig.trail_length)
 
+        self.slider_body_size_factor.on_value_changed = self.on_slider_body_size_changed
         self.slider_body_spin_factor.on_value_changed = self.on_slider_body_spin_changed
         self.slider_run_speed_factor.on_value_changed = self.on_slider_run_speed_changed
         self.slider_control_speed_factor.on_value_changed = self.on_slider_control_speed_changed
@@ -54,6 +56,7 @@ class UrsinaUI:
                 self.on_off_switch,
                 self.on_off_trail,
                 self.slider_trail_length,
+                self.slider_body_size_factor,
                 self.slider_body_spin_factor,
                 self.slider_run_speed_factor,
                 self.slider_control_speed_factor
@@ -111,6 +114,9 @@ class UrsinaUI:
 
     def on_slider_body_spin_changed(self):
         UrsinaConfig.body_spin_factor = self.slider_body_spin_factor.value
+
+    def on_slider_body_size_changed(self):
+        UrsinaConfig.body_size_factor = self.slider_body_size_factor.value
 
     def on_slider_run_speed_changed(self):
         UrsinaConfig.run_speed_factor = self.slider_run_speed_factor.value

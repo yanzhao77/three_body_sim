@@ -32,6 +32,8 @@ class UrsinaConfig:
     # 拖尾球体的数量
     trail_length = 200
 
+    __body_size_factor = 1.0
+
     @property
     @classmethod
     def run_speed_factor(cls):
@@ -52,6 +54,16 @@ class UrsinaConfig:
     def body_spin_factor(cls, value):
         cls.__body_spin_factor = value
 
+    @property
+    @classmethod
+    def body_size_factor(cls):
+        return cls.__body_size_factor
+
+    @body_size_factor.setter
+    @classmethod
+    def body_spin_factor(cls, value):
+        cls.__body_size_factor = value
+
     @classmethod
     def on_reset_subscription(cls, fun):
         cls.__on_reset_funcs.append(fun)
@@ -65,6 +77,7 @@ class UrsinaConfig:
 # 初始化
 UrsinaConfig.run_speed_factor = 1.0
 UrsinaConfig.body_spin_factor = 1.0
+UrsinaConfig.body_size_factor = 1.0
 
 if __name__ == '__main__':
     UrsinaConfig.run_speed_factor = 2.0
