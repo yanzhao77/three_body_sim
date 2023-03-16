@@ -37,7 +37,7 @@ class UiSlider(Slider):
 
 class SwithButton(ButtonGroup):
     def __init__(self, options, default, tooltips=None):
-        super().__init__(options, min_selection=1, y=0, default=default,
+        super().__init__(options, min_selection=1, y=-1, default=default,
                          selected_color=color.rgba(0.1, 0.6, 0.1, 1.0), ignore_paused=True,
                          color=color.rgba(0.0, 0.0, 0.0, 0.5))
         # self.label.scale = 0.8

@@ -44,6 +44,12 @@ class UrsinaUI:
                                          tooltips=('暂停', '运行'))
         self.on_off_switch.selected_color = color.red
 
+        self.sec_per_time_switch = SwithButton(("默认", "天", "周", "月", "年", "十年", "百年"),
+                                               default="默认",
+                                               tooltips=("系统默认", "每秒相当于1天", "每秒相当于1周",
+                                                         "每秒相当于1个月",
+                                                         "每秒相当于1年", "每秒相当于十年", "每秒相当于1百年"))
+
         self.on_off_trail = SwithButton((self.no_trail_button_text, self.trail_button_text),
                                         default=self.no_trail_button_text,
                                         tooltips=('天体运行无轨迹', '天体运行有拖尾轨迹'))
@@ -52,8 +58,21 @@ class UrsinaUI:
         self.point_button = UiButton(text='寻找', on_click=self.on_point_button_click)
         self.reset_button = UiButton(text='重置', on_click=self.on_reset_button_click)
 
-        self.point_button.scale_x = -0.2
-        self.reset_button.scale_x = 0.2
+        # button1 = Button(text='Button 1', scale=(0.1, 0.1), position=(-0.1, 0))
+        # button2 = Button(text='Button 2', scale=(0.1, 0.1), position=(0.1, 0))
+
+        # btn_settings = UiButton(text='操作设置', on_click=self.on_point_button_click)
+        # btn_settings.position = window.top_left
+        # btn_settings.y = 0.5
+        # # btn_settings.scale = (0.1,0.1)
+        # # btn_settings.y = 0
+        # btn_settings.scale = (.25, .025),
+        # btn_settings.origin = (-.5, .5),
+        # btn_settings.pressed_scale = 1,
+        # if btn_settings.text_entity:
+        #     btn_settings.text_entity.x = .05
+        #     btn_settings.text_entity.origin = (-.5, 0)
+        #     btn_settings.text_entity.scale *= .8
 
         self.on_off_switch.on_value_changed = self.on_off_switch_changed
         wp = WindowPanel(
@@ -64,6 +83,7 @@ class UrsinaUI:
                 # Button(text='Submit', color=color.azure),
                 self.point_button,
                 self.reset_button,
+                self.sec_per_time_switch,
                 self.on_off_switch,
                 self.on_off_trail,
                 self.slider_trail_length,
