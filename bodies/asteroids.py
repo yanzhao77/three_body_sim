@@ -44,7 +44,7 @@ class Asteroids(Body):
         }
         super().__init__(**params)
         # 环状星群
-        self.torus_starts = True
+        self.torus_stars = True
 
     def ignore_gravity(self, body):
         """

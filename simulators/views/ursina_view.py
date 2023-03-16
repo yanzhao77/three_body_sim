@@ -9,7 +9,7 @@
 # pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina
 from ursina import Ursina, window, Entity, Mesh, SmoothFollow, Texture, clamp, time, \
     camera, color, mouse, Vec2, Vec3, Vec4, \
-    load_texture, held_keys
+    load_texture, held_keys, destroy
 
 # from ursina.camera import OrthographicCamera
 from math import sin, cos, radians
@@ -25,7 +25,7 @@ from simulators.views.ursina_mesh import create_sphere, create_torus, create_bod
 import numpy as np
 import math
 
-SCALE_FACTOR = 5e-7
+SCALE_FACTOR = 5e-10
 # 旋转因子为1，则为正常的转速
 ROTATION_SPEED_FACTOR = 1.0
 ROTATION_SPEED_FACTOR = 0.01
@@ -39,8 +39,8 @@ class UrsinaPlayer(FirstPersonController):
 
     def __init__(self, position, targets=None):
         super().__init__()
-        camera.fov = 100
-        camera.rotation_y = 90
+        # camera.fov = 2000 # 100
+        # camera.rotation_y = 90
         self.planets = None
         if targets is not None:
             self.planets = []
@@ -85,9 +85,13 @@ class Planet(Entity):
         self.rotMode = 'x'  # random.choice(["x", "y", "z"])
         self.name = body_view.name
 
-        self.tails = {}
+        self.trails = {}
+        self.trail_len = 100
         b_color = self.body_view.body.color
-        self.tail_color = Vec4(b_color[0], b_color[1], b_color[2], 0.1)
+        trail_color = Vec4(b_color[0], b_color[1], b_color[2], 1) / 255  # 255 是原色，200会更亮一些
+        self.trail_color = color.rgba(trail_color[0], trail_color[1], trail_color[2], 0.3)
+
+        self.trail_color *= 1.5
 
         pos = body_view.position * body_view.body.distance_scale * SCALE_FACTOR
         scale = body_view.body.diameter * body_view.body.size_scale * SCALE_FACTOR
@@ -99,7 +103,7 @@ class Planet(Entity):
         else:
             texture = None
 
-        if hasattr(self.body_view.body, "torus_starts"):
+        if hasattr(self.body_view.body, "torus_stars"):
             model = create_torus(0.86, 1.02, 64, 4)
             rotation = (90, 0, 0)
         else:
@@ -116,45 +120,59 @@ class Planet(Entity):
             rotation=rotation,
             double_sided=True)
 
-        if hasattr(self.body_view.body, "torus_starts"):
+        if hasattr(self.body_view.body, "torus_stars"):
+            # 非一个天体，星环（主要模拟小行星群）
             self.set_light_off()
+        else:
+            # 一个天体
+            # 拖尾球体的大小为该天体的 1/5
+            self.trail_scale = scale / 5
+            if self.trail_scale < 1:
+                # 如果太小，则
+                pass
 
-    def create_tails(self):
-        tail_keys = []
-        his_pos = self.body_view.body.his_position()
-        for pos in his_pos:
-            tail_key = str(pos)
-            tail_keys.append(tail_key)
+    def distance_between_two_points(self, point_a: Vec3, point_b: Vec3) -> float:
+        # 计算两点在 x、y、z 三个坐标轴上的差值
+        diff_x = point_a.x - point_b.x
+        diff_y = point_a.y - point_b.y
+        diff_z = point_a.z - point_b.z
 
-        tail_more = len(self.tails) - len(his_pos)
+        # 计算两点之间的距离
+        distance = math.sqrt(diff_x ** 2 + diff_y ** 2 + diff_z ** 2)
 
-        # 先删除超过的 tail entity
-        if tail_more > 0:
-            for key, entity in self.tails.items():
-                entity.visible = False
-                entity.disable()
-                del entity
-                tail_more -= 1
-                if tail_more <= 0:
+        return distance
+
+    def create_trails(self):
+        pos = self.position
+        trails_keys = self.trails.keys()
+        if len(trails_keys) > 0:
+            last_key = list(trails_keys)[-1]
+            last_pos = self.trails[last_key]
+            distance = self.distance_between_two_points(pos, last_pos)
+            if distance < self.trail_scale * 1.2:
+                return
+
+        self.trails[self.create_trail(pos)] = pos
+        trail_more = len(self.trails) - self.trail_len
+        if trail_more > 0:
+            for entity, pos in self.trails.items():
+                # entity.visible = False
+                # entity.disable()
+                # del entity
+                destroy(entity)
+                trail_more -= 1
+                if trail_more <= 0:
                     break
 
-        # 再增加
-        for pos in his_pos:
-            tail_key = str(pos)
-            if tail_key not in self.tails.keys():
-                # pass
-                self.tails[tail_key] = self.create_tail(pos)
-
-    def create_tail(self, pos):
-        pos = pos * SCALE_FACTOR
+    def create_trail(self, pos):
+        # pos = pos * SCALE_FACTOR
         # sphere = create_sphere(0.5, 10)
-        scale = self.body_view.planet.scale_x / 5
-        tail = Entity(model="diamond", color=self.tail_color, scale=scale)  # ,
-        tail.x = -pos[1]
-        tail.y = pos[2]
-        tail.z = pos[0]
-        tail.set_light_off()
-        return tail
+        trail = Entity(model="sphere", color=self.trail_color, scale=self.trail_scale, position=pos)  # ,
+        # trail.x = pos[0]
+        # trail.y = pos[1]
+        # trail.z = pos[2]
+        trail.set_light_off()
+        return trail
 
     def turn(self):
         pos = self.body_view.position * SCALE_FACTOR
@@ -177,7 +195,13 @@ class Planet(Entity):
 
         self.rotation_y -= self.rotspeed
 
-        # self.create_tails()
+        # 有时候第一个位置不正确，所以判断一下有历史记录后在创建
+        if len(self.body_view.body.his_position()) > 1:
+            self.create_trails()
+        # self.animate_position(Vec2(2, 0), duration=1)
+        # from  ursina import Trail
+        # 给实体添加拖尾效果
+        # trail = Trail(self)
 
     # def input(self, key):
     #     if key == "enter":
@@ -249,4 +273,5 @@ class UrsinaView(BodyView):
         pass
 
     def disappear(self):
-        self.planet.disable()
+        destroy(self.planet)
+        # self.planet.disable()

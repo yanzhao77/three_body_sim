@@ -26,7 +26,7 @@ class Uranus(Body):
     def __init__(self, name="Uranus", mass=8.681e25,
                  init_position=[19 * AU, 0, 0],
                  init_velocity=[0, 6.81, 0],
-                 texture="uranus.jpg", size_scale=1.0, distance_scale=1.0,
+                 texture="uranus.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=-20.8816):
         params = {
             "name": name,

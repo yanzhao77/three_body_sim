@@ -26,7 +26,7 @@ class Pluto(Body):
     def __init__(self, name="Pluto", mass=1.303e22,
                  init_position=[40 * AU, 0, 0],
                  init_velocity=[0, 4.7, 0],
-                 texture="pluto2.jpg", size_scale=1.0, distance_scale=1.0,
+                 texture="pluto.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=-2.3474):
         params = {
             "name": name,
