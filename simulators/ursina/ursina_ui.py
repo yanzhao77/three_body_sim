@@ -10,7 +10,7 @@ from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application
     load_texture, held_keys, Button
 from ursina.prefabs.first_person_controller import FirstPersonController
 
-from simulators.ursina.ui_component import UiSlider, SwithButton
+from simulators.ursina.ui_component import UiSlider, SwithButton, UiButton
 from simulators.ursina.ursina_config import UrsinaConfig
 from simulators.ursina.ursina_event import UrsinaEvent
 from ursina import WindowPanel, InputField, Button, Slider, ButtonGroup
@@ -19,7 +19,10 @@ from ursina import WindowPanel, InputField, Button, Slider, ButtonGroup
 class UrsinaUI:
 
     def ui_component_init(self):
-        Text.default_font = 'simsun.ttc'
+
+        self.start_button_text = "●" # 》●▲○◎
+        self.pause_button_text = "〓" #  〓 || ‖
+
         application.time_scale = 0.5
         self.slider_body_spin_factor = UiSlider(text='自转速度', min=0.01, max=30, default=1)
         self.slider_body_size_factor = UiSlider(text='天体缩放', min=0.01, max=10, default=1)
@@ -33,22 +36,21 @@ class UrsinaUI:
         self.slider_control_speed_factor.on_value_changed = self.on_slider_control_speed_changed
         self.slider_trail_length.on_value_changed = self.on_slider_trail_length_changed
 
-        self.on_off_switch = SwithButton(('||', '○'), default='○')
+        self.on_off_switch = SwithButton((self.pause_button_text,
+                                          self.start_button_text), default=self.start_button_text)
         self.on_off_switch.selected_color = color.red
 
         self.on_off_trail = SwithButton((' ', '...'), default=' ')
         self.on_off_trail.on_value_changed = self.on_off_trail_changed
 
-        self.point_button = Button(text='寻找', origin=(0, 0), y=2,
-                                   on_click=self.on_point_button_click, color=color.rgba(0.0, 0.0, 0.0, 0.5))
-        self.reset_button = Button(text='重置', origin=(0, 0), y=2,
-                                   on_click=self.on_reset_button_click, color=color.rgba(0.0, 0.0, 0.0, 0.5))
+        self.point_button = UiButton(text='寻找', on_click=self.on_point_button_click)
+        self.reset_button = UiButton(text='重置', on_click=self.on_reset_button_click)
         self.on_off_switch.on_value_changed = self.on_off_switch_changed
 
         wp = WindowPanel(
             title='',
             content=(
-                Text('方位控制: Q W E A S D + 鼠标右键'),
+                Text('方位控制: Q W E A S D + 鼠标右键',font='msyhl.ttc'),
                 # InputField(name='name_field'),
                 # Button(text='Submit', color=color.azure),
                 self.point_button,
@@ -99,7 +101,7 @@ class UrsinaUI:
         UrsinaEvent.on_reset()
 
     def on_off_switch_changed(self):
-        if self.on_off_switch.value == "||":
+        if self.on_off_switch.value == self.pause_button_text:
             self.on_off_switch.selected_color = color.green
             application.paused = True
         else:

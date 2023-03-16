@@ -17,6 +17,10 @@ class UrsinaConfig:
     ROTATION_SPEED_FACTOR = 1.0
     # ROTATION_SPEED_FACTOR = 0.01
 
+    # 中文字体（微软雅黑）
+    CN_FONT = "msyhl.ttc"  # 'simsun.ttc' 仿宋体
+    CN_FONT = 'simsun.ttc'  #  仿宋体
+
     # 速度的倍数
     __run_speed_factor = 1.0
 
