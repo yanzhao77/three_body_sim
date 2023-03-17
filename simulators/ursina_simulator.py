@@ -20,6 +20,7 @@ from common.system import System
 import time
 import datetime
 import math
+import os
 from ursina import EditorCamera, PointLight, SpotLight, AmbientLight, DirectionalLight
 from scenes.func import ursina_run
 
@@ -65,7 +66,6 @@ class UrsinaSimulator(Simulator):
             # if view.appeared:
             views.append(view)
         return views
-
 
     def check_elapsed_time(self):
         """检查时间间隔是否已过"""
@@ -154,6 +154,17 @@ class UrsinaSimulator(Simulator):
 
         return lights
 
+    def switch_to_english_input_method(self):
+        pass
+        # os.system("powershell -Command \"Set-WinUserLanguageList -LanguageList 'en-US', 'zh-CN' -Force\"")
+
+        # if os.name == 'nt':  # Windows 系统
+        #     os.system('powershell -Command "Set-WinUserLanguageList en-US -Force"')
+        # elif os.name == 'posix':  # macOS 或 Linux 系统
+        #     os.system(
+        #         'defaults write ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources -array-add \'{ "InputSourceKind" = "Keyboard Layout"; "KeyboardLayout ID" = 252; "KeyboardLayout Name" = "ABC"; }\'')
+        #     os.system('killall cfprefsd')  # 重启 CoreFoundation 进程使更改生效
+
     def run(self, dt, **kwargs):
 
         window.title = '宇宙模拟器'
@@ -191,7 +202,8 @@ class UrsinaSimulator(Simulator):
 
         ui = UrsinaUI()
         EditorCamera(ignore_paused=True)
-
+        # 防止打开中文输入法
+        # self.switch_to_english_input_method()
         self.app.run()
 
 

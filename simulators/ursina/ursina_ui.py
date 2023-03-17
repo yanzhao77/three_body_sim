@@ -7,14 +7,14 @@
 # python_version  :3.8
 # ==============================================================================
 from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application, color, mouse, Vec2, Vec3, \
-    load_texture, held_keys, Button, ButtonList, destroy, scene, distance
+    load_texture, held_keys, Button, ButtonList, destroy, scene, distance, Sequence, Wait, Func
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 from common.consts import AU
 from simulators.ursina.ui_component import UiSlider, SwithButton, UiButton
 from simulators.ursina.ursina_config import UrsinaConfig
 from simulators.ursina.ursina_event import UrsinaEvent
-from ursina import WindowPanel, InputField, Button, Slider, ButtonGroup, Panel
+from ursina import WindowPanel, InputField, Button, Slider, ButtonGroup, Panel, invoke
 
 
 class UrsinaUI:
@@ -121,6 +121,28 @@ class UrsinaUI:
         # slider_text = Text(text='自转速度', scale=1, position=(-0.6, 0.3))
         # slider = Slider(scale=0.5, position=(-0.6, 0), min=0, max=10, step=1, text=slider_text)
 
+    def show_message(self, message, close_time=3):
+        """
+        创建消息框
+        :param message: 消息内容
+        :param close_time: 定义关闭时间
+        :return:
+        """
+        # 创建消息框
+        message_box = Text(text=message, font=UrsinaConfig.CN_FONT, background=True, origin=(0, 0), y=.25)
+
+        # 定义关闭函数
+        def close_message():
+            destroy(message_box)
+
+        s = Sequence(
+            Wait(3),
+            Func(close_message)
+        )
+        s.start()
+        # # 使用 time 模块来实现定时关闭
+        # invoke(close_message, delay=close_time)
+
     def on_off_trail_changed(self):
         if self.on_off_trail.value == self.trail_button_text:
             UrsinaConfig.show_trail = True
@@ -154,6 +176,10 @@ class UrsinaUI:
         results = UrsinaEvent.on_searching_bodies()
         if len(results) > 0:
             sub_name, bodies = results[0]
+            if len(bodies) == 0:
+                self.show_message("天体都飞不见了，请重新运行。")
+                # button_dict = {"天体都飞不见了，请重新运行。": lambda: self.bodies_button_list_click(None)}
+                return
             # print(results[0])
             button_dict = {"[关闭]": lambda: self.bodies_button_list_click(None)}
             camera = scene.camera
