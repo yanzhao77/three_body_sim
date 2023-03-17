@@ -66,11 +66,34 @@ def ursina_run(bodies,
     """
 
     from simulators.ursina_simulator import UrsinaSimulator, UrsinaPlayer
-    from ursina import application, Sequence
+    from ursina import application, Sequence, camera, held_keys, time, clamp,Entity,Text
     body_sys = System(bodies)
     simulator = UrsinaSimulator(body_sys)
 
     player = UrsinaPlayer(position, simulator.ursina_views)
+
+    # # 创建一个实体（在屏幕中央）和一个摄像机
+    # TODO: 未使用
+    # entity = Entity(model='cube', position=(0, 0, 5), scale=2)
+    # camera = Camera()
+    #
+    # # 设置初始的 FOV 值（默认值为 90）
+    # camera.fov = 60
+    #
+    # # 创建一个用于显示当前 FOV 值的文本
+    # fov_text = Text(text=f'FOV: {camera.fov}', position=(-0.5, 0.4), scale=2)
+    # # 每一帧更新摄像机 FOV 值
+    # def update():
+    #     # 通过鼠标滚轮来调整 FOV 值
+    #     camera.fov -= held_keys['scroll'] * 10 * time.dt
+    #     # 限制 FOV 值的范围（1 到 120 之间）
+    #     camera.fov = clamp(camera.fov, 1, 120)
+    #     # 更新文本内容
+    #     fov_text.text = f'FOV: {camera.fov:.2f}'  # 保留两位小数
+    #
+    #     # 将摄像机移到实体旁边，并对着它
+    #     camera.position = entity.position + (0, 0, -5)
+    #     camera.look_at(entity.position)
 
     def callback_update():
         for ursina_view in simulator.ursina_views:

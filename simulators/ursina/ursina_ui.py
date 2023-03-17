@@ -7,9 +7,10 @@
 # python_version  :3.8
 # ==============================================================================
 from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application, color, mouse, Vec2, Vec3, \
-    load_texture, held_keys, Button, ButtonList, destroy
+    load_texture, held_keys, Button, ButtonList, destroy, scene, distance
 from ursina.prefabs.first_person_controller import FirstPersonController
 
+from common.consts import AU
 from simulators.ursina.ui_component import UiSlider, SwithButton, UiButton
 from simulators.ursina.ursina_config import UrsinaConfig
 from simulators.ursina.ursina_event import UrsinaEvent
@@ -128,9 +129,26 @@ class UrsinaUI:
 
     def bodies_button_list_click(self, item):
         if item is not None:
-            print("select->", item)
+            # TODO: 先找到位置，确定摄像机的位置
+            # print("select->", item)
+            # UrsinaConfig.SCALE_FACTOR
+            x = item.planet.scale_x * 10
+            camera.position = item.planet.position + Vec3(-x, 0, 0)
+            camera.look_at(item.planet)
+            camera.rotation = (0, 90, 0)
+            # camera.forward = (1, 0, 0)  # 设置相机的方向向量为x轴方向
 
         destroy(self.bodies_button_list)
+
+    # my_entity = Entity(model='cube', color=color.red, position=(0, 1, 5))
+    #
+    # # 获取当前摄像机
+    # camera = scene.camera
+    #
+    # # 计算 Entity 和摄像机之间的距离
+    # distance_to_entity = distance(my_entity, camera)
+    #
+    # print('距离:', distance_to_entity)
 
     def on_searching_bodies_click(self):
         results = UrsinaEvent.on_searching_bodies()
@@ -138,13 +156,18 @@ class UrsinaUI:
             sub_name, bodies = results[0]
             # print(results[0])
             button_dict = {"[关闭]": lambda: self.bodies_button_list_click(None)}
-
+            camera = scene.camera
             for body in bodies:
                 def callback_action(b=body):
                     self.bodies_button_list_click(b)
 
-                button_dict[body.name] = callback_action
+                distance_to_entity = distance(body.planet, camera)
+                d = distance_to_entity / UrsinaConfig.SCALE_FACTOR / AU
+                name = f"{body.name}\t距离：{d:.4f}天文单位"
+                button_dict[name] = callback_action
 
+            if hasattr(self, "bodies_button_list"):
+                destroy(self.bodies_button_list)
             self.bodies_button_list = ButtonList(button_dict, font=UrsinaConfig.CN_FONT, button_height=1.5)
             # self.bodies_button_list.input = self.bodies_button_list_input
 
@@ -205,6 +228,8 @@ class UrsinaUI:
         # print(key)
         elif key == 'space':
             self.wp.enabled = not self.wp.enabled
+        elif key == 'left mouse down':
+            print(key)
         #     application.paused = not application.paused  # Pause/unpause the game.
         # elif key == 'tab':
         #     # application.time_scale 属性控制游戏时间流逝的速度。
