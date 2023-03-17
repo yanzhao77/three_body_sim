@@ -81,7 +81,6 @@ class UrsinaUI:
         wp = WindowPanel(
             title='',
             content=(
-                Text('方位控制: Q W E A S D + 鼠标右键', font='msyhl.ttc'),
                 # InputField(name='name_field'),
                 # Button(text='Submit', color=color.azure),
                 self.point_button,
@@ -116,8 +115,9 @@ class UrsinaUI:
         # self.text_time_scale_info = None
         self.settings_handler.input = self.settings_handler_input
         # self.show_text_time_scale_info()
-        key_info_str = "按[空格]设置"
-        key_info = Text(text=key_info_str, font=UrsinaConfig.CN_FONT, position=(-0.5, 0.5), origin=(-1, 1),
+        # Text('方位控制: Q W E A S D + 鼠标右键', font='msyhl.ttc'),
+        key_info_str = "方位控制[键盘QWEASD]+[鼠标右键]，按[空格]更多控制"
+        key_info = Text(text=key_info_str, font=UrsinaConfig.CN_FONT, position=(-1, 0.5), origin=(-1, 1),
                         background=True)
         # # self.show_button()
         # slider_text = Text(text='自转速度', scale=1, position=(-0.6, 0.3))

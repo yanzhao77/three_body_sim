@@ -84,6 +84,7 @@ class UrsinaSimulator(Simulator):
             else:
                 evolve_dt = UrsinaConfig.seconds_per * run_speed_factor
 
+            evolve_dt = evolve_dt * self.interval_fator
             super().evolve(evolve_dt)
 
     def cosmic_background(self, texture='../textures/cosmic2.jpg'):
@@ -182,9 +183,9 @@ class UrsinaSimulator(Simulator):
         # camera.rotation_x = -30
 
         # 设定时间间隔为0.01秒
-        interval = 0.01
-        self.evolve_dt = dt * interval
-        self.interval = datetime.timedelta(seconds=interval)
+        self.interval_fator = 0.01
+        self.evolve_dt = dt
+        self.interval = datetime.timedelta(seconds=self.interval_fator)
 
         self.last_time = datetime.datetime.now() - datetime.timedelta(seconds=2)
         if "light" in kwargs:
