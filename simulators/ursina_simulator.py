@@ -62,8 +62,8 @@ class UrsinaSimulator(Simulator):
     def on_searching_bodies(self, **kwargs):
         views = []
         for view in self.body_views:
-            if view.appeared:
-                views.append(view)
+            # if view.appeared:
+            views.append(view)
         return views
 
 

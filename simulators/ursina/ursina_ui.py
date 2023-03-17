@@ -161,10 +161,14 @@ class UrsinaUI:
                 def callback_action(b=body):
                     self.bodies_button_list_click(b)
 
-                distance_to_entity = distance(body.planet, camera)
-                d = distance_to_entity / UrsinaConfig.SCALE_FACTOR / AU
-                name = f"{body.name}\t距离：{d:.4f}天文单位"
-                button_dict[name] = callback_action
+                if body.appeared:
+                    distance_to_entity = distance(body.planet, camera)
+                    d = distance_to_entity / UrsinaConfig.SCALE_FACTOR / AU
+                    name = f"{body.name}\t距离：{d:.4f}天文单位"
+                    button_dict[name] = callback_action
+                else:
+                    name = f"{body.name}\t距离太远，找不到了"
+                    button_dict[name] = lambda: self.bodies_button_list_click(None)
 
             if hasattr(self, "bodies_button_list"):
                 destroy(self.bodies_button_list)
