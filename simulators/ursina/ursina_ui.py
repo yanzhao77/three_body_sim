@@ -149,15 +149,57 @@ class UrsinaUI:
         else:
             UrsinaConfig.show_trail = False
 
+    def move_camera_to_entity(self, camera_pos: Vec3, entity_pos: Vec3, _distance: float) -> Vec3:
+        # 计算摄像机到实体的向量
+        direction = entity_pos - camera_pos
+        # 计算当前距离
+        current_distance = direction.length()
+        # 如果当前距离已经小于等于要求的距离，则直接返回实体坐标
+        if current_distance <= _distance:
+            return camera_pos
+        # 计算需要移动的距离
+        _distance = current_distance - _distance
+        # 根据需要移动的距离计算移动向量
+        move_vector = direction.normalized() * _distance
+        # 返回摄像机移动后的坐标
+        return camera_pos + move_vector
+
+    def move_camera_to_entity(self,entity,d):
+        import math
+        # print("before",camera.position, entity.position)
+        camera.position = entity.position #- Vec3(0, 0, d)  # 设置摄像机位置
+        camera.world_position = entity.position
+        # camera.rotation = (0, 0, 0)  # 重置摄像机旋转角度
+
+        # print("after",camera.position,entity.position)
+
+        # # 获取相机和实体之间的向量
+        # target_vector = entity.position - camera.position
+        # target_vector.y = 0  # 假设实体在 x-z 平面上，将 y 坐标设为 0
+        #
+        # # 计算旋转角度
+        # angle = math.degrees(math.atan2(target_vector.z, target_vector.x))
+        # camera.rotation_y = angle  # 旋转相机
+
+        # camera.look_at(entity.position)  # 对准指定实体
+
     def bodies_button_list_click(self, item):
         if item is not None:
             # TODO: 先找到位置，确定摄像机的位置
             # print("select->", item)
             # UrsinaConfig.SCALE_FACTOR
-            x = item.planet.scale_x * 10
-            camera.position = item.planet.position + Vec3(-x, 0, 0)
-            camera.look_at(item.planet)
-            camera.rotation = (0, 90, 0)
+            # import copy
+            # camera_rotation = copy.deepcopy(camera.rotation)
+            d = item.planet.scale_x * 20
+            self.move_camera_to_entity(item.planet, d)
+            # d = distance(camera.position, item.planet.position)
+            # camera.look_at(item.planet)
+            # if d > 1.5 * x:
+            #     move_to = self.move_camera_to_entity(camera.position, item.planet.position, x)
+            #     camera.position = move_to
+
+            # camera_rotation = copy.deepcopy(camera.rotation)
+            # camera.rotation = (camera_rotation[0], camera_rotation[1], 0)
             # camera.forward = (1, 0, 0)  # 设置相机的方向向量为x轴方向
 
         destroy(self.bodies_button_list)
@@ -193,11 +235,14 @@ class UrsinaUI:
                     name = f"{body.name}\t距离：{d:.4f}天文单位"
                     button_dict[name] = callback_action
                 else:
+                    if hasattr(self, "bodies_button_list"):
+                        destroy(self.bodies_button_list)
                     name = f"{body.name}\t距离太远，找不到了"
                     button_dict[name] = lambda: self.bodies_button_list_click(None)
 
             if hasattr(self, "bodies_button_list"):
                 destroy(self.bodies_button_list)
+
             self.bodies_button_list = ButtonList(button_dict, font=UrsinaConfig.CN_FONT, button_height=1.5)
             # self.bodies_button_list.input = self.bodies_button_list_input
 
@@ -235,11 +280,11 @@ class UrsinaUI:
     def on_slider_run_speed_changed(self):
         UrsinaConfig.run_speed_factor = self.slider_run_speed_factor.value
 
-    def show_text_time_scale_info(self):
-        if self.text_time_scale_info is not None:
-            self.text_time_scale_info.disable()
-        text_time_scale = "控制倍率:" + str(application.time_scale).ljust(4, " ")
-        text_time_scale_info = Text(text=text_time_scale, position=(-0.8, 0.5), origin=(-1, 1), background=True)
+    # def show_text_time_scale_info(self):
+    #     if self.text_time_scale_info is not None:
+    #         self.text_time_scale_info.disable()
+    #     text_time_scale = "控制倍率:" + str(application.time_scale).ljust(4, " ")
+    #     text_time_scale_info = Text(text=text_time_scale, position=(-0.8, 0.5), origin=(-1, 1), background=True)
 
     # def show_button(self):
     #     b = Button(scale=(0, .25), text='zzz')

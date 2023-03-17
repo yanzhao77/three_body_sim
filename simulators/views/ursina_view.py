@@ -47,7 +47,7 @@ class UrsinaPlayer(FirstPersonController):
             #
             # camera.add_script(SmoothFollow(targets_parent, offset=(0, 8, -20)))
         pos = np.array(position) * UrsinaConfig.SCALE_FACTOR
-        # self.position = Vec3(pos[0], pos[1], pos[2])
+        self.position = Vec3(pos[0], pos[1], pos[2])
         # 将摄像机位置设置为 x=0、y=1、z=0 的位置
         camera.position = Vec3(pos[0], pos[1], pos[2])
         # self.position = Vec3(pos[0], pos[1], pos[2])
@@ -95,7 +95,7 @@ class Planet(Entity):
 
         if hasattr(self.body_view.body, "torus_stars"):
             # 创建一个星环小天体群（主要模拟小行星群，非一个天体）
-            model = create_torus(0.86, 1.02, 64, 4)
+            model = create_torus(0.75, 1.10, 64, 1)
             rotation = (90, 0, 0)
         else:
             # 创建一个天体

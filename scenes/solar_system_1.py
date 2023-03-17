@@ -6,8 +6,8 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Moon
-from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY, SECONDS_PER_YEAR
+from bodies import Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto, Moon, Asteroids
+from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY, SECONDS_PER_YEAR, AU
 from scenes.func import mayavi_run, ursina_run
 
 if __name__ == '__main__':
@@ -19,21 +19,24 @@ if __name__ == '__main__':
     #  =====================================================================
     #  以下展示的效果为太阳系真实的距离
     #  由于宇宙空间尺度非常大，如果按照实际的天体大小，则无法看到天体，因此需要对天体的尺寸进行放大
+    sun = Sun(name="太阳", size_scale=0.8e2)       # 太阳放大 80 倍，距离保持不变
     bodies = [
-        Sun(size_scale=0.8e2),      # 太阳放大 80 倍，距离保持不变
-        Mercury(size_scale=4e3),    # 水星放大 4000 倍，距离保持不变
-        Venus(size_scale=4e3),      # 金星放大 4000 倍，距离保持不变
-        Earth(size_scale=4e3),      # 地球放大 4000 倍，距离保持不变
-        Mars(size_scale=4e3),       # 火星放大 4000 倍，距离保持不变
-        Jupiter(size_scale=0.8e3),  # 木星放大 800 倍，距离保持不变
-        Saturn(size_scale=0.8e3),   # 土星放大 800 倍，距离保持不变
-        Uranus(size_scale=0.8e3),   # 天王星放大 800 倍，距离保持不变
-        Neptune(size_scale=1e3),    # 海王星放大 1000 倍，距离保持不变
-        Pluto(size_scale=10e3),     # 冥王星放大 10000 倍，距离保持不变(从太阳系的行星中排除)
+        sun,
+        Mercury(name="水星", size_scale=4e3),      # 水星放大 4000 倍，距离保持不变
+        Venus(name="金星", size_scale=4e3),        # 金星放大 4000 倍，距离保持不变
+        Earth(name="地球", size_scale=4e3),        # 地球放大 4000 倍，距离保持不变
+        Mars(name="火星", size_scale=4e3),         # 火星放大 4000 倍，距离保持不变
+        Asteroids(name="小行星群", size_scale=3.2e2,
+                  parent=sun),                     # 小行星群模拟(仅 ursina 模拟器支持)
+        Jupiter(name="木星", size_scale=0.8e3),    # 木星放大 800 倍，距离保持不变
+        Saturn(name="土星", size_scale=0.8e3),     # 土星放大 800 倍，距离保持不变
+        Uranus(name="天王星", size_scale=0.8e3),   # 天王星放大 800 倍，距离保持不变
+        Neptune(name="海王星", size_scale=1e3),    # 海王星放大 1000 倍，距离保持不变
+        Pluto(name="冥王星", size_scale=10e3),     # 冥王星放大 10000 倍，距离保持不变(从太阳系的行星中排除)
     ]
 
     # 使用 mayavi 查看的运行效果
     # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45)
 
     # 使用 ursina 查看的运行效果
-    ursina_run(bodies, SECONDS_PER_YEAR, position=(0, 0, 0))
+    ursina_run(bodies, SECONDS_PER_YEAR, position=(0, 5 * AU, -10 * AU))  # position=左-右+、上+下-、前+后-

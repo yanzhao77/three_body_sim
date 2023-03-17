@@ -168,6 +168,14 @@ class UrsinaSimulator(Simulator):
     def run(self, dt, **kwargs):
 
         window.title = '宇宙模拟器'
+
+        # 设置 camera 的裁剪面和位置
+        # camera.clip_plane_near = 0.00000009
+        # camera.fov = 120
+        # camera.clip_plane_far = 1000
+        # camera.position = (0, 10, -20)
+        # camera.rotation_x = -30
+
         # 设定时间间隔为0.01秒
         interval = 0.01
         self.evolve_dt = dt * interval
@@ -193,12 +201,6 @@ class UrsinaSimulator(Simulator):
             import os
             if cosmic_bg is not None and os.path.exists(cosmic_bg):
                 self.cosmic_background(cosmic_bg)
-
-        # 设置 camera 的裁剪面和位置
-        camera.clip_plane_near = 0.1
-        # camera.clip_plane_far = 1000
-        # camera.position = (0, 10, -20)
-        # camera.rotation_x = -30
 
         ui = UrsinaUI()
         EditorCamera(ignore_paused=True)
