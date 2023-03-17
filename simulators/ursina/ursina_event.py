@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-# title           :ursina天体运行模拟器
-# description     :ursina天体运行模拟器
+# title           :ursina天体运行模拟器事件传递
+# description     :ursina天体运行模拟器事件传递
 # author          :Python超人
 # date            :2023-02-11
 # link            :https://gitcode.net/pythoncr/

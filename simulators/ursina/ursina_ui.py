@@ -92,7 +92,7 @@ class UrsinaUI:
                 self.slider_run_speed_factor,
                 self.slider_control_speed_factor
 
-            ), ignore_paused=True, color=color.rgba(0.0, 0.0, 0.0, 0.5), popup=True
+            ), ignore_paused=True, color=color.rgba(0.0, 0.0, 0.0, 0.5)  # , popup=True
         )
         self.sec_per_time_switch.x = -0.5
         self.on_off_switch.x = -0.2
@@ -101,19 +101,21 @@ class UrsinaUI:
         wp.x = 0.6  # wp.scale_x + 0.1
         # wp.x = 0#wp.panel.scale_x / 2 * wp.scale_x
         self.wp = wp
+        self.wp.enabled = False
 
     def __init__(self):
         self.ui_component_init()
 
-        # self.pause_handler = Entity(ignore_paused=True)
+        self.settings_handler = Entity(ignore_paused=True)
         # 加载中文字体文件
 
         # text_time_scale = "1"
         # self.text_time_scale_info = None
-        # self.pause_handler.input = self.pause_handler_input
+        self.settings_handler.input = self.settings_handler_input
         # self.show_text_time_scale_info()
-        # key_info_str = "退出[按2次ESC] 方位控制[鼠标QWEASD] 开始暂停[空格] 控制倍率[Tab - +]"
-        # key_info = Text(text=key_info_str, position=(-0.8, 0.5), origin=(-1, 1), background=True)
+        key_info_str = "按[空格]设置"
+        key_info = Text(text=key_info_str, font=UrsinaConfig.CN_FONT, position=(-0.5, 0.5), origin=(-1, 1),
+                        background=True)
         # # self.show_button()
         # slider_text = Text(text='自转速度', scale=1, position=(-0.6, 0.3))
         # slider = Slider(scale=0.5, position=(-0.6, 0), min=0, max=10, step=1, text=slider_text)
@@ -125,7 +127,8 @@ class UrsinaUI:
             UrsinaConfig.show_trail = False
 
     def bodies_button_list_click(self, item):
-        print("select->", item)
+        if item is not None:
+            print("select->", item)
 
         destroy(self.bodies_button_list)
 
@@ -134,7 +137,7 @@ class UrsinaUI:
         if len(results) > 0:
             sub_name, bodies = results[0]
             # print(results[0])
-            button_dict = {}
+            button_dict = {"[关闭]": lambda: self.bodies_button_list_click(None)}
 
             for body in bodies:
                 def callback_action(b=body):
@@ -185,8 +188,8 @@ class UrsinaUI:
         text_time_scale = "控制倍率:" + str(application.time_scale).ljust(4, " ")
         text_time_scale_info = Text(text=text_time_scale, position=(-0.8, 0.5), origin=(-1, 1), background=True)
 
-    def show_button(self):
-        b = Button(scale=(0, .25), text='zzz')
+    # def show_button(self):
+    #     b = Button(scale=(0, .25), text='zzz')
 
     #  if key == "escape":
     #             if mouse.locked:
@@ -195,40 +198,40 @@ class UrsinaUI:
     #                 sys.exit()
 
     # 按空格键则暂停
-    def pause_handler_input(self, key):
+    def settings_handler_input(self, key):
         import sys
-        time_scales = [0.05, 0.1, 0.2, 0.5, 1, 5, 10, 20, 30]
         if key == "escape":
             sys.exit()
         # print(key)
         elif key == 'space':
-            application.paused = not application.paused  # Pause/unpause the game.
-        elif key == 'tab':
-            # application.time_scale 属性控制游戏时间流逝的速度。
-            # 具体来说，它是一个浮点数，用于调整游戏时间流逝速度的比例，其默认值为 1.0，表示正常速度。
-            # 当你将它设置为小于 1.0 的值时，游戏时间会变慢，而设置为大于 1.0 的值时，游戏时间则会变快。
-            for idx, time_scale in enumerate(time_scales):
-                if float(application.time_scale) == time_scale:
-                    if idx < len(time_scales) - 1:
-                        application.time_scale = time_scales[idx + 1]
-                        break
-                    else:
-                        application.time_scale = time_scales[0]
-        elif key == '+':
-            UrsinaConfig.run_speed_factor *= 2
-        elif key == "= up":
-            UrsinaConfig.body_spin_factor *= 2
-            # if application.time_scale in time_scales:
-            #     idx = time_scales.index(application.time_scale)
-            #     if idx < len(time_scales) - 1:
-            #         application.time_scale = time_scales[idx + 1]
-        elif key == '-':
-            UrsinaConfig.run_speed_factor *= 0.5
-        elif key == "- up":
-            UrsinaConfig.body_spin_factor *= 0.5
-            # if application.time_scale in time_scales:
-            #     idx = time_scales.index(application.time_scale)
-            #     if idx > 0:
-            #         application.time_scale = time_scales[idx - 1]
-
-        self.show_text_time_scale_info()
+            self.wp.enabled = not self.wp.enabled
+        #     application.paused = not application.paused  # Pause/unpause the game.
+        # elif key == 'tab':
+        #     # application.time_scale 属性控制游戏时间流逝的速度。
+        #     # 具体来说，它是一个浮点数，用于调整游戏时间流逝速度的比例，其默认值为 1.0，表示正常速度。
+        #     # 当你将它设置为小于 1.0 的值时，游戏时间会变慢，而设置为大于 1.0 的值时，游戏时间则会变快。
+        #     for idx, time_scale in enumerate(time_scales):
+        #         if float(application.time_scale) == time_scale:
+        #             if idx < len(time_scales) - 1:
+        #                 application.time_scale = time_scales[idx + 1]
+        #                 break
+        #             else:
+        #                 application.time_scale = time_scales[0]
+        # elif key == '+':
+        #     UrsinaConfig.run_speed_factor *= 2
+        # elif key == "= up":
+        #     UrsinaConfig.body_spin_factor *= 2
+        #     # if application.time_scale in time_scales:
+        #     #     idx = time_scales.index(application.time_scale)
+        #     #     if idx < len(time_scales) - 1:
+        #     #         application.time_scale = time_scales[idx + 1]
+        # elif key == '-':
+        #     UrsinaConfig.run_speed_factor *= 0.5
+        # elif key == "- up":
+        #     UrsinaConfig.body_spin_factor *= 0.5
+        #     # if application.time_scale in time_scales:
+        #     #     idx = time_scales.index(application.time_scale)
+        #     #     if idx > 0:
+        #     #         application.time_scale = time_scales[idx - 1]
+        #
+        # self.show_text_time_scale_info()
