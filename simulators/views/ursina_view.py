@@ -200,8 +200,11 @@ class Planet(Entity):
         return trail
 
     def turn(self):
-
-        self.scale = self.init_scale * UrsinaConfig.body_size_factor
+        if hasattr(self.body_view.body, "torus_stars"):
+            # 星环小天体群（主要模拟小行星群，非一个天体）不受 body_size_factor 影响
+            self.scale = self.init_scale
+        else:
+            self.scale = self.init_scale * UrsinaConfig.body_size_factor
 
         pos = self.body_view.position * UrsinaConfig.SCALE_FACTOR
         if self.body_view.body.parent is None:
