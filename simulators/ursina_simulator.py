@@ -8,7 +8,7 @@
 # ==============================================================================
 # pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina
 from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application, color, mouse, Vec2, Vec3, \
-    load_texture, held_keys
+    load_texture, held_keys, distance
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 from simulators.ursina.ursina_event import UrsinaEvent
@@ -57,8 +57,24 @@ class UrsinaSimulator(Simulator):
             self.ursina_views.append(view)
             # planets.append(newPlanet)
             # x += cp[i] * 10
-
+        self.adj_application_time_scale()
         UrsinaEvent.on_searching_bodies_subscription(type(self).__name__, self.on_searching_bodies)
+
+    def adj_application_time_scale(self):
+        max_distance = 0
+        for b1 in self.body_views:
+            for b2 in self.body_views:
+                if b1 is b2:
+                    continue
+            d = distance(b1.planet, b2.planet)
+            if d > max_distance:
+                max_distance = d
+
+        # UrsinaConfig.control_camera_speed = round(max_distance * 10, 2)
+        time_scale = round(pow(max_distance, 1 / 3), 2)
+        if time_scale < 0.01:
+            time_scale = 0.01
+        application.time_scale = time_scale
 
     def on_searching_bodies(self, **kwargs):
         views = []

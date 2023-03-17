@@ -11,15 +11,15 @@
 
 class UrsinaConfig:
     # 常量定义
-    # 天体缩放的因子（不能太大，否则无法容得下大数量级的天体）
-    SCALE_FACTOR = 5e-10
+    # 天体缩放的因子（不能太大，否则无法容得下大数量级的天体）调整 5e-7 最佳
+    SCALE_FACTOR = 5e-7
     # 旋转因子为1，则为正常的转速
     ROTATION_SPEED_FACTOR = 1.0
     # ROTATION_SPEED_FACTOR = 0.01
 
     # 中文字体（微软雅黑）
     CN_FONT = "msyhl.ttc"  # 'simsun.ttc' 仿宋体
-    CN_FONT = 'simsun.ttc'  #  仿宋体
+    # CN_FONT = 'simsun.ttc'  #  仿宋体
 
     # 速度的倍数
     __run_speed_factor = 1.0
@@ -37,6 +37,8 @@ class UrsinaConfig:
     trail_length = 200
     # 默认秒数（0表示默认）
     seconds_per = 0
+    # # 控制摄像机动作速度（天体越大，速度越快，天体越小，速度越慢）
+    # control_camera_speed = 1
 
     __body_size_factor = 1.0
 

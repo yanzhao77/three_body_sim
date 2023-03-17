@@ -16,12 +16,12 @@ from simulators.ursina.ursina_config import UrsinaConfig
 
 
 class UiSlider(Slider):
-    def __init__(self, text, min=0.01, max=3, default=1):
+    def __init__(self, text, min=0.01, max=3, step=.01, default=1):
         # Text.default_font = 'msyhl.ttc'  # 'simsun.ttc'
         super().__init__(text=text,
                          height=Text.size,
                          y=-.6,
-                         step=.01,
+                         step=step,
                          min=min,
                          max=max,
                          default=default,
@@ -35,10 +35,9 @@ class UiSlider(Slider):
         # self.height *= 8/10
 
 
-
 class SwithButton(ButtonGroup):
     def __init__(self, options, default, tooltips=None):
-        super().__init__(options, min_selection=1,default=default,
+        super().__init__(options, min_selection=1, default=default,
                          selected_color=color.rgba(0.1, 0.6, 0.1, 1.0), ignore_paused=True,
                          color=color.rgba(0.0, 0.0, 0.0, 0.5))
         # self.label.scale = 0.8
