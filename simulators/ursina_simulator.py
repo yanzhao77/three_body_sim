@@ -79,7 +79,12 @@ class UrsinaSimulator(Simulator):
     def check_and_evolve(self):
         if self.check_elapsed_time():
             run_speed_factor = UrsinaConfig.run_speed_factor
-            super().evolve(self.evolve_dt * run_speed_factor)
+            if UrsinaConfig.seconds_per == 0:
+                evolve_dt = self.evolve_dt * run_speed_factor
+            else:
+                evolve_dt = UrsinaConfig.seconds_per * run_speed_factor
+
+            super().evolve(evolve_dt)
 
     def cosmic_background(self, texture='../textures/cosmic2.jpg'):
         """

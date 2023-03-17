@@ -35,6 +35,8 @@ class UrsinaConfig:
     show_trail = False
     # 拖尾球体的数量
     trail_length = 200
+    # 默认秒数（0表示默认）
+    seconds_per = 0
 
     __body_size_factor = 1.0
 

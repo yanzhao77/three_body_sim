@@ -111,8 +111,8 @@ class Planet(Entity):
             texture=texture,
             color=color.white,
             position=pos,
-            rotation=rotation,
-            double_sided=True)
+            rotation=rotation  # ,double_sided=True
+            )
 
         if hasattr(self.body_view.body, "torus_stars"):
             # 星环小天体群（主要模拟小行星群，非一个天体）

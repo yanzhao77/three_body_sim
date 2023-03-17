@@ -9,7 +9,8 @@
 from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application, color, mouse, Vec2, Vec3, \
     load_texture, held_keys, Button, ButtonList, destroy, scene, distance, Sequence, Wait, Func
 from ursina.prefabs.first_person_controller import FirstPersonController
-
+from common.consts import SECONDS_PER_HOUR, SECONDS_PER_HALF_DAY, \
+    SECONDS_PER_DAY, SECONDS_PER_WEEK, SECONDS_PER_MONTH, SECONDS_PER_YEAR
 from common.consts import AU
 from simulators.ursina.ui_component import UiSlider, SwithButton, UiButton
 from simulators.ursina.ursina_config import UrsinaConfig
@@ -50,6 +51,7 @@ class UrsinaUI:
                                                tooltips=("系统默认", "每秒相当于1天", "每秒相当于1周",
                                                          "每秒相当于1个月",
                                                          "每秒相当于1年", "每秒相当于十年", "每秒相当于1百年"))
+        self.sec_per_time_switch.on_value_changed = self.sec_per_time_switch_changed
 
         self.on_off_trail = SwithButton((self.no_trail_button_text, self.trail_button_text),
                                         default=self.no_trail_button_text,
@@ -95,9 +97,9 @@ class UrsinaUI:
 
             ), ignore_paused=True, color=color.rgba(0.0, 0.0, 0.0, 0.5)  # , popup=True
         )
-        self.sec_per_time_switch.x = -0.5
-        self.on_off_switch.x = -0.2
-        self.on_off_trail.x = -0.2
+        self.sec_per_time_switch.x = -0.4
+        self.on_off_switch.x = 0.2
+        self.on_off_trail.x = -0.4
         wp.y = 0.5  # wp.panel.scale_y / 2 * wp.scale_y  # center the window panel
         wp.x = 0.6  # wp.scale_x + 0.1
         # wp.x = 0#wp.panel.scale_x / 2 * wp.scale_x
@@ -136,12 +138,29 @@ class UrsinaUI:
             destroy(message_box)
 
         s = Sequence(
-            Wait(3),
+            Wait(close_time),
             Func(close_message)
         )
         s.start()
         # # 使用 time 模块来实现定时关闭
         # invoke(close_message, delay=close_time)
+
+    def sec_per_time_switch_changed(self):
+        # ("默认", "天", "周", "月", "年", "十年", "百年")
+        if self.sec_per_time_switch.value == "天":
+            UrsinaConfig.seconds_per = SECONDS_PER_DAY
+        elif self.sec_per_time_switch.value == "周":
+            UrsinaConfig.seconds_per = SECONDS_PER_WEEK
+        elif self.sec_per_time_switch.value == "月":
+            UrsinaConfig.seconds_per = SECONDS_PER_MONTH
+        elif self.sec_per_time_switch.value == "年":
+            UrsinaConfig.seconds_per = SECONDS_PER_YEAR
+        elif self.sec_per_time_switch.value == "十年":
+            UrsinaConfig.seconds_per = SECONDS_PER_YEAR * 10
+        elif self.sec_per_time_switch.value == "百年":
+            UrsinaConfig.seconds_per = SECONDS_PER_YEAR * 100
+        else:
+            UrsinaConfig.seconds_per = 0
 
     def on_off_trail_changed(self):
         if self.on_off_trail.value == self.trail_button_text:
@@ -164,10 +183,10 @@ class UrsinaUI:
         # 返回摄像机移动后的坐标
         return camera_pos + move_vector
 
-    def move_camera_to_entity(self,entity,d):
+    def move_camera_to_entity(self, entity, d):
         import math
         # print("before",camera.position, entity.position)
-        camera.position = entity.position #- Vec3(0, 0, d)  # 设置摄像机位置
+        camera.position = entity.position  # - Vec3(0, 0, d)  # 设置摄像机位置
         camera.world_position = entity.position
         # camera.rotation = (0, 0, 0)  # 重置摄像机旋转角度
 
@@ -190,8 +209,11 @@ class UrsinaUI:
             # UrsinaConfig.SCALE_FACTOR
             # import copy
             # camera_rotation = copy.deepcopy(camera.rotation)
-            d = item.planet.scale_x * 20
-            self.move_camera_to_entity(item.planet, d)
+            try:
+                d = item.planet.scale_x * 20
+                self.move_camera_to_entity(item.planet, d)
+            except Exception as e:
+                self.show_message(f"{item}飞不见了")
             # d = distance(camera.position, item.planet.position)
             # camera.look_at(item.planet)
             # if d > 1.5 * x:
