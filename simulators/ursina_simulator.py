@@ -11,6 +11,7 @@ from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application
     load_texture, held_keys
 from ursina.prefabs.first_person_controller import FirstPersonController
 
+from simulators.ursina.ursina_event import UrsinaEvent
 from simulators.ursina.ursina_ui import UrsinaUI
 from simulators.views.ursina_view import UrsinaView, UrsinaPlayer
 from simulators.ursina.ursina_config import UrsinaConfig
@@ -55,6 +56,16 @@ class UrsinaSimulator(Simulator):
             self.ursina_views.append(view)
             # planets.append(newPlanet)
             # x += cp[i] * 10
+
+        UrsinaEvent.on_searching_bodies_subscription(type(self).__name__, self.on_searching_bodies)
+
+    def on_searching_bodies(self, **kwargs):
+        views = []
+        for view in self.body_views:
+            if view.appeared:
+                views.append(view)
+        return views
+
 
     def check_elapsed_time(self):
         """检查时间间隔是否已过"""

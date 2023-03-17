@@ -7,7 +7,7 @@
 # python_version  :3.8
 # ==============================================================================
 from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application, color, mouse, Vec2, Vec3, \
-    load_texture, held_keys, Button
+    load_texture, held_keys, Button, ButtonList, destroy
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 from simulators.ursina.ui_component import UiSlider, SwithButton, UiButton
@@ -55,7 +55,7 @@ class UrsinaUI:
                                         tooltips=('天体运行无轨迹', '天体运行有拖尾轨迹'))
         self.on_off_trail.on_value_changed = self.on_off_trail_changed
 
-        self.point_button = UiButton(text='寻找', on_click=self.on_point_button_click)
+        self.point_button = UiButton(text='寻找', on_click=self.on_searching_bodies_click)
         self.reset_button = UiButton(text='重置', on_click=self.on_reset_button_click)
 
         # button1 = Button(text='Button 1', scale=(0.1, 0.1), position=(-0.1, 0))
@@ -92,8 +92,11 @@ class UrsinaUI:
                 self.slider_run_speed_factor,
                 self.slider_control_speed_factor
 
-            ), ignore_paused=True, color=color.rgba(0.0, 0.0, 0.0, 0.5)
+            ), ignore_paused=True, color=color.rgba(0.0, 0.0, 0.0, 0.5), popup=True
         )
+        self.sec_per_time_switch.x = -0.5
+        self.on_off_switch.x = -0.2
+        self.on_off_trail.x = -0.2
         wp.y = 0.5  # wp.panel.scale_y / 2 * wp.scale_y  # center the window panel
         wp.x = 0.6  # wp.scale_x + 0.1
         # wp.x = 0#wp.panel.scale_x / 2 * wp.scale_x
@@ -121,8 +124,26 @@ class UrsinaUI:
         else:
             UrsinaConfig.show_trail = False
 
-    def on_point_button_click(self):
-        pass
+    def bodies_button_list_click(self, item):
+        print("select->", item)
+
+        destroy(self.bodies_button_list)
+
+    def on_searching_bodies_click(self):
+        results = UrsinaEvent.on_searching_bodies()
+        if len(results) > 0:
+            sub_name, bodies = results[0]
+            # print(results[0])
+            button_dict = {}
+
+            for body in bodies:
+                def callback_action(b=body):
+                    self.bodies_button_list_click(b)
+
+                button_dict[body.name] = callback_action
+
+            self.bodies_button_list = ButtonList(button_dict, font=UrsinaConfig.CN_FONT, button_height=1.5)
+            # self.bodies_button_list.input = self.bodies_button_list_input
 
     def on_reset_button_click(self):
         UrsinaEvent.on_reset()
@@ -131,9 +152,17 @@ class UrsinaUI:
         if self.on_off_switch.value == self.pause_button_text:
             self.on_off_switch.selected_color = color.green
             application.paused = True
+            for c in self.wp.children:
+                if not c.ignore_paused:
+                    # c.enabled = True
+                    c.disabled = False
         else:
             self.on_off_switch.selected_color = color.red
             application.paused = False
+            for c in self.wp.children:
+                if not c.ignore_paused:
+                    # c.enabled = True
+                    c.disabled = False
 
     def on_slider_trail_length_changed(self):
         UrsinaConfig.trail_length = int(self.slider_trail_length.value)
