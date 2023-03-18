@@ -177,9 +177,13 @@ class Planet(Entity):
             last_key = list(trails_keys)[-1]
             last_pos = self.trails[last_key]
             # 获取拖尾与当前天体的位置
-            distance = self.distance_between_two_points(pos, last_pos)
+            last_pos_distance = self.distance_between_two_points(pos, last_pos)
+            self_pos_distance = self.distance_between_two_points(pos, self.position)
+            # # 如果拖尾在天体的内部也不要生成
+            # if self_pos_distance < self.scale_x + (self.trail_scale / 2):
+            #     pass
             # 如果位置比较近，就不创建拖尾了，保证拖尾间隔一定的距离
-            if distance < self.trail_scale * 1.2:  # 间隔距离不小于1.2倍的拖尾球体
+            if last_pos_distance < self.trail_scale * 1.2:  # 间隔距离不小于1.2倍的拖尾球体
                 return
 
         # 创建拖尾球体，并作为字典的key，存放拖尾球体的位置
