@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-# title           :地月场景模拟
-# description     :地月场景模拟
+# title           :地月场景模拟（观看月相变化的过程）
+# description     :地月场景模拟（观看月相变化的过程）
 # author          :Python超人
 # date            :2023-02-11
 # link            :https://gitcode.net/pythoncr/
@@ -22,6 +22,7 @@ if __name__ == '__main__':
     sun.ignore_mass = True
 
     # 观看月相变化的过程：分别是 新月、蛾眉月、上弦月、盈凸、满月、亏凸、下弦月、残月
+    # 参考：images/moon/月相变化过程.jpeg
     # TODO: 月球在摄像机的前方（从 “新月” 开始）
     moon_pos, moon_vel = [384400, 0, 0], [0, EARTH_INIT_VELOCITY + 1.023, 0]
     # TODO: 月球在摄像机的右方（从 “下弦月” 开始），将会出现
@@ -38,10 +39,10 @@ if __name__ == '__main__':
              init_velocity=moon_vel,
              size_scale=2e1)          # 月球放大 20 倍，距离保持不变
     ]
-    # 使用 mayavi 查看的运行效果
-    # mayavi_run(bodies, SECONDS_PER_HALF_DAY / 2, view_azimuth=-45)
-
     # 使用 ursina 查看的运行效果
     # position = 左-右+、上+下-、前+后-
     # position=(0, 0, 0) 的位置是站在地球视角，可以观看月相变化的过程
     ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0))
+
+    # 使用 mayavi 查看的运行效果
+    # mayavi_run(bodies, SECONDS_PER_HALF_DAY / 2, view_azimuth=-45)
