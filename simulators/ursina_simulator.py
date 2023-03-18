@@ -57,10 +57,10 @@ class UrsinaSimulator(Simulator):
             self.ursina_views.append(view)
             # planets.append(newPlanet)
             # x += cp[i] * 10
-        self.adj_application_time_scale()
+        self.adj_run_params()
         UrsinaEvent.on_searching_bodies_subscription(type(self).__name__, self.on_searching_bodies)
 
-    def adj_application_time_scale(self):
+    def adj_run_params(self):
         max_distance = 0
         for b1 in self.body_views:
             for b2 in self.body_views:
@@ -71,10 +71,12 @@ class UrsinaSimulator(Simulator):
                 max_distance = d
 
         # UrsinaConfig.control_camera_speed = round(max_distance * 10, 2)
-        time_scale = round(pow(max_distance, 1 / 3), 2)
+        time_scale = round(pow(max_distance, 1 / 4), 2)
         if time_scale < 0.01:
             time_scale = 0.01
+
         application.time_scale = time_scale
+        # UrsinaConfig.auto_scale_factor = 1.0e-9
 
     def on_searching_bodies(self, **kwargs):
         views = []

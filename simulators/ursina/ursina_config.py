@@ -12,7 +12,8 @@
 class UrsinaConfig:
     # 常量定义
     # 天体缩放的因子（不能太大，否则无法容得下大数量级的天体）调整 5e-7 最佳
-    SCALE_FACTOR = 5e-7
+    __SCALE_FACTOR = 5e-7
+    auto_scale_factor = 1.0  # __SCALE_FACTOR 不能满足，需要自动进行调整
     # 旋转因子为1，则为正常的转速
     ROTATION_SPEED_FACTOR = 1.0
     # ROTATION_SPEED_FACTOR = 0.01
@@ -34,13 +35,32 @@ class UrsinaConfig:
 
     show_trail = False
     # 拖尾球体的数量
-    trail_length = 200
+    trail_length = 100
     # 默认秒数（0表示默认）
     seconds_per = 0
     # # 控制摄像机动作速度（天体越大，速度越快，天体越小，速度越慢）
     # control_camera_speed = 1
 
     __body_size_factor = 1.0
+
+    @classmethod
+    def init(cls):
+        # 初始化
+        cls.run_speed_factor = 1.0
+        cls.body_spin_factor = 1.0
+        cls.body_size_factor = 1.0
+        # 天体缩放的因子（不能太大，否则无法容得下大数量级的天体）调整 5e-7 最佳
+        cls.SCALE_FACTOR = 5e-7
+
+    @property
+    @classmethod
+    def SCALE_FACTOR(cls):
+        return cls.__SCALE_FACTOR * cls.auto_scale_factor
+
+    @SCALE_FACTOR.setter
+    @classmethod
+    def SCALE_FACTOR(cls, value):
+        cls.__SCALE_FACTOR = value
 
     @property
     @classmethod
@@ -82,10 +102,7 @@ class UrsinaConfig:
             f()
 
 
-# 初始化
-UrsinaConfig.run_speed_factor = 1.0
-UrsinaConfig.body_spin_factor = 1.0
-UrsinaConfig.body_size_factor = 1.0
+UrsinaConfig.init()
 
 if __name__ == '__main__':
     UrsinaConfig.run_speed_factor = 2.0

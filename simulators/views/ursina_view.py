@@ -28,9 +28,9 @@ class UrsinaPlayer(FirstPersonController):
     """
 
     """
-    body_rotation_speed_control = 1.0
+    # body_rotation_speed_control = 1.0
 
-    def __init__(self, position, targets=None):
+    def __init__(self, position, view_azimuth=0, targets=None):
         super().__init__()
         # camera.fov = 2000 # 100
         # camera.rotation_y = 90
@@ -50,18 +50,21 @@ class UrsinaPlayer(FirstPersonController):
         self.position = Vec3(pos[0], pos[1], pos[2])
         # 将摄像机位置设置为 x=0、y=1、z=0 的位置
         camera.position = Vec3(pos[0], pos[1], pos[2])
+        # self.x = 90
         # self.position = Vec3(pos[0], pos[1], pos[2])
         # 将摄像机的观察角度绕 x 轴旋转 45 度，绕 y 轴旋转 0 度，绕 z 轴旋转 0 度
-        # camera.rotation = Vec3(45, 90, 0)
-        camera.rotation = Vec3(0, 0, 0)
-
+        # self.rotation = Vec3(45, 90, 0)
+        # camera.look_at(Vec3(0, 0, 0))
+        # camera.world_rotation = Vec3(0, 190, 190)
+        # camera.enabled = True
         # self.gravity = 0
         # self.vspeed = 400
         # self.speed = 1000
         # self.mouse_sensitivity = Vec2(160, 160)
         # self.on_enable()
         # self.rotation_speed = 80
-        self.on_disable()
+
+        self.on_disable()  # 防止鼠标被窗口锁定
 
     # def input(self, key):
     #     if key == "escape":
@@ -95,7 +98,7 @@ class Planet(Entity):
 
         if hasattr(self.body_view.body, "torus_stars"):
             # 创建一个星环小天体群（主要模拟小行星群，非一个天体）
-            model = create_torus(0.75, 1.10, 64, 1)
+            model = create_torus(0.83, 1.05, 64, 1)
             rotation = (90, 0, 0)
         else:
             # 创建一个天体
@@ -112,11 +115,12 @@ class Planet(Entity):
             color=color.white,
             position=pos,
             rotation=rotation  # ,double_sided=True
-            )
+        )
 
         if hasattr(self.body_view.body, "torus_stars"):
             # 星环小天体群（主要模拟小行星群，非一个天体）
             self.set_light_off()
+            self.double_sided = True
         else:
             # 一个天体
             # 拖尾球体的初始化
@@ -195,8 +199,12 @@ class Planet(Entity):
         :param pos:
         :return:
         """
-        trail = Entity(model="sphere", color=self.trail_color, scale=self.trail_scale, position=pos)
+        # sphere = create_sphere(1,6)  diamond sphere
+        trail = Entity(model='sphere', color=self.trail_color, scale=self.trail_scale, position=pos)
         trail.set_light_off()
+        # trail.set_color_off()
+        # trail.set_color_scale_off()
+        # trail.enabled = False
         return trail
 
     def turn(self):

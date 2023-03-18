@@ -55,22 +55,37 @@ def mayavi_run(bodies, dt=SECONDS_PER_WEEK,
 def ursina_run(bodies,
                dt=SECONDS_PER_HALF_DAY,
                position=(4000000, 800000000, 4000000),
+               # view_azimuth=0,
                light=True,
                cosmic_bg=None,
                show_grid=True):
     """
 
-    :param bodies:
-    :param dt:
+    :param bodies: 天体
+    :param dt: 单位：秒，按时间差进行演变，值越小越精确，但演变速度会慢。
+    :param position: 摄像头位置
+    :param view_azimuth: 摄像头观测方位角，可选，float类型（以度为单位，0-360）
+    :param light: 使用灯光效果
+    :param cosmic_bg: 宇宙背景图片
+    :param show_grid: 是否显示空间网格
     :return:
     """
 
     from simulators.ursina_simulator import UrsinaSimulator, UrsinaPlayer
-    from ursina import application, Sequence, camera, held_keys, time, clamp,Entity,Text
+    from ursina import application, Sequence, camera, held_keys, time, clamp, Entity, Text, color
+    from ursina.prefabs.first_person_controller import FirstPersonController
     body_sys = System(bodies)
     simulator = UrsinaSimulator(body_sys)
-
-    player = UrsinaPlayer(position, simulator.ursina_views)
+    view_azimuth = 0  # 暂时未用
+    player = UrsinaPlayer(position, view_azimuth, simulator.ursina_views)
+    # # player = FirstPersonController(model='cube', y=-1e20, color=color.orange, origin_y=-5000, speed=8)
+    # # player.on_disable()
+    # # player.position = position
+    #
+    # player = FirstPersonController()
+    # cube = Entity(model='cube', color=color.red, scale=2)
+    # player.parent = cube  # 设置 FirstPersonController 的父实体为 cube
+    # cube.position = position  # 修改父实体的位置，从而间接地修改 FirstPersonController 的位置
 
     # # 创建一个实体（在屏幕中央）和一个摄像机
     # TODO: 未使用

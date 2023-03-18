@@ -7,7 +7,7 @@
 # python_version  :3.8
 # ==============================================================================
 from bodies import Sun, Earth
-from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY
+from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY, AU
 from scenes.func import mayavi_run, ursina_run
 
 if __name__ == '__main__':
@@ -32,4 +32,5 @@ if __name__ == '__main__':
     # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=0)
 
     # 使用 ursina 查看的运行效果
-    ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0))
+    # position = 左-右+、上+下-、前+后-
+    ursina_run(bodies, SECONDS_PER_DAY, position=(3 * AU, AU, -4 * AU))

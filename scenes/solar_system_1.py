@@ -39,4 +39,5 @@ if __name__ == '__main__':
     # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=-45)
 
     # 使用 ursina 查看的运行效果
-    ursina_run(bodies, SECONDS_PER_YEAR, position=(0, 5 * AU, -10 * AU))  # position=左-右+、上+下-、前+后-
+    # position = 左-右+、上+下-、前+后-
+    ursina_run(bodies, SECONDS_PER_YEAR, position=(0, 2 * AU, -11 * AU))
