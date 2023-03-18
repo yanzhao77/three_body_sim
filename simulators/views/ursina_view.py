@@ -9,7 +9,7 @@
 # pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina
 from ursina import Ursina, window, Entity, Mesh, SmoothFollow, Texture, clamp, time, \
     camera, color, mouse, Vec2, Vec3, Vec4, \
-    load_texture, held_keys, destroy
+    load_texture, held_keys, destroy, PointLight
 
 from ursina.prefabs.first_person_controller import FirstPersonController
 import sys
@@ -126,6 +126,8 @@ class Planet(Entity):
             # 一个天体
             # 拖尾球体的初始化
             self.trail_init()
+            if self.body_view.body.is_fixed_star:
+                self.create_fixed_star_lights()
 
     def trail_init(self):
         """
@@ -273,6 +275,25 @@ class Planet(Entity):
         self.x = -pos[1]
         self.y = pos[2]
         self.z = pos[0]
+
+    def create_fixed_star_lights(self):
+        """
+        创建恒星的发光的效果、并作为灯光源
+        :param entity:
+        :return:
+        """
+
+        # 如果是恒星（如：太阳），自身会发光，则需要关闭灯光
+        self.set_light_off()
+
+        # lights = []
+        # # 创建多个新的 Entity 对象，作为光晕的容器
+        for i in range(10):
+            glow_entity = Entity(parent=self, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
+                                 scale=math.pow(1.03, i), alpha=0.1)
+        for i in range(2):
+            # 创建 PointLight 对象，作为恒星的灯光源
+            light = PointLight(parent=self, intensity=10, range=10, color=color.white)
 
     def create_rings(self):
         """

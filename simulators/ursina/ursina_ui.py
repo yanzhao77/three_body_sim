@@ -223,8 +223,7 @@ class UrsinaUI:
             # camera_rotation = copy.deepcopy(camera.rotation)
             # camera.rotation = (camera_rotation[0], camera_rotation[1], 0)
             # camera.forward = (1, 0, 0)  # 设置相机的方向向量为x轴方向
-
-        destroy(self.bodies_button_list)
+        self.bodies_button_list_close()
 
     # my_entity = Entity(model='cube', color=color.red, position=(0, 1, 5))
     #
@@ -236,6 +235,11 @@ class UrsinaUI:
     #
     # print('距离:', distance_to_entity)
 
+    def bodies_button_list_close(self):
+        if hasattr(self, "bodies_button_list"):
+            self.bodies_button_list.enabled = False
+            destroy(self.bodies_button_list)
+
     def on_searching_bodies_click(self):
         results = UrsinaEvent.on_searching_bodies()
         if len(results) > 0:
@@ -245,7 +249,7 @@ class UrsinaUI:
                 # button_dict = {"天体都飞不见了，请重新运行。": lambda: self.bodies_button_list_click(None)}
                 return
             # print(results[0])
-            button_dict = {"[关闭]": lambda: self.bodies_button_list_click(None)}
+            button_dict = {"[关闭]        == 寻找天体 ==": lambda: self.bodies_button_list_click(None)}
             camera = scene.camera
             for body in bodies:
                 def callback_action(b=body):
@@ -258,12 +262,12 @@ class UrsinaUI:
                     button_dict[name] = callback_action
                 else:
                     if hasattr(self, "bodies_button_list"):
-                        destroy(self.bodies_button_list)
+                        self.bodies_button_list_close()
                     name = f"{body.name}\t距离太远，找不到了"
                     button_dict[name] = lambda: self.bodies_button_list_click(None)
 
             if hasattr(self, "bodies_button_list"):
-                destroy(self.bodies_button_list)
+                self.bodies_button_list_close()
 
             self.bodies_button_list = ButtonList(button_dict, font=UrsinaConfig.CN_FONT, button_height=1.5)
             # self.bodies_button_list.input = self.bodies_button_list_input
@@ -330,8 +334,7 @@ class UrsinaUI:
         elif key == 'y':  # 寻找天体
             if hasattr(self, "bodies_button_list"):
                 if self.bodies_button_list.enabled:
-                    self.bodies_button_list.enabled = False
-                    destroy(self.bodies_button_list)
+                    self.bodies_button_list_close()
                     return
             self.on_searching_bodies_click()
         elif key == 'o':  # 重新开始
@@ -361,33 +364,33 @@ class UrsinaUI:
             self.slider_run_speed_factor.value = run_speed_factor
             self.slider_run_speed_factor.knob.drop()
     #     UrsinaConfig.run_speed_factor *= 2
-        #     application.paused = not application.paused  # Pause/unpause the game.
-        # elif key == 'tab':
-        #     # application.time_scale 属性控制游戏时间流逝的速度。
-        #     # 具体来说，它是一个浮点数，用于调整游戏时间流逝速度的比例，其默认值为 1.0，表示正常速度。
-        #     # 当你将它设置为小于 1.0 的值时，游戏时间会变慢，而设置为大于 1.0 的值时，游戏时间则会变快。
-        #     for idx, time_scale in enumerate(time_scales):
-        #         if float(application.time_scale) == time_scale:
-        #             if idx < len(time_scales) - 1:
-        #                 application.time_scale = time_scales[idx + 1]
-        #                 break
-        #             else:
-        #                 application.time_scale = time_scales[0]
-        # elif key == '+':
-        #     UrsinaConfig.run_speed_factor *= 2
-        # elif key == "= up":
-        #     UrsinaConfig.body_spin_factor *= 2
-        #     # if application.time_scale in time_scales:
-        #     #     idx = time_scales.index(application.time_scale)
-        #     #     if idx < len(time_scales) - 1:
-        #     #         application.time_scale = time_scales[idx + 1]
-        # elif key == '-':
-        #     UrsinaConfig.run_speed_factor *= 0.5
-        # elif key == "- up":
-        #     UrsinaConfig.body_spin_factor *= 0.5
-        #     # if application.time_scale in time_scales:
-        #     #     idx = time_scales.index(application.time_scale)
-        #     #     if idx > 0:
-        #     #         application.time_scale = time_scales[idx - 1]
-        #
-        # self.show_text_time_scale_info()
+    #     application.paused = not application.paused  # Pause/unpause the game.
+    # elif key == 'tab':
+    #     # application.time_scale 属性控制游戏时间流逝的速度。
+    #     # 具体来说，它是一个浮点数，用于调整游戏时间流逝速度的比例，其默认值为 1.0，表示正常速度。
+    #     # 当你将它设置为小于 1.0 的值时，游戏时间会变慢，而设置为大于 1.0 的值时，游戏时间则会变快。
+    #     for idx, time_scale in enumerate(time_scales):
+    #         if float(application.time_scale) == time_scale:
+    #             if idx < len(time_scales) - 1:
+    #                 application.time_scale = time_scales[idx + 1]
+    #                 break
+    #             else:
+    #                 application.time_scale = time_scales[0]
+    # elif key == '+':
+    #     UrsinaConfig.run_speed_factor *= 2
+    # elif key == "= up":
+    #     UrsinaConfig.body_spin_factor *= 2
+    #     # if application.time_scale in time_scales:
+    #     #     idx = time_scales.index(application.time_scale)
+    #     #     if idx < len(time_scales) - 1:
+    #     #         application.time_scale = time_scales[idx + 1]
+    # elif key == '-':
+    #     UrsinaConfig.run_speed_factor *= 0.5
+    # elif key == "- up":
+    #     UrsinaConfig.body_spin_factor *= 0.5
+    #     # if application.time_scale in time_scales:
+    #     #     idx = time_scales.index(application.time_scale)
+    #     #     if idx > 0:
+    #     #         application.time_scale = time_scales[idx - 1]
+    #
+    # self.show_text_time_scale_info()

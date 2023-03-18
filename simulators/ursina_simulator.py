@@ -40,8 +40,17 @@ class WorldGrid(Entity):  # Entity # 定义构造方法
 
 
 class UrsinaSimulator(Simulator):
+    """
+    Ursina官网： https://www.ursinaengine.org/
+    """
     def __init__(self, bodies_sys: System):
-        self.app = Ursina()
+        # self.app = Ursina()
+        import os
+        os.environ['CUDA_VISIBLE_DEVICES'] = '1'  # 选择第二个GPU
+        self.app = Ursina(window_title='GPU模拟',
+                     window_kwargs={'vsync': True, 'fullscreen': False, 'borderless': False, 'show_ursina_splash': True,
+                                    'high_resolution': True})
+
         self.ursina_views = []
         window.color = color.black
 
@@ -210,7 +219,8 @@ class UrsinaSimulator(Simulator):
             if kwargs["light"]:
                 for v in self.ursina_views:
                     if v.body.is_fixed_star:
-                        self.lights = self.create_fixed_star_lights(v.planet)
+                        # self.lights = self.create_fixed_star_lights(v.planet)
+                        pass
 
         if "show_grid" in kwargs:
             if kwargs["show_grid"]:

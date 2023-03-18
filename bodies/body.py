@@ -49,11 +49,14 @@ class Body(metaclass=ABCMeta):
         self.name = name
         self.__mass = mass
 
+        self.__init_position = None
+        self.__init_velocity = None
+
         self.init_position = np.array(init_position, dtype='float32')
         self.init_velocity = np.array(init_velocity, dtype='float32')
 
-        self.__position = copy.deepcopy(self.init_position)
-        self.__velocity = copy.deepcopy(self.init_velocity)
+        # self.__position = copy.deepcopy(self.init_position)
+        # self.__velocity = copy.deepcopy(self.init_velocity)
 
         self.__density = density
         self.__rotation_speed = rotation_speed
@@ -72,6 +75,42 @@ class Body(metaclass=ABCMeta):
         # 是否显示
         self.appeared = True
         self.parent = parent
+
+    @property
+    def init_position(self):
+        """
+        获取天体的初始位置（单位：km）
+        :return:
+        """
+        return self.__init_position
+
+    @init_position.setter
+    def init_position(self, value):
+        """
+        设置天体的初始位置（单位：km）
+        :param value:
+        :return:
+        """
+        self.__init_position = np.array(value, dtype='float32')
+        self.__position = copy.deepcopy(self.__init_position)
+
+    @property
+    def init_velocity(self):
+        """
+        获取天体的初始速度 (km/s)
+        :return:
+        """
+        return self.__init_velocity
+
+    @init_velocity.setter
+    def init_velocity(self, value):
+        """
+        设置天体的初始速度 (km/s)
+        :param value:
+        :return:
+        """
+        self.__init_velocity = np.array(value, dtype='float32')
+        self.__velocity = copy.deepcopy(self.__init_velocity)
 
     @property
     def has_rings(self):
