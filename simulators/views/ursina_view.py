@@ -28,6 +28,7 @@ class UrsinaPlayer(FirstPersonController):
     """
 
     """
+
     # body_rotation_speed_control = 1.0
 
     def __init__(self, position, view_azimuth=0, targets=None):
@@ -260,15 +261,18 @@ class Planet(Entity):
             self.clear_trails()
 
     def follow_parent(self):
-        if not hasattr(self.body_view, "bodies_system"):
-            return
-        sys = self.body_view.bodies_system
-        for b in sys.bodies:
-            if self.body_view.body.parent == b:
-                pos = b.position * UrsinaConfig.SCALE_FACTOR
-                self.x = -pos[1]
-                self.y = pos[2]
-                self.z = pos[0]
+        if not hasattr(self, "f_parent"):
+            if not hasattr(self.body_view, "bodies_system"):
+                return
+            sys = self.body_view.bodies_system
+            for b in sys.bodies:
+                if self.body_view.body.parent == b:
+                    self.f_parent = b
+                    break
+        pos = self.f_parent.position * UrsinaConfig.SCALE_FACTOR
+        self.x = -pos[1]
+        self.y = pos[2]
+        self.z = pos[0]
 
     def create_rings(self):
         """
