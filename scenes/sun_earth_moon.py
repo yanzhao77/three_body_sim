@@ -42,6 +42,7 @@ if __name__ == '__main__':
     # 使用 ursina 查看的运行效果
     # position = 左-右+、上+下-、前+后-
     # position=(0, 0, 0) 的位置是站在地球视角，可以观看月相变化的过程
+    # 常用快捷键： P：运行和暂停  O：重新开始  I：显示天体轨迹
     ursina_run(bodies, SECONDS_PER_DAY, position=(0, 0, 0))
 
     # 使用 mayavi 查看的运行效果

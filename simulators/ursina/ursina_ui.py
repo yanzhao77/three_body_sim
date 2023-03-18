@@ -43,7 +43,7 @@ class UrsinaUI:
         self.on_off_switch = SwithButton((self.pause_button_text,
                                           self.start_button_text),
                                          default=self.start_button_text,
-                                         tooltips=('暂停', '运行'))
+                                         tooltips=('暂停(P)', '运行(P)'))
         self.on_off_switch.selected_color = color.red
 
         self.sec_per_time_switch = SwithButton(("默认", "天", "周", "月", "年", "十年", "百年"),
@@ -58,8 +58,8 @@ class UrsinaUI:
                                         tooltips=('天体运行无轨迹', '天体运行有拖尾轨迹'))
         self.on_off_trail.on_value_changed = self.on_off_trail_changed
 
-        self.point_button = UiButton(text='寻找', on_click=self.on_searching_bodies_click)
-        self.reset_button = UiButton(text='重置', on_click=self.on_reset_button_click)
+        self.point_button = UiButton(text='寻找天体(Y)', on_click=self.on_searching_bodies_click)
+        self.reset_button = UiButton(text='重新开始(O)', on_click=self.on_reset_button_click)
 
         # button1 = Button(text='Button 1', scale=(0.1, 0.1), position=(-0.1, 0))
         # button2 = Button(text='Button 2', scale=(0.1, 0.1), position=(0.1, 0))
@@ -327,6 +327,40 @@ class UrsinaUI:
             self.wp.enabled = not self.wp.enabled
         elif key == 'left mouse down':
             print(key)
+        elif key == 'y':  # 寻找天体
+            if hasattr(self, "bodies_button_list"):
+                if self.bodies_button_list.enabled:
+                    self.bodies_button_list.enabled = False
+                    destroy(self.bodies_button_list)
+                    return
+            self.on_searching_bodies_click()
+        elif key == 'o':  # 重新开始
+            self.on_reset_button_click()
+        elif key == 'i':  # 拖尾开关
+            if self.on_off_trail.value == self.trail_button_text:
+                self.on_off_trail.value = self.no_trail_button_text
+            else:
+                self.on_off_trail.value = self.trail_button_text
+            self.on_off_trail_changed()
+        elif key == 'p':  # 开始、暂停
+            if self.on_off_switch.value == self.pause_button_text:
+                self.on_off_switch.value = self.start_button_text
+            else:
+                self.on_off_switch.value = self.pause_button_text
+            self.on_off_switch_changed()
+        elif key == '+' or key == "= up":
+            run_speed_factor = self.slider_run_speed_factor.value + self.slider_run_speed_factor.step * 50
+            if run_speed_factor > self.slider_run_speed_factor.max:
+                run_speed_factor = self.slider_run_speed_factor.max
+            self.slider_run_speed_factor.value = run_speed_factor
+            self.slider_run_speed_factor.knob.drop()
+        elif key == '-' or key == "- up":
+            run_speed_factor = self.slider_run_speed_factor.value - self.slider_run_speed_factor.step * 50
+            if run_speed_factor < self.slider_run_speed_factor.min:
+                run_speed_factor = self.slider_run_speed_factor.min
+            self.slider_run_speed_factor.value = run_speed_factor
+            self.slider_run_speed_factor.knob.drop()
+    #     UrsinaConfig.run_speed_factor *= 2
         #     application.paused = not application.paused  # Pause/unpause the game.
         # elif key == 'tab':
         #     # application.time_scale 属性控制游戏时间流逝的速度。
