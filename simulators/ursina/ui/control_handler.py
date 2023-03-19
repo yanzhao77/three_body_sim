@@ -185,16 +185,7 @@ class ControlHandler(EventHandler):
                     return
             self.on_searching_bodies_click()
         elif key == 'o':  # 重新开始
-            paused = application.paused
-            if paused:  # 如果是暂停状态，先不暂停，等重新开始后再暂停
-                application.paused = False
             self.on_reset_button_click()
-            if paused:
-                def application_paused():
-                    application.paused = True
-
-                UrsinaEvent.on_application_run_callback_subscription(application_paused)
-
         elif key == 'i':  # 拖尾开关
             if self.ui.on_off_trail.value == self.ui.trail_button_text:
                 self.ui.on_off_trail.value = self.ui.no_trail_button_text
