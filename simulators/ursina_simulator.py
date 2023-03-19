@@ -99,6 +99,10 @@ class UrsinaSimulator(Simulator):
             d = distance(b1.planet, b2.planet)
             if d > max_distance:
                 max_distance = d
+        if max_distance == 0:
+            if len(body_views) > 0:
+                # 如果最大距离等于0，说明只有一个有效的天体，则以第一个天体的半径为基准
+                max_distance = pow(body_views[0].planet.scale_x, 3)
         return max_distance
 
     def adjust_system_motion_params(self):
