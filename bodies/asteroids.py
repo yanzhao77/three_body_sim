@@ -30,7 +30,8 @@ class Asteroids(Body):
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  texture="asteroids.png", size_scale=1.0,
-                 distance_scale=1.0, rotation_speed=0.6130,
+                 distance_scale=1.0,
+                 rotation_speed=0.002,  # 小行星绕太阳转一圈的时间在数年到几十年之间不等。
                  parent=None):
         params = {
             "name": name,

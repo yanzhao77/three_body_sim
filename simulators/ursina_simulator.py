@@ -46,6 +46,7 @@ class UrsinaSimulator(Simulator):
     """
     Ursina官网： https://www.ursinaengine.org/
     """
+
     def __init__(self, bodies_sys: System):
         self.app = Ursina()
         # import os
@@ -69,7 +70,7 @@ class UrsinaSimulator(Simulator):
             self.ursina_views.append(view)
             # planets.append(newPlanet)
             # x += cp[i] * 10
-        self.adj_run_params()
+        self.adjust_system_motion_params()
         UrsinaEvent.on_searching_bodies_subscription(type(self).__name__, self.on_searching_bodies)
 
     # def get_bodies_max_distance(self, body_views):
@@ -100,14 +101,13 @@ class UrsinaSimulator(Simulator):
                 max_distance = d
         return max_distance
 
-    def adj_run_params(self):
+    def adjust_system_motion_params(self):
         """
-
+        调整天体系统运行的参数
         :return:
         """
         max_distance = self.get_bodies_max_distance(self.body_views)
-
-        # UrsinaConfig.control_camera_speed = round(max_distance * 10, 2)
+        # 根据天体之间的距离，调整 application.time_scale（控制摄像头运动的速度）
         time_scale = round(pow(max_distance, 1 / 4), 2)
         if time_scale < 0.01:
             time_scale = 0.01
@@ -122,23 +122,29 @@ class UrsinaSimulator(Simulator):
             views.append(view)
         return views
 
-    def check_elapsed_time(self):
-        """检查时间间隔是否已过"""
+    def check_interval_expired(self):
+        """
+        检查时间间隔是否已过期
+        :return:
+        """
         now = datetime.datetime.now()
         elapsed_time = now - self.last_time
-        value = elapsed_time >= self.interval
-        if value:
+        is_expired = elapsed_time >= self.interval
+        if is_expired:
             self.last_time = now
-        return value
+        return is_expired
 
     def check_and_evolve(self):
-        if self.check_elapsed_time():
-            run_speed_factor = UrsinaConfig.run_speed_factor
-            if UrsinaConfig.seconds_per == 0:
+        if self.check_interval_expired():
+            # 获取配置中的运行速度的因子
+            run_speed_factor = float(UrsinaConfig.run_speed_factor)
+            if UrsinaConfig.seconds_per <= 0:
+                # 配置中，如果为0秒，表示默认开始运行设置的秒数（evolve_dt）
                 evolve_dt = self.evolve_dt * run_speed_factor
             else:
+                # 配置中，每年、月、天等等有多少秒
                 evolve_dt = UrsinaConfig.seconds_per * run_speed_factor
-
+            # interval_fator 能让更新天体运行状态（位置、速度）更精确
             evolve_dt = evolve_dt * self.interval_fator
             super().evolve(evolve_dt)
 
@@ -215,34 +221,26 @@ class UrsinaSimulator(Simulator):
 
         return lights
 
-    def switch_to_english_input_method(self):
-        pass
-        # os.system("powershell -Command \"Set-WinUserLanguageList -LanguageList 'en-US', 'zh-CN' -Force\"")
-
-        # if os.name == 'nt':  # Windows 系统
-        #     os.system('powershell -Command "Set-WinUserLanguageList en-US -Force"')
-        # elif os.name == 'posix':  # macOS 或 Linux 系统
-        #     os.system(
-        #         'defaults write ~/Library/Preferences/com.apple.HIToolbox.plist AppleSelectedInputSources -array-add \'{ "InputSourceKind" = "Keyboard Layout"; "KeyboardLayout ID" = 252; "KeyboardLayout Name" = "ABC"; }\'')
-        #     os.system('killall cfprefsd')  # 重启 CoreFoundation 进程使更改生效
-
     def run(self, dt, **kwargs):
 
         window.title = '宇宙模拟器'
 
         # 设置 camera 的裁剪面和位置
-        # camera.clip_plane_near = 0.00000009
+        # camera.clip_plane_near = 0.01
         # camera.fov = 120
         # camera.clip_plane_far = 1000
         # camera.position = (0, 10, -20)
         # camera.rotation_x = -30
 
+        # interval_fator 能让更新天体运行状态（位置、速度）更精确
         # 设定时间间隔为0.01秒
         self.interval_fator = 0.01
         self.evolve_dt = dt
-        self.interval = datetime.timedelta(seconds=self.interval_fator)
 
+        # interval 和 last_time 用于检查时间间隔是否已过期
+        self.interval = datetime.timedelta(seconds=self.interval_fator)
         self.last_time = datetime.datetime.now() - datetime.timedelta(seconds=2)
+
         if "light" in kwargs:
             if kwargs["light"]:
                 for v in self.ursina_views:
