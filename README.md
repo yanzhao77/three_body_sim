@@ -11,11 +11,7 @@
 # 三个模拟器效果图
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_3.png" width="80.7%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_1.png" width="40%">
-<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_2.png" width="40%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_1.png" width="40%">
-<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_2.png" width="40%">
-<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/sun_earth_jupiter.py.png" width="40%">
-<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/two_body_1.png" width="40%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_3.png" width="40%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_4.png" width="40%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/bodies_run.gif" width="90%">
