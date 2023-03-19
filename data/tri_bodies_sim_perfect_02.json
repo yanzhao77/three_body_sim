@@ -1,0 +1,81 @@
+{
+  "bodies": [
+    {
+      "name": "红轨太阳A",
+      "mass": 2e+30,
+      "init_position": [
+        0.0,
+        518222240.0,
+        0.0
+      ],
+      "init_velocity": [
+        -14.890000343322754,
+        0.0,
+        0.0
+      ],
+      "density": 1408.0,
+      "color": [
+        255,
+        0,
+        0
+      ],
+      "texture": "sun2.jpg",
+      "size_scale": 50.0,
+      "distance_scale": 1.0
+    },
+    {
+      "name": "绿轨太阳B",
+      "mass": 2e+30,
+      "init_position": [
+        -299195744.0,
+        0.0,
+        0.0
+      ],
+      "init_velocity": [
+        7.445000171661377,
+        -12.895118713378906,
+        0.0
+      ],
+      "density": 1408.0,
+      "color": [
+        0,
+        255,
+        0
+      ],
+      "texture": "sun2.jpg",
+      "size_scale": 50.0,
+      "distance_scale": 1.0
+    },
+    {
+      "name": "蓝轨太阳C",
+      "mass": 2e+30,
+      "init_position": [
+        299195744.0,
+        0.0,
+        0.0
+      ],
+      "init_velocity": [
+        7.445000171661377,
+        12.895118713378906,
+        0.0
+      ],
+      "density": 1408.0,
+      "color": [
+        0,
+        0,
+        255
+      ],
+      "texture": "sun2.jpg",
+      "size_scale": 50.0,
+      "distance_scale": 1.0
+    }
+  ],
+  "params": {
+    "dt": 31536000,
+    "position": [
+      0,
+      149597870.7,
+      -1495978707.0
+    ]
+  }
+}
