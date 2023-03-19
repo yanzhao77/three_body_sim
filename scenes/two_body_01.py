@@ -31,6 +31,6 @@ if __name__ == '__main__':
     # mayavi_run(bodies, SECONDS_PER_WEEK, view_azimuth=0)
 
     # 使用 ursina 查看的运行效果
-    # position = 左-右+、上+下-、前+后-
     # 常用快捷键： P：运行和暂停  O：重新开始  I：显示天体轨迹
+    # position = 左-右+、上+下-、前+后-
     ursina_run(bodies, SECONDS_PER_YEAR, position=(0, 2 * AU, -5 * AU))

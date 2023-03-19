@@ -25,8 +25,9 @@ if __name__ == '__main__':
 
     dt = params["dt"] if "dt" in params else SECONDS_PER_YEAR
     position = params["position"] if "position" in params else (0, 0, 0)
+
     # 使用 ursina 查看的运行效果
-    # position = 左-右+、上+下-、前+后-
     # 常用快捷键： P：运行和暂停  O：重新开始  I：显示天体轨迹
+    # position = 左-右+、上+下-、前+后-
     json_file = None  # 指定 json_file 保存路径，则会将模拟环境天体数据保存到该json文件中
     ursina_run(bodies, dt, position=position, save_as_json=json_file)
