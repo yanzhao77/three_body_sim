@@ -116,16 +116,27 @@ class ControlHandler(EventHandler):
             if hasattr(self, "bodies_button_list"):
                 self.bodies_button_list_close()
 
-            self.bodies_button_list = ButtonList(button_dict, font=UrsinaConfig.CN_FONT, button_height=1.5)
+            self.bodies_button_list = ButtonList(button_dict,
+                                                 font=UrsinaConfig.CN_FONT,
+                                                 button_height=1.5,
+                                                 ignore_paused=True)
 
     def on_reset_button_click(self):
+        paused = application.paused
+        if paused:  # 如果是暂停状态，先不暂停，等重新开始后再暂停
+            application.paused = False
         UrsinaEvent.on_reset()
+        if paused:
+            def application_paused():
+                application.paused = True
 
-    def on_buttons_changed(self):
-        if self.ui.buttons.value == "寻找":
-            self.on_searching_bodies_click()
-        elif self.ui.buttons.value == "重启":
-            self.on_reset_button_click()
+            UrsinaEvent.on_application_run_callback_subscription(application_paused)
+
+    # def on_buttons_changed(self):
+    #     if self.ui.buttons.value == "寻找":
+    #         self.on_searching_bodies_click()
+    #     elif self.ui.buttons.value == "重启":
+    #         self.on_reset_button_click()
 
     def on_off_switch_changed(self):
         if self.ui.on_off_switch.value == self.ui.pause_button_text:
@@ -181,6 +192,7 @@ class ControlHandler(EventHandler):
             if paused:
                 def application_paused():
                     application.paused = True
+
                 UrsinaEvent.on_application_run_callback_subscription(application_paused)
 
         elif key == 'i':  # 拖尾开关
