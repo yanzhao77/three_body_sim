@@ -353,13 +353,40 @@ class Body(metaclass=ABCMeta):
         with open(json_file, "r", encoding='utf-8') as read_content:
             json_data = json.load(read_content)
             for body_data in json_data["bodies"]:
-                # print(body_data)
+                try:
+                    body_data = Body.exp(body_data)  # print(body_data)
+                except Exception as e:
+                    err_msg = f"{json_file} 格式错误：" + str(e)
+                    raise Exception(err_msg)
                 body = Body(**body_data)
                 bodies.append(body)
             if "params" in json_data:
                 params = json_data["params"]
                 # print(body.position_au())
         return bodies, params
+
+    @staticmethod
+    def exp(body_data):
+        """
+        进行表达式分析，将表达式改为eval执行后的结果
+        :param body_data:
+        :return:
+        """
+        #
+        for k in body_data.keys():
+            v = body_data[k]
+            if isinstance(v, str):
+                if v.startswith("$exp:"):
+                    exp = v[5:]
+                    body_data[k] = eval(exp)
+            elif isinstance(v, list):
+                for idx,item in  enumerate(v):
+                    if isinstance(item, str):
+                        if item.startswith("$exp:"):
+                            exp = item[5:]
+                            v[idx] = eval(exp)
+
+        return body_data
 
 
 if __name__ == '__main__':

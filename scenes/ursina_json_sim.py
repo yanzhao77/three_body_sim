@@ -13,7 +13,7 @@ from scenes.func import ursina_run
 
 if __name__ == '__main__':
     # TODO: 去掉注释，太阳演示
-    bodies, params = Body.build_bodies_from_json('../data/sun.json')
+    # bodies, params = Body.build_bodies_from_json('../data/sun.json')
     # TODO: 去掉注释，太阳和地球演示
     # bodies, params = Body.build_bodies_from_json('../data/sun_earth.json')
     # TODO: 去掉注释，在地球上看月相演示变化过程演示
