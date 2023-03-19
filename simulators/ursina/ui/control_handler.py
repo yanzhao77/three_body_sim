@@ -92,7 +92,7 @@ class ControlHandler(EventHandler):
         if len(results) > 0:
             sub_name, bodies = results[0]
             if len(bodies) == 0:
-                self.show_message("天体都飞不见了，请重新运行。")
+                self.ui.show_message("天体都飞不见了，请重新运行。")
                 # button_dict = {"天体都飞不见了，请重新运行。": lambda: self.bodies_button_list_click(None)}
                 return
             # print(results[0])
