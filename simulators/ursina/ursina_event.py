@@ -20,6 +20,11 @@ class UrsinaEvent:
             return
         UrsinaEvent.on_reset_funcs = []
         UrsinaEvent.on_searching_bodies_funcs = []
+        UrsinaEvent.on_application_run_callback = []
+
+    @staticmethod
+    def on_application_run_callback_subscription(fun):
+        UrsinaEvent.on_application_run_callback.append(fun)
 
     @staticmethod
     def on_searching_bodies_subscription(subscription_name, fun):
@@ -33,6 +38,14 @@ class UrsinaEvent:
     def on_reset():
         for f in UrsinaEvent.on_reset_funcs:
             f()
+
+    @staticmethod
+    def on_application_run():
+        if len(UrsinaEvent.on_application_run_callback) == 0:
+            return
+        for f in UrsinaEvent.on_application_run_callback:
+            f()
+        UrsinaEvent.on_application_run_callback.clear()
 
     @staticmethod
     def on_searching_bodies(**kwargs):

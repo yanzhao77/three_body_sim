@@ -12,7 +12,7 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 from common.consts import SECONDS_PER_HOUR, SECONDS_PER_HALF_DAY, \
     SECONDS_PER_DAY, SECONDS_PER_WEEK, SECONDS_PER_MONTH, SECONDS_PER_YEAR
 from common.consts import AU
-from simulators.ursina.ui_component import UiSlider, SwithButton, UiButton
+from simulators.ursina.ui_component import UiSlider, SwithButton, UiButton, Buttons
 from simulators.ursina.ursina_config import UrsinaConfig
 from simulators.ursina.ursina_event import UrsinaEvent
 from ursina import WindowPanel, InputField, Button, Slider, ButtonGroup, Panel, invoke
@@ -58,6 +58,9 @@ class UrsinaUI:
                                         tooltips=('天体运行无轨迹', '天体运行有拖尾轨迹'))
         self.on_off_trail.on_value_changed = self.on_off_trail_changed
 
+        # self.buttons = Buttons(("寻找", "重启"), tooltips=("寻找天体(Y)", "重新开始(O)"))
+
+
         self.point_button = UiButton(text='寻找天体(Y)', on_click=self.on_searching_bodies_click)
         self.reset_button = UiButton(text='重新开始(O)', on_click=self.on_reset_button_click)
 
@@ -85,6 +88,7 @@ class UrsinaUI:
                 # Button(text='Submit', color=color.azure),
                 self.point_button,
                 self.reset_button,
+                # self.buttons,
                 self.sec_per_time_switch,
                 self.on_off_switch,
                 self.on_off_trail,
@@ -274,6 +278,12 @@ class UrsinaUI:
 
     def on_reset_button_click(self):
         UrsinaEvent.on_reset()
+
+    def on_buttons_changed(self):
+        if self.buttons.value == "寻找":
+            self.on_searching_bodies_click()
+        elif self.buttons.value == "重启":
+            self.on_reset_button_click()
 
     def on_off_switch_changed(self):
         if self.on_off_switch.value == self.pause_button_text:

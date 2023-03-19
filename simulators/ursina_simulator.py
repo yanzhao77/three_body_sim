@@ -12,7 +12,10 @@ from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 from simulators.ursina.ursina_event import UrsinaEvent
-from simulators.ursina.ursina_ui import UrsinaUI
+# from simulators.ursina.ursina_ui import UrsinaUI
+from simulators.ursina.ui.control_ui import ControlUI
+from simulators.ursina.ui.control_handler import ControlHandler
+
 from simulators.views.ursina_view import UrsinaView, UrsinaPlayer
 from simulators.ursina.ursina_config import UrsinaConfig
 from simulators.simulator import Simulator
@@ -236,7 +239,9 @@ class UrsinaSimulator(Simulator):
             if cosmic_bg is not None and os.path.exists(cosmic_bg):
                 self.cosmic_background(cosmic_bg)
 
-        ui = UrsinaUI()
+        # ui = UrsinaUI()
+        ctl = ControlUI(ControlHandler(), position=(0.6, 0.5))
+
         EditorCamera(ignore_paused=True)
         # 防止打开中文输入法
         # self.switch_to_english_input_method()

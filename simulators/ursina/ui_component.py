@@ -52,6 +52,26 @@ class SwithButton(ButtonGroup):
         self.x = -0.5
 
 
+class Buttons(ButtonGroup):
+    def __init__(self, options, default=None, tooltips=None):
+        min_selection = len(options)
+        super().__init__(options, min_selection=1, default=default,
+                         color=color.rgba(0.1, 0.6, 0.1, 1.0), ignore_paused=True,
+                         selected_color=color.rgba(0.0, 0.0, 0.0, 0.5))
+        # self.label.scale = 0.8
+        # self.label.font = UrsinaConfig.CN_FONT\
+        for i, button in enumerate(self.buttons):
+            button.text_entity.font = UrsinaConfig.CN_FONT
+
+            # button.scale_x = 2
+            if tooltips is not None:
+                if len(tooltips) > i:
+                    tooltip = Tooltip(tooltips[i])
+                    tooltip.font = UrsinaConfig.CN_FONT
+                    button.tooltip = tooltip
+        self.x = -0.5
+
+
 class UiButton(Button):
     def __init__(self, text, on_click):
         super(UiButton, self).__init__(text=text, origin=(0, 0), y=2,

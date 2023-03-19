@@ -9,6 +9,7 @@
 import matplotlib.pyplot as plt
 from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY, SECONDS_PER_HALF_DAY
 from common.system import System
+from simulators.ursina.ursina_event import UrsinaEvent
 
 
 def mayavi_run(bodies, dt=SECONDS_PER_WEEK,
@@ -111,6 +112,7 @@ def ursina_run(bodies,
     #     camera.look_at(entity.position)
 
     def callback_update():
+        UrsinaEvent.on_application_run()
         for ursina_view in simulator.ursina_views:
             simulator.check_and_evolve()
             if ursina_view.appeared:
