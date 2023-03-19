@@ -4,7 +4,7 @@
       "name": "太阳",
       "mass": 1.9891e+30,
       "init_position": [
-        0.0,
+        149597872.0,
         0.0,
         0.0
       ],
@@ -20,23 +20,23 @@
         25
       ],
       "texture": "sun2.jpg",
-      "size_scale": 50.0,
+      "size_scale": 20.0,
       "distance_scale": 1.0,
       "rotation_speed": 0.613,
-      "ignore_mass": false,
+      "ignore_mass": true,
       "is_fixed_star": true
     },
     {
       "name": "地球",
       "mass": 5.97237e+24,
       "init_position": [
-        167549616.0,
+        0.0,
         0.0,
         0.0
       ],
       "init_velocity": [
         0.0,
-        29.790000915527344,
+        0.0,
         0.0
       ],
       "density": 5507.85,
@@ -46,19 +46,45 @@
         162
       ],
       "texture": "earth1.jpg",
-      "size_scale": 2000.0,
-      "distance_scale": 1,
+      "size_scale": 10.0,
+      "distance_scale": 1.0,
       "rotation_speed": 15,
+      "ignore_mass": false,
+      "is_fixed_star": false
+    },
+    {
+      "name": "月球",
+      "mass": 7.342e+22,
+      "init_position": [
+        384400.0,
+        0.0,
+        0.0
+      ],
+      "init_velocity": [
+        0.0,
+        1.0230000019073486,
+        0.0
+      ],
+      "density": 3344.0,
+      "color": [
+        162,
+        162,
+        162
+      ],
+      "texture": "moon.jpg",
+      "size_scale": 20.0,
+      "distance_scale": 1.0,
+      "rotation_speed": 0.5487,
       "ignore_mass": false,
       "is_fixed_star": false
     }
   ],
   "params": {
-    "dt": 604800,
+    "dt": 86400,
     "position": [
       0,
-      149597870.7,
-      -448793612.09999996
+      0,
+      0
     ]
   }
 }

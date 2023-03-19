@@ -59,7 +59,8 @@ def ursina_run(bodies,
                # view_azimuth=0,
                light=True,
                cosmic_bg=None,
-               show_grid=True):
+               show_grid=True,
+               save_as_json=None):
     """
 
     :param bodies: 天体
@@ -76,9 +77,17 @@ def ursina_run(bodies,
     from ursina import application, Sequence, camera, held_keys, time, clamp, Entity, Text, color
     from ursina.prefabs.first_person_controller import FirstPersonController
     body_sys = System(bodies)
+    if save_as_json is not None:
+        try:
+            body_sys.save_to_json(save_as_json, {"dt": dt, "position": position})
+            print(f"{save_as_json} 文件生成成功！")
+        except Exception as e:
+            print(f"{save_as_json} 文件生成失败！" + str(e))
+        return
     simulator = UrsinaSimulator(body_sys)
     view_azimuth = 0  # 暂时未用
     player = UrsinaPlayer(position, view_azimuth, simulator.ursina_views)
+
     # # player = FirstPersonController(model='cube', y=-1e20, color=color.orange, origin_y=-5000, speed=8)
     # # player.on_disable()
     # # player.position = position

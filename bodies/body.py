@@ -22,7 +22,8 @@ class Body(metaclass=ABCMeta):
     def __init__(self, name, mass, init_position, init_velocity,
                  density=5e3, color=(125 / 255, 125 / 255, 125 / 255),
                  texture=None, size_scale=1.0, distance_scale=1.0,
-                 rotation_speed=None, parent=None):
+                 rotation_speed=None, parent=None, ignore_mass=False,
+                 is_fixed_star=False):
         """
         天体类
         :param name: 天体名称
@@ -35,13 +36,16 @@ class Body(metaclass=ABCMeta):
         :param size_scale: 尺寸缩放
         :param distance_scale: 距离缩放
         :param rotation_speed: 自旋速度（度/小时）
+        :param parent: 天体的父对象
+        :param ignore_mass: 是否忽略质量（如果为True，则不计算引力）
+        :param is_fixed_star: 是否为恒星
         """
         self.__his_pos = []
         self.__his_vel = []
         self.__his_acc = []
         self.__his_reserved_num = 200
         # 是否忽略质量（如果为True，则不计算引力）
-        self.ignore_mass = False
+        self.ignore_mass = ignore_mass
 
         if name is None:
             name = getattr(self.__class__, '__name__')
@@ -75,6 +79,7 @@ class Body(metaclass=ABCMeta):
         # 是否显示
         self.appeared = True
         self.parent = parent
+        self.__is_fixed_star = is_fixed_star
 
     @property
     def init_position(self):
@@ -126,7 +131,11 @@ class Body(metaclass=ABCMeta):
         是否为恒星（太阳为 True）
         :return:
         """
-        return False
+        return self.__is_fixed_star
+
+    @is_fixed_star.setter
+    def is_fixed_star(self, value):
+        self.__is_fixed_star = value
 
     @property
     def position(self):
@@ -340,20 +349,24 @@ class Body(metaclass=ABCMeta):
         :return:
         """
         bodies = []
-        with open(json_file, "r") as read_content:
+        params = {}
+        with open(json_file, "r", encoding='utf-8') as read_content:
             json_data = json.load(read_content)
             for body_data in json_data["bodies"]:
                 # print(body_data)
                 body = Body(**body_data)
                 bodies.append(body)
+            if "params" in json_data:
+                params = json_data["params"]
                 # print(body.position_au())
-        return bodies
+        return bodies, params
 
 
 if __name__ == '__main__':
     # build_bodies_from_json('../data/sun.json')
-    bodies = Body.build_bodies_from_json('../data/sun_earth.json')
+    bodies, params = Body.build_bodies_from_json('../data/sun_earth.json')
     # 太阳半径 / 地球半径
     print("太阳半径 / 地球半径 =", bodies[0].raduis / bodies[1].raduis)
+    print("params:", params)
     for body in bodies:
         print(body)

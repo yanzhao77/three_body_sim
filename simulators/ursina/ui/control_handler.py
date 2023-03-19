@@ -180,7 +180,7 @@ class ControlHandler(EventHandler):
             print(key)
         elif key == 'y':  # 寻找天体
             if hasattr(self, "bodies_button_list"):
-                if self.ui.bodies_button_list.enabled:
+                if self.bodies_button_list.enabled:
                     self.bodies_button_list_close()
                     return
             self.on_searching_bodies_click()

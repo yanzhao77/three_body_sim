@@ -21,6 +21,7 @@ class Sun(Body):
     def __init__(self, name="Sun", mass=1.9891e30,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
+                 color=(170, 98, 25),
                  texture="sun2.jpg", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.6130):
         params = {
@@ -29,7 +30,7 @@ class Sun(Body):
             "init_position": init_position,
             "init_velocity": init_velocity,
             "density": 1.408e3,
-            "color": (170, 98, 25),
+            "color": color,
             "texture": texture,
             "size_scale": size_scale,
             "distance_scale": distance_scale,

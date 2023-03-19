@@ -66,6 +66,36 @@ class System(object):
             # body.position += 0.5 * body.acceleration * (dt ** 2)
             body.position += body.velocity * dt
 
+    def save_to_json(self, json_file_name, params=None):
+        """
+
+        :param json_file_name:
+        :param params:
+        :return:
+        """
+        import json
+        import os
+        # json_file = os.path.join("../data", json_file_name)
+        filed_names = ["name", "mass", "init_position", "init_velocity",
+                       "density", "color", "texture",
+                       "size_scale", "distance_scale",  # "parent"
+                       "rotation_speed", "ignore_mass", "is_fixed_star"]
+        bodies = []
+        for b in self.bodies:
+            body = {}
+            for filed_name in filed_names:
+                filed_value = getattr(b, filed_name)
+                if type(filed_value) is np.ndarray:
+                    filed_value = filed_value.tolist()
+                body[filed_name] = filed_value
+            bodies.append(body)
+        data = {"bodies": bodies}
+        if params is not None:
+            data["params"] = params
+        json_str = json.dumps(data, indent=2, ensure_ascii=False, separators=(',', ': '))
+        with open(json_file_name, "w", encoding='utf-8') as f:
+            f.write(json_str)
+
     def calc_bodies_acceleration(self):
         """
         计算加速度
@@ -124,17 +154,42 @@ class System(object):
 
 
 if __name__ == '__main__':
-    body_sys = System([
-        Sun(),  # 太阳
-        Mercury(),  # 水星
-        Venus(),  # 金星
-        Earth(),  # 地球
-        Mars(),  # 火星
-        Jupiter(),  # 木星
-        Saturn(),  # 土星
-        Uranus(),  # 天王星
-        Neptune(),  # 海王星
-        Pluto()  # 冥王星(从太阳系的行星中排除)
-    ])
+    # body_sys = System([
+    #     Sun(),  # 太阳
+    #     Mercury(),  # 水星
+    #     Venus(),  # 金星
+    #     Earth(),  # 地球
+    #     Mars(),  # 火星
+    #     Jupiter(),  # 木星
+    #     Saturn(),  # 土星
+    #     Uranus(),  # 天王星
+    #     Neptune(),  # 海王星
+    #     Pluto()  # 冥王星(从太阳系的行星中排除)
+    # ])
+    import math
 
-    print(body_sys)
+    mass = 2e30
+    r = 2 * AU
+    # p = 14.9
+    p = 14.89
+    bodies = [
+        Sun(name="太阳A红色", mass=mass,
+            init_position=[0, r * math.sqrt(3), 0],  # 位置
+            init_velocity=[-p, 0, 0],  # 速度（km/s）
+            size_scale=5e1, texture="sun2.jpg", color=(255, 0, 0)),  # 太阳放大 100 倍
+        Sun(name="太阳B绿色", mass=mass,
+            init_position=[-r, 0, 0],
+            init_velocity=[1 / 2 * p, -math.sqrt(3) / 2 * p, 0],
+            size_scale=5e1, texture="sun2.jpg", color=(0, 255, 0)),  # 太阳放大 100 倍
+        Sun(name="太阳C蓝色", mass=mass,
+            init_position=[r, 0, 0],
+            init_velocity=[1 / 2 * p, math.sqrt(3) / 2 * p, 0],
+            size_scale=5e1, texture="sun2.jpg", color=(0, 0, 255)),  # 太阳放大 100 倍
+        Earth(name="地球",
+              # init_position=[0, -AU * -2, 5 * AU],
+              init_position=[0, math.sqrt(3) * r / 6, 5 * AU],
+              init_velocity=[0, 0, -10],
+              size_scale=4e3, distance_scale=1),  # 地球放大 4000 倍，距离保持不变
+    ]
+    body_sys = System(bodies)
+    print(body_sys.save_to_json("../data/tri_bodies_sim_perfect_01.json"))
