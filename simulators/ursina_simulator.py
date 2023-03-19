@@ -10,7 +10,7 @@
 from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application, color, mouse, Vec2, Vec3, \
     load_texture, held_keys, distance
 from ursina.prefabs.first_person_controller import FirstPersonController
-
+import itertools
 from simulators.ursina.ursina_event import UrsinaEvent
 # from simulators.ursina.ursina_ui import UrsinaUI
 from simulators.ursina.ui.control_ui import ControlUI
@@ -47,12 +47,12 @@ class UrsinaSimulator(Simulator):
     Ursina官网： https://www.ursinaengine.org/
     """
     def __init__(self, bodies_sys: System):
-        # self.app = Ursina()
-        import os
-        os.environ['CUDA_VISIBLE_DEVICES'] = '1'  # 选择第二个GPU
-        self.app = Ursina(window_title='GPU模拟',
-                     window_kwargs={'vsync': True, 'fullscreen': False, 'borderless': False, 'show_ursina_splash': True,
-                                    'high_resolution': True})
+        self.app = Ursina()
+        # import os
+        # os.environ['CUDA_VISIBLE_DEVICES'] = '1'  # 选择第二个GPU
+        # self.app = Ursina(window_title='GPU模拟',
+        #              window_kwargs={'vsync': True, 'fullscreen': False, 'borderless': False, 'show_ursina_splash': True,
+        #                             'high_resolution': True})
 
         self.ursina_views = []
         window.color = color.black
@@ -72,15 +72,40 @@ class UrsinaSimulator(Simulator):
         self.adj_run_params()
         UrsinaEvent.on_searching_bodies_subscription(type(self).__name__, self.on_searching_bodies)
 
-    def adj_run_params(self):
+    # def get_bodies_max_distance(self, body_views):
+    #     max_distance = 0
+    #     for b1 in body_views:
+    #         if b1.body.ignore_mass:
+    #             continue
+    #         for b2 in body_views:
+    #             if (b1 is b2) or b2.body.ignore_mass:
+    #                 continue
+    #         d = distance(b1.planet, b2.planet)
+    #         if d > max_distance:
+    #             max_distance = d
+    #     return max_distance
+
+    def get_bodies_max_distance(self, body_views):
+        """
+        算法优化
+        :param body_views:
+        :return:
+        """
         max_distance = 0
-        for b1 in self.body_views:
-            for b2 in self.body_views:
-                if b1 is b2:
-                    continue
+        for b1, b2 in itertools.combinations(body_views, 2):
+            if b1.body.ignore_mass or b2.body.ignore_mass:
+                continue
             d = distance(b1.planet, b2.planet)
             if d > max_distance:
                 max_distance = d
+        return max_distance
+
+    def adj_run_params(self):
+        """
+
+        :return:
+        """
+        max_distance = self.get_bodies_max_distance(self.body_views)
 
         # UrsinaConfig.control_camera_speed = round(max_distance * 10, 2)
         time_scale = round(pow(max_distance, 1 / 4), 2)
