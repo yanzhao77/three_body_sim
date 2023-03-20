@@ -276,6 +276,7 @@ class UrsinaSimulator(Simulator):
         # 防止打开中文输入法
         # self.switch_to_english_input_method()
         audio = Audio('../sounds/universe_04.mp3', pitch=1, loop=True, autoplay=True)
+        audio.volume = 0.3
         self.app.run()
 
 
