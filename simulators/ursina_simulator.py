@@ -8,7 +8,7 @@
 # ==============================================================================
 # pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina
 from ursina import Ursina, window, Entity, Grid, Mesh, camera, Text, application, color, mouse, Vec2, Vec3, \
-    load_texture, held_keys, distance
+    load_texture, held_keys, distance, Audio
 from ursina.prefabs.first_person_controller import FirstPersonController
 import itertools
 from simulators.ursina.ursina_event import UrsinaEvent
@@ -32,6 +32,7 @@ class WorldGrid(Entity):
     """
     创建一个宇宙网格对象
     """
+
     def __init__(self):
         super().__init__()
         s = 100
@@ -57,7 +58,6 @@ class UrsinaSimulator(Simulator):
         # self.app = Ursina(window_title='GPU模拟',
         #              window_kwargs={'vsync': True, 'fullscreen': False, 'borderless': False, 'show_ursina_splash': True,
         #                             'high_resolution': True})
-
         self.ursina_views = []
         window.color = color.black
 
@@ -275,6 +275,7 @@ class UrsinaSimulator(Simulator):
         EditorCamera(ignore_paused=True)
         # 防止打开中文输入法
         # self.switch_to_english_input_method()
+        audio = Audio('../sounds/universe_04.mp3', pitch=1, loop=True, autoplay=True)
         self.app.run()
 
 
