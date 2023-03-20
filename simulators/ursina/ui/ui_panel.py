@@ -50,6 +50,7 @@ class UiPanel(WindowPanel):
         """
         # 创建消息框
         message_box = Text(text=message, font=UrsinaConfig.CN_FONT, background=True, origin=(0, 0), y=.25)
+        close_time = close_time * application.time_scale
 
         # 定义关闭函数
         def close_message():
