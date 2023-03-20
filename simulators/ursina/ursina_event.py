@@ -11,15 +11,18 @@
 
 class UrsinaEvent:
     """
-
+    ursina天体运行模拟器事件传递
     """
 
     @staticmethod
     def init():
         if hasattr(UrsinaEvent, "on_reset_funcs"):
             return
+        # 重启运行的订阅事件
         UrsinaEvent.on_reset_funcs = []
+        # 搜索天体的订阅事件
         UrsinaEvent.on_searching_bodies_funcs = []
+        # 应用运行的订阅事件
         UrsinaEvent.on_application_run_callback = []
 
     @staticmethod

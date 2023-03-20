@@ -12,3 +12,4 @@ from bodies.venus import Venus
 from bodies.moon import Moon
 from bodies.asteroid import Asteroid
 from bodies.asteroids import Asteroids
+from bodies.dysen_sphere import DysenSphere

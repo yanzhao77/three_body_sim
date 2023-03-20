@@ -28,7 +28,10 @@ from ursina import EditorCamera, PointLight, SpotLight, AmbientLight, Directiona
 from scenes.func import ursina_run
 
 
-class WorldGrid(Entity):  # Entity # 定义构造方法
+class WorldGrid(Entity):
+    """
+    创建一个宇宙网格对象
+    """
     def __init__(self):
         super().__init__()
         s = 100
@@ -168,62 +171,62 @@ class UrsinaSimulator(Simulator):
         #                   position=(0, 0, 0),
         #                   rotation=(0, 0, 0))
 
-    def __add_glow(self, entity, intensity=2, light_color=color.white, attenuation=3):
-        """
-        未用，保留代码
-        :param entity:
-        :param intensity:
-        :param light_color:
-        :param attenuation:
-        :return:
-        """
-        lights = []
-        import math
-        for i in range(5):
-            glow_entity = Entity(parent=entity, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
-                                 scale=math.pow(1.03, i), alpha=0.2)
-            lights.append(glow_entity)
-        # 创建一个新的 Entity 对象，作为光晕的容器
-        # glow_entity = Entity(parent=entity, model='sphere', scale=entity.scale * 1.2)
-        # 创建 PointLight 对象，并设置它的属性
-        for i in range(2):
-            light = PointLight(parent=lights[0], intensity=intensity, color=light_color, attenuation=attenuation)
-            lights.append(light)
+    # def __add_glow(self, entity, intensity=2, light_color=color.white, attenuation=3):
+    #     """
+    #     未用，保留代码
+    #     :param entity:
+    #     :param intensity:
+    #     :param light_color:
+    #     :param attenuation:
+    #     :return:
+    #     """
+    #     lights = []
+    #     import math
+    #     for i in range(5):
+    #         glow_entity = Entity(parent=entity, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
+    #                              scale=math.pow(1.03, i), alpha=0.2)
+    #         lights.append(glow_entity)
+    #     # 创建一个新的 Entity 对象，作为光晕的容器
+    #     # glow_entity = Entity(parent=entity, model='sphere', scale=entity.scale * 1.2)
+    #     # 创建 PointLight 对象，并设置它的属性
+    #     for i in range(2):
+    #         light = PointLight(parent=lights[0], intensity=intensity, color=light_color, attenuation=attenuation)
+    #         lights.append(light)
+    #
+    #     # 把 Entity 对象放到星星的后面，使得光晕看起来像是从星星发出来的
+    #     glow_entity.world_position = entity.world_position
+    #     glow_entity.world_parent = entity.parent
+    #     glow_entity.y += entity.scale_y * 0.1
+    #     glow_entity.depth_test = False
+    #     return lights
 
-        # 把 Entity 对象放到星星的后面，使得光晕看起来像是从星星发出来的
-        glow_entity.world_position = entity.world_position
-        glow_entity.world_parent = entity.parent
-        glow_entity.y += entity.scale_y * 0.1
-        glow_entity.depth_test = False
-        return lights
-
-    def create_fixed_star_lights(self, entity):
-        """
-        创建恒星的发光的效果、并作为灯光源
-        :param entity:
-        :return:
-        """
-
-        # 如果是恒星（如：太阳），自身会发光，则需要关闭灯光
-        entity.set_light_off()
-
-        lights = []
-        # 创建多个新的 Entity 对象，作为光晕的容器
-        for i in range(10):
-            glow_entity = Entity(parent=entity, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
-                                 scale=math.pow(1.03, i), alpha=0.1)
-
-            lights.append(glow_entity)
-        for i in range(2):
-            # 创建 PointLight 对象，作为恒星的灯光源
-            light = PointLight(parent=entity, intensity=10, range=10, color=color.white)
-            lights.append(light)
-
-        # light = DirectionalLight(shadows=True, direction=Vec3(0, 0, 1), color=color.white)
-        # light.look_at(Vec3(0, 0, -1))
-        # light = SpotLight(parent=entity,shadows=True, direction=Vec3(1,1,1), color=color.white)
-
-        return lights
+    # def create_fixed_star_lights(self, entity):
+    #     """
+    #     创建恒星的发光的效果、并作为灯光源
+    #     :param entity:
+    #     :return:
+    #     """
+    #
+    #     # 如果是恒星（如：太阳），自身会发光，则需要关闭灯光
+    #     entity.set_light_off()
+    #
+    #     lights = []
+    #     # 创建多个新的 Entity 对象，作为光晕的容器
+    #     for i in range(10):
+    #         glow_entity = Entity(parent=entity, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
+    #                              scale=math.pow(1.03, i), alpha=0.1)
+    #
+    #         lights.append(glow_entity)
+    #     for i in range(2):
+    #         # 创建 PointLight 对象，作为恒星的灯光源
+    #         light = PointLight(parent=entity, intensity=10, range=10, color=color.white)
+    #         lights.append(light)
+    #
+    #     # light = DirectionalLight(shadows=True, direction=Vec3(0, 0, 1), color=color.white)
+    #     # light.look_at(Vec3(0, 0, -1))
+    #     # light = SpotLight(parent=entity,shadows=True, direction=Vec3(1,1,1), color=color.white)
+    #
+    #     return lights
 
     def run(self, dt, **kwargs):
 

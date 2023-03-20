@@ -16,6 +16,9 @@ from simulators.ursina.ursina_config import UrsinaConfig
 
 
 class UiSlider(Slider):
+    """
+
+    """
     def __init__(self, text, min=0.01, max=3, step=.01, default=1):
         # Text.default_font = 'msyhl.ttc'  # 'simsun.ttc'
         super().__init__(text=text,
@@ -36,6 +39,9 @@ class UiSlider(Slider):
 
 
 class SwithButton(ButtonGroup):
+    """
+
+    """
     def __init__(self, options, default, tooltips=None):
         super().__init__(options, min_selection=1, default=default,
                          selected_color=color.rgba(0.1, 0.6, 0.1, 1.0), ignore_paused=True,
@@ -53,6 +59,9 @@ class SwithButton(ButtonGroup):
 
 
 class Buttons(ButtonGroup):
+    """
+
+    """
     def __init__(self, options, default=None, tooltips=None):
         min_selection = len(options)
         super().__init__(options, min_selection=1, default=default,
@@ -73,6 +82,9 @@ class Buttons(ButtonGroup):
 
 
 class UiButton(Button):
+    """
+
+    """
     def __init__(self, text, on_click):
         super(UiButton, self).__init__(text=text, origin=(0, 0), y=2,
                                        on_click=on_click, color=color.rgba(0.0, 0.0, 0.0, 0.5),

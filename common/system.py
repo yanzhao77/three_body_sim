@@ -7,6 +7,7 @@
 # python_version  :3.8
 # ==============================================================================
 import numpy as np
+import math
 from common.consts import AU, G
 from bodies import Body, Sun, Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune, Pluto
 from common.func import calculate_distance
@@ -24,7 +25,52 @@ class System(object):
         :param max_distance:系统的最大范围，超出范围的天体就不显示了
         """
         self.bodies = bodies
+        # self.adjust_distance_and_velocity()
         self.max_distance = max_distance
+
+    @staticmethod
+    def calc_body_new_velocity_position(body, sun_mass=1.9891e30, G=6.674e-11):
+        old_velocity = body.init_velocity
+        old_position = body.init_position
+
+        old_distance = np.linalg.norm(old_position - [0,0,0], axis=-1)
+        new_distance = old_distance * body.distance_scale
+        new_position = old_position * body.distance_scale
+
+        new_velocity = System.get_new_velocity(old_velocity, old_distance, new_distance, body.mass)
+
+        return new_velocity, new_position
+
+    @staticmethod
+    def get_new_velocity(old_velocity, old_distance, new_distance, mass, sun_mass=1.9891e30, G=6.674e-11):
+        # 计算原速度的模长
+        old_speed = np.linalg.norm(old_velocity * 1000)
+        # 计算原动能和原势能
+        old_kinetic_energy = 0.5 * mass * old_speed ** 2
+        old_potential_energy = - G * mass * sun_mass / old_distance
+
+        new_potential_energy = - G * mass * sun_mass / new_distance
+
+        # 计算新动能
+        new_kinetic_energy = old_kinetic_energy
+        # 计算新速度的模长
+        new_speed = math.sqrt(2 * (new_kinetic_energy - old_potential_energy) / mass)
+        # 计算新速度向量
+        new_velocity = old_velocity / old_speed * new_speed/1000
+        return new_velocity
+
+    def get_new_velocity1(old_velocity, old_distance, new_distance, mass, sun_mass=1.9891e30, G=6.674e-11):
+        # 计算原来的速度
+        old_speed = math.sqrt(G * sun_mass / old_distance)
+        # 计算新的速度
+        new_speed = math.sqrt(G * sun_mass / new_distance)
+        # 计算原来的动能
+        old_kinetic_energy = 0.5 * mass * old_velocity ** 2
+        # 计算新的动能
+        new_kinetic_energy = old_kinetic_energy * new_speed ** 2 / old_speed ** 2
+        # 计算新的速度
+        new_velocity = math.sqrt(2 * new_kinetic_energy / mass)
+        return new_velocity
 
     def add(self, body):
         self.bodies.append(body)
@@ -166,30 +212,39 @@ if __name__ == '__main__':
     #     Neptune(),  # 海王星
     #     Pluto()  # 冥王星(从太阳系的行星中排除)
     # ])
-    import math
+    # import math
+    #
+    # mass = 2e30
+    # r = 2 * AU
+    # # p = 14.9
+    # p = 14.89
+    # bodies = [
+    #     Sun(name="太阳A红色", mass=mass,
+    #         init_position=[0, r * math.sqrt(3), 0],  # 位置
+    #         init_velocity=[-p, 0, 0],  # 速度（km/s）
+    #         size_scale=5e1, texture="sun2.jpg", color=(255, 0, 0)),  # 太阳放大 100 倍
+    #     Sun(name="太阳B绿色", mass=mass,
+    #         init_position=[-r, 0, 0],
+    #         init_velocity=[1 / 2 * p, -math.sqrt(3) / 2 * p, 0],
+    #         size_scale=5e1, texture="sun2.jpg", color=(0, 255, 0)),  # 太阳放大 100 倍
+    #     Sun(name="太阳C蓝色", mass=mass,
+    #         init_position=[r, 0, 0],
+    #         init_velocity=[1 / 2 * p, math.sqrt(3) / 2 * p, 0],
+    #         size_scale=5e1, texture="sun2.jpg", color=(0, 0, 255)),  # 太阳放大 100 倍
+    #     Earth(name="地球",
+    #           # init_position=[0, -AU * -2, 5 * AU],
+    #           init_position=[0, math.sqrt(3) * r / 6, 5 * AU],
+    #           init_velocity=[0, 0, -10],
+    #           size_scale=4e3, distance_scale=1),  # 地球放大 4000 倍，距离保持不变
+    # ]
+    # body_sys = System(bodies)
+    # print(body_sys.save_to_json("../data/tri_bodies_sim_perfect_01.json"))
+    earth = Earth(name="地球",
+          # init_position=[0, -AU * -2, 5 * AU],
+          init_position=[0, 1000000, 500000],
+          init_velocity=[0, 0, -10],
+          size_scale=4e3, distance_scale=1)
+    new_velocity, new_position = System.calc_body_new_velocity_position(earth)
 
-    mass = 2e30
-    r = 2 * AU
-    # p = 14.9
-    p = 14.89
-    bodies = [
-        Sun(name="太阳A红色", mass=mass,
-            init_position=[0, r * math.sqrt(3), 0],  # 位置
-            init_velocity=[-p, 0, 0],  # 速度（km/s）
-            size_scale=5e1, texture="sun2.jpg", color=(255, 0, 0)),  # 太阳放大 100 倍
-        Sun(name="太阳B绿色", mass=mass,
-            init_position=[-r, 0, 0],
-            init_velocity=[1 / 2 * p, -math.sqrt(3) / 2 * p, 0],
-            size_scale=5e1, texture="sun2.jpg", color=(0, 255, 0)),  # 太阳放大 100 倍
-        Sun(name="太阳C蓝色", mass=mass,
-            init_position=[r, 0, 0],
-            init_velocity=[1 / 2 * p, math.sqrt(3) / 2 * p, 0],
-            size_scale=5e1, texture="sun2.jpg", color=(0, 0, 255)),  # 太阳放大 100 倍
-        Earth(name="地球",
-              # init_position=[0, -AU * -2, 5 * AU],
-              init_position=[0, math.sqrt(3) * r / 6, 5 * AU],
-              init_velocity=[0, 0, -10],
-              size_scale=4e3, distance_scale=1),  # 地球放大 4000 倍，距离保持不变
-    ]
-    body_sys = System(bodies)
-    print(body_sys.save_to_json("../data/tri_bodies_sim_perfect_01.json"))
+    print(new_velocity, new_position)
+    print(earth.init_velocity, earth.init_position)

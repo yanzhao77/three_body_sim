@@ -21,6 +21,9 @@ from ursina import WindowPanel, InputField, Button, Slider, ButtonGroup, Panel, 
 
 
 class ControlUI(UiPanel):
+    """
+    控制面板界面
+    """
     def component_init(self):
         self.start_button_text = "●"  # 》●▲○◎
         self.pause_button_text = "〓"  # 〓 || ‖

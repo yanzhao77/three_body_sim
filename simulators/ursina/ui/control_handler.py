@@ -21,8 +21,15 @@ from simulators.ursina.ui.event_handler import EventHandler
 
 
 class ControlHandler(EventHandler):
+    """
+    控制面板事件处理类
+    """
 
     def handler_input_init(self):
+        """
+        输入事件初始化
+        @return:
+        """
         self.settings_handler = Entity(ignore_paused=True)
         self.settings_handler.input = self.settings_handler_input
         key_info_str = "方位控制[键盘QWEASD]+[鼠标右键]，按[空格]更多控制"
@@ -30,7 +37,10 @@ class ControlHandler(EventHandler):
                         background=True)
 
     def sec_per_time_switch_changed(self):
-        # ("默认", "天", "周", "月", "年", "十年", "百年")
+        """
+        按钮组("默认", "天", "周", "月", "年", "十年", "百年") 点击
+        @return:
+        """
         if self.ui.sec_per_time_switch.value == "天":
             UrsinaConfig.seconds_per = SECONDS_PER_DAY
         elif self.ui.sec_per_time_switch.value == "周":
@@ -44,15 +54,19 @@ class ControlHandler(EventHandler):
         elif self.ui.sec_per_time_switch.value == "百年":
             UrsinaConfig.seconds_per = SECONDS_PER_YEAR * 100
         else:
-            UrsinaConfig.seconds_per = 0
+            UrsinaConfig.seconds_per = 0  # 默认
 
     def on_off_trail_changed(self):
+        """
+        拖尾开关点击
+        @return:
+        """
         if self.ui.on_off_trail.value == self.ui.trail_button_text:
             UrsinaConfig.show_trail = True
         else:
             UrsinaConfig.show_trail = False
 
-    def move_camera_to_entity(self, camera_pos: Vec3, entity_pos: Vec3, _distance: float) -> Vec3:
+    def move_camera_to_entity2(self, camera_pos: Vec3, entity_pos: Vec3, _distance: float) -> Vec3:
         # 计算摄像机到实体的向量
         direction = entity_pos - camera_pos
         # 计算当前距离
@@ -70,8 +84,14 @@ class ControlHandler(EventHandler):
     def move_camera_to_entity(self, entity, d):
         camera.position = entity.position  # - Vec3(0, 0, d)  # 设置摄像机位置
         camera.world_position = entity.position
+        forward = camera.forward
 
-    def bodies_button_list_click(self, item):
+    def search_bodies_button_list_click(self, item):
+        """
+
+        @param item:
+        @return:
+        """
         if item is not None:
             # TODO: 先找到位置，确定摄像机的位置
             try:
@@ -80,12 +100,12 @@ class ControlHandler(EventHandler):
             except Exception as e:
                 self.ui.show_message(f"{item}飞不见了")
 
-        self.bodies_button_list_close()
+        self.search_bodies_button_list_close()
 
-    def bodies_button_list_close(self):
-        if hasattr(self, "bodies_button_list"):
-            self.bodies_button_list.enabled = False
-            destroy(self.bodies_button_list)
+    def search_bodies_button_list_close(self):
+        if hasattr(self, "search_bodies_button_list"):
+            self.search_bodies_button_list.enabled = False
+            destroy(self.search_bodies_button_list)
 
     def on_searching_bodies_click(self):
         results = UrsinaEvent.on_searching_bodies()
@@ -93,14 +113,13 @@ class ControlHandler(EventHandler):
             sub_name, bodies = results[0]
             if len(bodies) == 0:
                 self.ui.show_message("天体都飞不见了，请重新运行。")
-                # button_dict = {"天体都飞不见了，请重新运行。": lambda: self.bodies_button_list_click(None)}
                 return
-            # print(results[0])
-            button_dict = {"[关闭]        == 寻找天体 ==": lambda: self.bodies_button_list_click(None)}
+
+            button_dict = {"[关闭]        == 寻找天体 ==": lambda: self.search_bodies_button_list_click(None)}
             camera = scene.camera
             for body in bodies:
                 def callback_action(b=body):
-                    self.bodies_button_list_click(b)
+                    self.search_bodies_button_list_click(b)
 
                 if body.appeared:
                     distance_to_entity = distance(body.planet, camera)
@@ -108,18 +127,18 @@ class ControlHandler(EventHandler):
                     name = f"{body.name}\t距离：{d:.4f}天文单位"
                     button_dict[name] = callback_action
                 else:
-                    if hasattr(self, "bodies_button_list"):
-                        self.bodies_button_list_close()
+                    if hasattr(self, "search_bodies_button_list"):
+                        self.search_bodies_button_list_close()
                     name = f"{body.name}\t距离太远，找不到了"
-                    button_dict[name] = lambda: self.bodies_button_list_click(None)
+                    button_dict[name] = lambda: self.search_bodies_button_list_click(None)
 
-            if hasattr(self, "bodies_button_list"):
-                self.bodies_button_list_close()
+            if hasattr(self, "search_bodies_button_list"):
+                self.search_bodies_button_list_close()
 
-            self.bodies_button_list = ButtonList(button_dict,
-                                                 font=UrsinaConfig.CN_FONT,
-                                                 button_height=1.5,
-                                                 ignore_paused=True)
+            self.search_bodies_button_list = ButtonList(button_dict,
+                                                        font=UrsinaConfig.CN_FONT,
+                                                        button_height=1.5,
+                                                        ignore_paused=True)
 
     def on_reset_button_click(self):
         paused = application.paused
@@ -179,9 +198,9 @@ class ControlHandler(EventHandler):
         elif key == 'left mouse down':
             print(key)
         elif key == 'y':  # 寻找天体
-            if hasattr(self, "bodies_button_list"):
-                if self.bodies_button_list.enabled:
-                    self.bodies_button_list_close()
+            if hasattr(self, "search_bodies_button_list"):
+                if self.search_bodies_button_list.enabled:
+                    self.search_bodies_button_list_close()
                     return
             self.on_searching_bodies_click()
         elif key == 'o':  # 重新开始

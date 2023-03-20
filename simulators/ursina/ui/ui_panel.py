@@ -20,11 +20,22 @@ from simulators.ursina.ui.event_handler import EventHandler
 
 
 class UiPanel(WindowPanel):
+    """
+    界面面板类
+    """
     def __init__(self, handler: EventHandler, position=(0, 0), enabled=False, title=''):
+        """
+
+        @param handler: 事件处理类
+        @param position: 界面位置
+        @param enabled: 是否显示
+        @param title: 标题
+        """
         self.components = self.component_init()
         self.handler = handler
         self.handler.ui = self
         self.event_handler_init()
+
         super().__init__(title=title, content=self.components, ignore_paused=True, color=color.rgba(0.0, 0.0, 0.0, 0.5))
 
         self.y = position[1]  # wp.panel.scale_y / 2 * wp.scale_y  # center the window panel
@@ -33,19 +44,29 @@ class UiPanel(WindowPanel):
         self.after_component_init()
 
     def after_component_init(self):
+        """
+        组件初始化后运行
+        """
         pass
 
     def component_init(self):
+        """
+        组件初始化
+        """
         pass
 
     def event_handler_init(self):
+        """
+        事件处理初始化
+        @return:
+        """
         pass
 
     def show_message(self, message, close_time=3):
         """
-        创建消息框
+        显示消息框
         :param message: 消息内容
-        :param close_time: 定义关闭时间
+        :param close_time: 定义显示消息框关闭时间
         :return:
         """
         # 创建消息框

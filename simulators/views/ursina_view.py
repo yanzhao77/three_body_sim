@@ -118,8 +118,10 @@ class Planet(Entity):
             rotation=rotation  # ,double_sided=True
         )
 
-        if hasattr(self.body_view.body, "torus_stars"):
+        if hasattr(self.body_view.body, "torus_stars") or \
+                hasattr(self.body_view.body, "light_disable"):
             # 星环小天体群（主要模拟小行星群，非一个天体）
+            # 或者灯光禁用
             self.set_light_off()
             self.double_sided = True
         else:

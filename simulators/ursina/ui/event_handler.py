@@ -14,5 +14,9 @@ class EventHandler:
         self.handler_input_init()
 
     def handler_input_init(self):
+        """
+        
+        @return:
+        """
         pass
 
