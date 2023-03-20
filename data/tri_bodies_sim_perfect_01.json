@@ -21,7 +21,8 @@
       ],
       "texture": "sun2.jpg",
       "size_scale": 50.0,
-      "distance_scale": 1.0
+      "distance_scale": 1.0,
+      "is_fixed_star": true
     },
     {
       "name": "绿轨太阳B",
@@ -44,7 +45,8 @@
       ],
       "texture": "sun2.jpg",
       "size_scale": 50.0,
-      "distance_scale": 1.0
+      "distance_scale": 1.0,
+      "is_fixed_star": true
     },
     {
       "name": "蓝轨太阳C",
@@ -67,7 +69,8 @@
       ],
       "texture": "sun2.jpg",
       "size_scale": 50.0,
-      "distance_scale": 1.0
+      "distance_scale": 1.0,
+      "is_fixed_star": true
     },
     {
       "name": "流浪地球",
