@@ -12,11 +12,13 @@ from common.consts import MO
 
 class Alcyone(FixedStar):
     """
-    TODO： 参宿七 (Alcyone)
+    TODO： 昴宿六 (Alcyone)
     质量：5太阳质量
     密度：不详
     颜色值：#EFF6FF
     直径：6.12倍太阳直径
+
+    中文名昴宿六外文名Alcyone表面温度13000K；总光度太阳的2,400倍半    径太阳的10倍质    量太阳的7倍视星等2.87自转周期3天光谱型B7III绝对星等-2.76
     ------------------------
     == 太阳参数 ==
     自转周期: 24.47 地球日，自转角速度约为 0.6130 度/小时 = 360/(24.47*24)
@@ -24,7 +26,7 @@ class Alcyone(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="参宿七", mass=5 * MO,
+    def __init__(self, name="昴宿六", mass=5 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  color=(0xEF, 0xF6, 0xFF),

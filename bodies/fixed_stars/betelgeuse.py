@@ -12,11 +12,14 @@ from common.consts import MO
 
 class Betelgeuse(FixedStar):
     """
-    TODO： 大角星 (Betelgeuse)
+    TODO： 参宿四 (Betelgeuse)
     质量：20太阳质量
     密度：1.16×10⁻⁴ g/cm³
     颜色值：#FF9100
     直径：1,180倍太阳直径
+
+    中文名参宿四外文名Betelgeuse别    名α Orionis分    类红超巨星质    量11.6，11.6 + 5.0 或 11.6 - 3.9 M⊙直    径887 ± 203 或955 ± 217 D⊙表面温度3590 K视星等+0.50（0.0 ~ +1.3）绝对星等-5.85赤    经5时55分10.30秒赤    纬+7°24′25.43″距地距离640 光年光谱型M1-M2Ia-abU-B 色指数+2.06B-V 色指数+1.85光    度90000 ~ 1.5 × 10^5 L⊙变星类型SRc
+
     ------------------------
     == 太阳参数 ==
     自转周期: 24.47 地球日，自转角速度约为 0.6130 度/小时 = 360/(24.47*24)
@@ -24,7 +27,7 @@ class Betelgeuse(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="大角星", mass=20 * MO,
+    def __init__(self, name="参宿四", mass=20 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  color=(0xFF, 0xF0, 0xE4),

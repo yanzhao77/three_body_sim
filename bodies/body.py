@@ -294,8 +294,8 @@ class Body(metaclass=ABCMeta):
         return self.raduis * 2
 
     def __repr__(self):
-        return '<%s> m=%.3e(kg), r=%.3e(km), p=[%.3e,%.3e,%.3e](km), v=%s(km/s)' % \
-               (self.name, self.mass, self.raduis,
+        return '<%s> m=%.3e(kg), r/d=%.3e/%.3e(km), v=%.3e(km³), d=%.3e(kg/m³), p=[%.3e,%.3e,%.3e](km), v=%s(km/s)' % \
+               (self.name, self.mass, self.raduis, self.diameter, self.volume, self.density,
                 self.position[0], self.position[1], self.position[2], self.velocity)
 
     def ignore_gravity(self, body):

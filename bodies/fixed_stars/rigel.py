@@ -16,7 +16,7 @@ class Rigel(FixedStar):
     质量：为21太阳质量
     大小：为78.9太阳半径
     颜色：为0xFF, 0xEE, 0xC8
-    密度：为0.18 g/cm³
+    密度：为0.18 g/cm³  # TODO: 0.060199??
     直径：1.07184✕108 km
     ------------------------
     == 太阳参数 ==
@@ -25,7 +25,7 @@ class Rigel(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="参宿七星", mass=21 * MO,
+    def __init__(self, name="参宿七", mass=21 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  color=(0x90, 0x90, 0xFF),

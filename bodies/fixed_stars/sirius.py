@@ -13,8 +13,8 @@ from common.consts import MO
 class Sirius(FixedStar):
     """
     天狼星 (Sirius)
-    质量：2.02太阳质量
-    密度：2.6 g/cm³
+    质量：2.02太阳质量 TODO: ???
+    密度：2.6 g/cm³ TODO: ???
     颜色值：#FFF0E4
     直径：1.71倍太阳直径
     ------------------------
@@ -24,7 +24,7 @@ class Sirius(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="天狼星", mass=2.02 * MO,
+    def __init__(self, name="天狼星", mass=2.06 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  color=(0xFF, 0xF0, 0xE4),
@@ -35,7 +35,7 @@ class Sirius(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 2.6e3,
+            "density": 0.58e3,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -50,5 +50,6 @@ if __name__ == '__main__':
     fixed_star = Sirius()
     sun = Sun()
     print(fixed_star)
+    print(sun)
     print("质量倍数", fixed_star.mass / sun.mass)
     print("半径倍数", fixed_star.raduis / sun.raduis)

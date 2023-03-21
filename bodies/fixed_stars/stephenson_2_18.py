@@ -13,10 +13,10 @@ from common.consts import MO
 class Stephenson_2_18(FixedStar):
     """
     史蒂文森2-18 (Stephenson 2-18)
-    质量：40.0 太阳质量
+    质量：40.0 太阳质量 ? TODO: 14.28e5 * MO ??
     大小：2150 太阳半径
     颜色：0xFF, 0xFF, 0xFF
-    密度：0.0002 g/cm³ >> 所以 1g/cm³等于 1e3 kg/m³。
+    密度：0.0002 g/cm³ >> TODO:???
     半径：2158R☉
     ------------------------
     == 太阳参数 ==
@@ -25,7 +25,7 @@ class Stephenson_2_18(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="史蒂文森2-18", mass=40 * MO,
+    def __init__(self, name="史蒂文森2-18", mass=14.28e5 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  color=((0xFF, 60, 0)),

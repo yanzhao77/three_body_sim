@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-# title           :北河三
-# description     :北河三
+# title           :大角星
+# description     :大角星
 # author          :Python超人
 # date            :2023-02-11
 # link            :https://gitcode.net/pythoncr/
@@ -10,15 +10,17 @@ from bodies import FixedStar, Sun
 from common.consts import MO
 
 
-class Procyon(FixedStar):
+class Arcturus(FixedStar):
     """
-    TODO： 南河三(Procyon）
-    质量：1.5太阳质量
-    密度：1.8 g/cm³
-    颜色值：#F5E8D5
-    直径：1.84倍太阳直径
+    TODO： 大角星 (Arcturus)
+    质量：20太阳质量
+    密度：1.16×10⁻⁴ g/cm³
+    颜色值：#FF9100
+    直径：1,180倍太阳直径
 
-    中文名南河三外文名Procyon别    名小犬座α分    类恒星发现者未知发现时间史前视星等约0.34绝对星等约2.67赤    经7时39分18.1秒赤    纬+5°13′29″距地距离约 11.46 光年半长轴1.18"离心率0.36轨道倾角31.9 度年    龄约1.7×1000000000年星表编号HIP 37279光谱类型F5 IV-V星    座小犬座星    官南河（井宿，朱雀）
+
+    中文名大角星外文名Arcturus别    名牧夫座α，牧夫座16 [2]  、α Boötis、天栋分    类恒星（橙巨星）质    量约 1.08 M⊙ [4] 表面温度约 4286 K [4] 视星等-0.05 等 [3] 绝对星等-0.38 等赤    经14时15分39.7秒赤    纬+19°10′56″距地距离36.7 光年半    径25.4±0.2 R☉ [4] 光    度170 L☉ [5] 光谱类型K0III [2]
+
     ------------------------
     == 太阳参数 ==
     自转周期: 24.47 地球日，自转角速度约为 0.6130 度/小时 = 360/(24.47*24)
@@ -26,10 +28,10 @@ class Procyon(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="南河三", mass=1.5 * MO,
+    def __init__(self, name="大角星", mass=20 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=(0xF5, 0xE8, 0xD5),
+                 color=(0xFF, 0xF0, 0xE4),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.1, ignore_mass=False):
         params = {
@@ -37,7 +39,7 @@ class Procyon(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 0.5e3,
+            "density": 1.408e3,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -49,7 +51,7 @@ class Procyon(FixedStar):
 
 
 if __name__ == '__main__':
-    fixed_star = Procyon()
+    fixed_star = Arcturus()
     sun = Sun()
     print(fixed_star)
     print("质量倍数", fixed_star.mass / sun.mass)
