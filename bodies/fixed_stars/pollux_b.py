@@ -6,7 +6,7 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import FixedStar, Sun
+from bodies import FixedStar
 from common.consts import MO
 
 
@@ -57,6 +57,7 @@ class PolluxB(FixedStar):
 
 
 if __name__ == '__main__':
+    from bodies import Sun
     fixed_star = PolluxB()
     sun = Sun()
     print(fixed_star)

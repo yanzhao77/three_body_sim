@@ -23,7 +23,7 @@ class Saturn(Body):
     　平均密度: 0.687 g/cm³ -> 0.687×10³ kg/m³
     """
 
-    def __init__(self, name="Saturn", mass=5.6834e26,
+    def __init__(self, name="土星", mass=5.6834e26,
                  init_position=[10 * AU, 0, 0],
                  init_velocity=[0, 9.64, 0],
                  texture="saturn.jpg", size_scale=1.0, distance_scale=1.0,

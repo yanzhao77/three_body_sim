@@ -23,7 +23,7 @@ class Venus(Body):
     　平均密度: 5.24g/cm3 -> 5.24×10³ kg/m³
     """
 
-    def __init__(self, name="Venus", mass=4.8675e24,
+    def __init__(self, name="金星", mass=4.8675e24,
                  init_position=[0.72 * AU, 0, 0],
                  init_velocity=[0, 35, 0],
                  texture="venus.jpg", size_scale=1.0, distance_scale=1.0,

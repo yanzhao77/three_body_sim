@@ -23,7 +23,7 @@ class Uranus(Body):
     　平均密度: 1.27 g/cm³ -> 1.27×10³ kg/m³
     """
 
-    def __init__(self, name="Uranus", mass=8.681e25,
+    def __init__(self, name="天王星", mass=8.681e25,
                  init_position=[19 * AU, 0, 0],
                  init_velocity=[0, 6.81, 0],
                  texture="uranus.png", size_scale=1.0, distance_scale=1.0,

@@ -23,7 +23,7 @@ class Neptune(Body):
     　平均密度: 1.638 g/cm³ -> 1.638×10³ kg/m³
     """
 
-    def __init__(self, name="Neptune", mass=1.0241e26,
+    def __init__(self, name="海王星", mass=1.0241e26,
                  init_position=[30 * AU, 0, 0],
                  init_velocity=[0, 5.43, 0],
                  texture="neptune.png", size_scale=1.0, distance_scale=1.0,

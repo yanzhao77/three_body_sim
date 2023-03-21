@@ -6,7 +6,7 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import FixedStar, Sun
+from bodies import FixedStar
 from common.consts import MO
 
 
@@ -39,7 +39,7 @@ class Rigel(FixedStar):
     def __init__(self, name="参宿七", mass=21 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=(0x90, 0x90, 0xFF),
+                 color=(141,213,227),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.1, ignore_mass=False):
         params = {
@@ -56,9 +56,11 @@ class Rigel(FixedStar):
             "ignore_mass": ignore_mass
         }
         super().__init__(**params)
+        self.glow_num = 7
 
 
 if __name__ == '__main__':
+    from bodies import Sun
     fixed_star = Rigel()
     sun = Sun()
     print(fixed_star)

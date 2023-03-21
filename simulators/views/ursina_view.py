@@ -107,13 +107,15 @@ class Planet(Entity):
             rotation = (0, 0, 0)
 
         UrsinaEvent.on_reset_subscription(self.on_reset)
-
+        # color.white
+        self.plant_color = color.white
+        # self.plant_color = color.rgba(*self.body_view.color)
         super().__init__(
             # model="sphere",
             model=model,
             scale=scale,
             texture=texture,
-            color=color.white,
+            color=self.plant_color,
             position=pos,
             rotation=rotation  # ,double_sided=True
         )
@@ -295,14 +297,30 @@ class Planet(Entity):
         # lights = []
         # # 创建多个新的 Entity 对象，作为光晕的容器
         # _color = color.rgba(1.0, 0.6, 0.2, 1)
-        _color = self.body_view.body.color
-        _color = color.rgba(_color[0]/255, _color[1]/255, _color[2]/255, 1)
-        for i in range(10):
-            glow_entity = Entity(parent=self, model='sphere', color=_color,
-                                 scale=math.pow(1.03, i), alpha=0.1)
-        for i in range(2):
-            # 创建 PointLight 对象，作为恒星的灯光源
-            light = PointLight(parent=self, intensity=10, range=10, color=color.white)
+        if hasattr(self.body_view.body, "glow_num"):
+            glow_num = self.body_view.body.glow_num
+            if glow_num > 12:
+                glow_num = 12
+            if glow_num > 5:
+                alpha = 0.1
+            elif glow_num > 4:
+                alpha = 0.2
+            elif glow_num > 3:
+                alpha = 0.3
+            elif glow_num > 2:
+                alpha = 0.4
+
+            if glow_num > 0:
+                _color = self.body_view.body.color
+                _color = color.rgba(_color[0]/255, _color[1]/255, _color[2]/255, 1)
+                for i in range(glow_num):
+                    glow_entity = Entity(parent=self, model='sphere', color=_color,
+                                         scale=math.pow(1.03, i), alpha=alpha)
+        if hasattr(self.body_view.body, "light_on"):
+            if self.body_view.body.light_on:
+                for i in range(2):
+                    # 创建 PointLight 对象，作为恒星的灯光源
+                    light = PointLight(parent=self, intensity=10, range=10, color=color.white)
 
     def create_rings(self):
         """

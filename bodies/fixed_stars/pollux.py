@@ -6,7 +6,7 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import FixedStar, Sun
+from bodies import FixedStar
 from common.consts import MO
 
 
@@ -18,7 +18,19 @@ class Pollux(FixedStar):
     颜色值：#F5E8D5
     直径：1.84倍太阳直径
 
-    中文名北河三外文名Pollux别    名双子座β星分    类恒星，橙巨星质    量1.86 M⊙表面温度4770 K视星等1.14 等绝对星等1.08 等自转周期558天赤    经7时45分18.94秒赤    纬+28°01′34.31″距地距离33.78 光年B-V色指数1U-B色指数0.86光    度39L⊙位    置双子座
+    中文名北河三外文名Pollux别    名双子座β星分    类恒星，橙巨星
+    质    量1.86 M⊙
+    表面温度4770 K
+    视星等1.14 等
+    绝对星等1.08 等自
+    转周期558天
+    赤    经7时45分18.94秒
+    赤    纬+28°01′34.31″
+    距地距离33.78 光年B-V
+    色指数1U-B
+    色指数0.86
+    光    度39L⊙
+    位    置双子座
 
 
 一、北河三比太阳大多少，77.4个太阳
@@ -57,6 +69,7 @@ class Pollux(FixedStar):
 
 
 if __name__ == '__main__':
+    from bodies import Sun
     fixed_star = Pollux()
     sun = Sun()
     print(fixed_star)

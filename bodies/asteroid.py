@@ -26,7 +26,7 @@ class Asteroid(Body):
      　平均密度: 2.3✕10³ kg/m³
     """
 
-    def __init__(self, name="Asteroid", mass=4.1e10,
+    def __init__(self, name="小行星", mass=4.1e10,
                  init_position=[1.6 * AU, 0, 0],
                  init_velocity=[0, 25.37, 0],
                  texture="", size_scale=1.0, distance_scale=1.0):

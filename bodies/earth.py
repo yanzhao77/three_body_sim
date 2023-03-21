@@ -23,7 +23,7 @@ class Earth(Body):
     　平均密度: 5507.85 kg/m³
     """
 
-    def __init__(self, name="Earth", mass=5.97237e24,
+    def __init__(self, name="地球", mass=5.97237e24,
                  init_position=[1.12 * AU, 0, 0],
                  init_velocity=[0, 29.79, 0],
                  texture="earth1.jpg", size_scale=1.0, distance_scale=1.0,

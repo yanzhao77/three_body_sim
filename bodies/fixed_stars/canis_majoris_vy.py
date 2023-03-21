@@ -6,7 +6,7 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import FixedStar, Sun
+from bodies import FixedStar
 from common.consts import MO
 
 
@@ -66,6 +66,7 @@ class CanisMajorisVY(FixedStar):
 
 
 if __name__ == '__main__':
+    from bodies import Sun
     fixed_star = CanisMajorisVY()
     sun = Sun()
     print(fixed_star)

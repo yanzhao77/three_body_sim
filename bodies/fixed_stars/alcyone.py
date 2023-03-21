@@ -6,19 +6,29 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import FixedStar, Sun
+from bodies import FixedStar
 from common.consts import MO
 
 
 class Alcyone(FixedStar):
     """
-    TODO： 昴宿六 (Alcyone)
-    质量：5太阳质量
+    昴宿六 (Alcyone)
+    质量：7个太阳质量
     密度：不详
     颜色值：#EFF6FF
     直径：6.12倍太阳直径
 
-    中文名昴宿六外文名Alcyone表面温度13000K；总光度太阳的2,400倍半    径太阳的10倍质    量太阳的7倍视星等2.87自转周期3天光谱型B7III绝对星等-2.76
+    中文名: 昴宿六
+    外文名: Alcyone
+    表面温度: 13000K；
+    总光度: 太阳的2,400倍
+    半径: 太阳的10倍
+    质量: 太阳的7倍
+    视星等: 2.87
+    自转周期: 3天
+    光谱型: B7III
+    绝对星等: -2.76
+
     ------------------------
     == 太阳参数 ==
     自转周期: 24.47 地球日，自转角速度约为 0.6130 度/小时 = 360/(24.47*24)
@@ -26,10 +36,10 @@ class Alcyone(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="昴宿六", mass=5 * MO,
+    def __init__(self, name="昴宿六", mass=7 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=(0xEF, 0xF6, 0xFF),
+                 color=(0xBB, 0xAA, 0xFF),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.1, ignore_mass=False):
         params = {
@@ -37,7 +47,7 @@ class Alcyone(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 1.408e3,
+            "density": 9.854,  # 10.000676498446115
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -49,6 +59,7 @@ class Alcyone(FixedStar):
 
 
 if __name__ == '__main__':
+    from bodies import Sun
     fixed_star = Alcyone()
     sun = Sun()
     print(fixed_star)

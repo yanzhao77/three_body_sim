@@ -6,7 +6,7 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import FixedStar, Sun
+from bodies import FixedStar
 from common.consts import MO
 
 
@@ -47,6 +47,7 @@ class WR21a(FixedStar):
 
 
 if __name__ == '__main__':
+    from bodies import Sun
     fixed_star = WR21a()
     sun = Sun()
     print(fixed_star)

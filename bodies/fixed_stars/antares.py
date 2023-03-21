@@ -6,23 +6,37 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import FixedStar, Sun
+from bodies import FixedStar
 from common.consts import MO
 
 
 class Antares(FixedStar):
     """
-    TODO： 心宿二，英文名为Antares
+    心宿二，英文名为Antares
     质    量A：12 ± 0.2 M⊙ B：7.2 M⊙
     半    径A:680–800 R☉；B:5.2 R☉
     A：红超巨星 B：蓝矮星
-    质量：为18.6太阳质量
-    大小：为883太阳半径
+    质量：为12太阳质量
+    大小：为680–800太阳半径
     颜色：为0xFF, 0x44, 0x00
     密度：为0.0037 g/cm³。
 
-
-    中文名心宿二外文名Antares别    名Alpha Scorpii分    类A：红超巨星 B：蓝矮星质    量A：12 ± 0.2 M⊙ B：7.2 M⊙表面温度A：3570 K B：18500 K视星等A：0.6 ～ 1.6 B：5.5绝对星等-5.28 等 [9] 赤    经16时29分24.46秒赤    纬-26°25′55.21″距地距离550 ly（170 pc）U-B 色指数A：M1.5Iab-Ib B：B2.5VB-V 色指数+1.83光    度A:75,900 L☉ (44,700 – 128,900 L☉)；B:2754 L☉ [9] 变星类型Lc半    径A:680–800 R☉；B:5.2 R☉ [9] 拼    音xīn xiù èr
+    中文名: 心宿二
+    外文名: Antares
+    别名: Alpha Scorpii
+    分类: A：红超巨星 B：蓝矮星
+    质量: A：12 ± 0.2 M⊙ B：7.2 M⊙
+    表面温度: A：3570 K B：18500 K
+    视星等: A：0.6 ～ 1.6 B：5.5
+    绝对星等: -5.28 等 [9]
+    赤经: 16时29分24.46秒
+    赤纬: -26°25′55.21″
+    距地距离: 550 ly（170 pc）U-B
+    色指数: A：M1.5Iab-Ib B：B2.5VB-V
+    色指数: +1.83
+    光度: A:75,900 L☉ (44,700 – 128,900 L☉)；B:2754 L☉ [9]
+    变星类型: Lc
+    半径: A:680–800 R☉；B:5.2 R☉
 
     ------------------------
     == 太阳参数 ==
@@ -31,10 +45,10 @@ class Antares(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="心宿二", mass=18.6 * MO,
+    def __init__(self, name="心宿二", mass=12 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=(0xFF, 0x44, 0x00),
+                 color=(249,198,83),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.1, ignore_mass=False):
         params = {
@@ -42,7 +56,7 @@ class Antares(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 0.0037e3,
+            "density": 0.000037,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -51,9 +65,11 @@ class Antares(FixedStar):
             "ignore_mass": ignore_mass
         }
         super().__init__(**params)
+        self.glow_num = 6
 
 
 if __name__ == '__main__':
+    from bodies import Sun
     fixed_star = Antares()
     sun = Sun()
     print(fixed_star)

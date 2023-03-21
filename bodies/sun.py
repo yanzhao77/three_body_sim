@@ -6,10 +6,10 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies.body import Body
+from bodies import FixedStar
 
 
-class Sun(Body):
+class Sun(FixedStar):
     """
     太阳
     ------------------------
@@ -18,7 +18,7 @@ class Sun(Body):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="Sun", mass=1.9891e30,
+    def __init__(self, name="太阳", mass=1.9891e30,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  color=(170, 98, 25),

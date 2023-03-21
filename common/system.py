@@ -18,16 +18,13 @@ class System(object):
     天体系统
     """
 
-    def __init__(self, bodies, max_distance=200 * AU, ignore_mass=False):
+    def __init__(self, bodies, max_distance=200 * AU):
         """
 
         :param bodies:
         :param max_distance:系统的最大范围，超出范围的天体就不显示了
         """
         self.bodies = bodies
-        if ignore_mass:
-            for body in self.bodies:
-                body.ignore_mass = True
         # self.adjust_distance_and_velocity()
         self.max_distance = max_distance
 
@@ -184,7 +181,7 @@ class System(object):
                     if calculate_distance(body2.position) > self.max_distance:  # 超过了max_distance距离，则消失
                         body2.appeared = False
 
-                if False == body1.appeared or body2.appeared == False:
+                if not body1.appeared or not body2.appeared:
                     continue
 
                 if body1 is body2:

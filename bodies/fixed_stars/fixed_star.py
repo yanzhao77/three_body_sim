@@ -45,13 +45,19 @@ class FixedStar(Body):
             "ignore_mass": ignore_mass
         }
         super().__init__(**params)
+        self.light_on = True
+        self.glow_num = 10
 
     def gen_texture(self, texture):
+        if texture is None:
+            return None
         texture_path = find_texture_root_path()
         if texture_path is None:
             err_msg = "未找到纹理图片目录"
             raise Exception(err_msg)
         save_file = os.path.join(texture_path, "fixed_star_%s.png" % str(self.__class__.__name__).lower())
+        if os.path.exists(save_file):
+            return save_file
         fixed_star_img = os.path.join(texture_path, texture)
         gen_fixed_star_texture(self.color, save_file=save_file, fixed_star_img=fixed_star_img)
         return save_file

@@ -18,7 +18,7 @@ class DysenSphere(Body):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="DysenSphere", mass=2e28,
+    def __init__(self, name="戴森球", mass=2e28,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  color=(170, 98, 25),

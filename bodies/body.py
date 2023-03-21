@@ -257,6 +257,14 @@ class Body(metaclass=ABCMeta):
         """
         return self.__rotation_speed
 
+    @rotation_speed.setter
+    def rotation_speed(self, value):
+        """
+        自旋速度（度/小时）
+        :return:
+        """
+        self.__rotation_speed = value
+
     @property
     def density(self):
         """

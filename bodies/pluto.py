@@ -23,7 +23,7 @@ class Pluto(Body):
     　平均密度: 1.854 g/cm³(±0.006) -> 1.854×10³ kg/m³
     """
 
-    def __init__(self, name="Pluto", mass=1.303e22,
+    def __init__(self, name="冥王星", mass=1.303e22,
                  init_position=[40 * AU, 0, 0],
                  init_velocity=[0, 4.7, 0],
                  texture="pluto.png", size_scale=1.0, distance_scale=1.0,

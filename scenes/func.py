@@ -55,13 +55,12 @@ def mayavi_run(bodies, dt=SECONDS_PER_WEEK,
 
 def ursina_run(bodies,
                dt=SECONDS_PER_HALF_DAY,
-               position=(4000000, 800000000, 4000000),
+               position=(0, 0, 0),
                # view_azimuth=0,
                light=True,
                cosmic_bg=None,
                show_grid=True,
-               save_as_json=None,
-               ignore_mass=False):
+               save_as_json=None):
     """
 
     :param bodies: 天体
@@ -79,7 +78,7 @@ def ursina_run(bodies,
     from simulators.ursina_simulator import UrsinaSimulator, UrsinaPlayer
     from ursina import application, Sequence, camera, held_keys, time, clamp, Entity, Text, color
     from ursina.prefabs.first_person_controller import FirstPersonController
-    body_sys = System(bodies, ignore_mass)
+    body_sys = System(bodies)
     if save_as_json is not None:
         try:
             body_sys.save_to_json(save_as_json, {"dt": dt, "position": position})
