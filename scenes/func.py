@@ -60,7 +60,8 @@ def ursina_run(bodies,
                light=True,
                cosmic_bg=None,
                show_grid=True,
-               save_as_json=None):
+               save_as_json=None,
+               ignore_mass=False):
     """
 
     :param bodies: 天体
@@ -70,13 +71,15 @@ def ursina_run(bodies,
     :param light: 使用灯光效果
     :param cosmic_bg: 宇宙背景图片
     :param show_grid: 是否显示空间网格
+    :param save_as_json: 将所有天体的信息保存为 json 文件
+    :param ignore_mass: 忽略所有天体的引力
     :return:
     """
 
     from simulators.ursina_simulator import UrsinaSimulator, UrsinaPlayer
     from ursina import application, Sequence, camera, held_keys, time, clamp, Entity, Text, color
     from ursina.prefabs.first_person_controller import FirstPersonController
-    body_sys = System(bodies)
+    body_sys = System(bodies, ignore_mass)
     if save_as_json is not None:
         try:
             body_sys.save_to_json(save_as_json, {"dt": dt, "position": position})

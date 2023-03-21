@@ -12,6 +12,8 @@ from common.func import get_dominant_colors
 import numpy as np
 import os
 
+from common.image_utils import find_texture
+
 
 class BodyView(metaclass=ABCMeta):
     """
@@ -50,13 +52,16 @@ class BodyView(metaclass=ABCMeta):
         :param texture: 纹理图片
         :return: 纹理图片的路径
         """
-        paths = ['./textures', '../textures']
-        for path in paths:
-            p = path + "/" + texture
-            if os.path.exists(p):
-                return p
+        return find_texture(texture)
+        # if os.path.exists(texture):
+        #     return texture
+        # paths = [os.path.join('.', 'textures'), os.path.join('..', 'textures')]
+        # for path in paths:
+        #     p = os.path.join(path, texture)
+        #     if os.path.exists(p):
+        #         return p
 
-        return None
+        # return ""
 
     def __get_texture_main_color(self, texture):
         """

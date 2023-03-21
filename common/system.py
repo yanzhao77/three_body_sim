@@ -18,13 +18,16 @@ class System(object):
     天体系统
     """
 
-    def __init__(self, bodies, max_distance=200 * AU):
+    def __init__(self, bodies, max_distance=200 * AU, ignore_mass=False):
         """
 
         :param bodies:
         :param max_distance:系统的最大范围，超出范围的天体就不显示了
         """
         self.bodies = bodies
+        if ignore_mass:
+            for body in self.bodies:
+                body.ignore_mass = True
         # self.adjust_distance_and_velocity()
         self.max_distance = max_distance
 
@@ -33,7 +36,7 @@ class System(object):
         old_velocity = body.init_velocity
         old_position = body.init_position
 
-        old_distance = np.linalg.norm(old_position - [0,0,0], axis=-1)
+        old_distance = np.linalg.norm(old_position - [0, 0, 0], axis=-1)
         new_distance = old_distance * body.distance_scale
         new_position = old_position * body.distance_scale
 
@@ -56,7 +59,7 @@ class System(object):
         # 计算新速度的模长
         new_speed = math.sqrt(2 * (new_kinetic_energy - old_potential_energy) / mass)
         # 计算新速度向量
-        new_velocity = old_velocity / old_speed * new_speed/1000
+        new_velocity = old_velocity / old_speed * new_speed / 1000
         return new_velocity
 
     def get_new_velocity1(old_velocity, old_distance, new_distance, mass, sun_mass=1.9891e30, G=6.674e-11):
@@ -240,10 +243,10 @@ if __name__ == '__main__':
     # body_sys = System(bodies)
     # print(body_sys.save_to_json("../data/tri_bodies_sim_perfect_01.json"))
     earth = Earth(name="地球",
-          # init_position=[0, -AU * -2, 5 * AU],
-          init_position=[0, 1000000, 500000],
-          init_velocity=[0, 0, -10],
-          size_scale=4e3, distance_scale=1)
+                  # init_position=[0, -AU * -2, 5 * AU],
+                  init_position=[0, 1000000, 500000],
+                  init_velocity=[0, 0, -10],
+                  size_scale=4e3, distance_scale=1)
     new_velocity, new_position = System.calc_body_new_velocity_position(earth)
 
     print(new_velocity, new_position)

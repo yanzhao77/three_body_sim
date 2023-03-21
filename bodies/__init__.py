@@ -13,3 +13,7 @@ from bodies.moon import Moon
 from bodies.asteroid import Asteroid
 from bodies.asteroids import Asteroids
 from bodies.dysen_sphere import DysenSphere
+
+from bodies.fixed_stars.fixed_star import FixedStar
+from bodies.fixed_stars.sirius import Sirius
+from bodies.fixed_stars.stephenson_2_18 import Stephenson_2_18

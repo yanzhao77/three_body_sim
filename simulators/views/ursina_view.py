@@ -294,8 +294,11 @@ class Planet(Entity):
 
         # lights = []
         # # 创建多个新的 Entity 对象，作为光晕的容器
+        # _color = color.rgba(1.0, 0.6, 0.2, 1)
+        _color = self.body_view.body.color
+        _color = color.rgba(_color[0]/255, _color[1]/255, _color[2]/255, 1)
         for i in range(10):
-            glow_entity = Entity(parent=self, model='sphere', color=color.rgba(1.0, 0.6, 0.2, 1),
+            glow_entity = Entity(parent=self, model='sphere', color=_color,
                                  scale=math.pow(1.03, i), alpha=0.1)
         for i in range(2):
             # 创建 PointLight 对象，作为恒星的灯光源
