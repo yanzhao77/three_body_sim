@@ -12,8 +12,12 @@ from bodies.venus import Venus
 from bodies.moon import Moon
 from bodies.asteroid import Asteroid
 from bodies.asteroids import Asteroids
+
+# 戴森球
 from bodies.dysen_sphere import DysenSphere
 
+# 恒星
 from bodies.fixed_stars.fixed_star import FixedStar
 from bodies.fixed_stars.sirius import Sirius
 from bodies.fixed_stars.stephenson_2_18 import Stephenson_2_18
+from bodies.fixed_stars.rigel import Rigel

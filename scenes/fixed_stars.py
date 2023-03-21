@@ -6,7 +6,7 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import Sun, Sirius, Stephenson_2_18
+from bodies import Sun, Sirius, Rigel, Stephenson_2_18
 from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY
 from scenes.func import mayavi_run, mpl_run, ursina_run
 from bodies.body import Body, AU
@@ -18,7 +18,8 @@ if __name__ == '__main__':
     # 构建两个天体对象（太阳、地球）
     bodies = [
         Sun(size_scale=1, init_position=[0, 0, 0]),
-        Sirius(size_scale=1, init_position=[0, 2 * AU, 0]),
+        Sirius(size_scale=1, init_position=[0, 1 * AU, 0]),
+        Rigel(size_scale=1, init_position=[0, 2 * AU, 0]),
         Stephenson_2_18(size_scale=1, init_position=[0, 3 * AU, 0])
     ]
 
