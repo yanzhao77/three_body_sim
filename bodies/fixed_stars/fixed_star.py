@@ -51,7 +51,7 @@ class FixedStar(Body):
         if texture_path is None:
             err_msg = "未找到纹理图片目录"
             raise Exception(err_msg)
-        save_file = os.path.join(texture_path, "%s.png" % str(self.__class__.__name__).lower())
+        save_file = os.path.join(texture_path, "fixed_star_%s.png" % str(self.__class__.__name__).lower())
         fixed_star_img = os.path.join(texture_path, texture)
         gen_fixed_star_texture(self.color, save_file=save_file, fixed_star_img=fixed_star_img)
         return save_file
