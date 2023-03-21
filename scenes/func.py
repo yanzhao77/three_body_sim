@@ -83,7 +83,7 @@ def ursina_run(bodies,
     body_sys = System(bodies)
     if save_as_json is not None:
         try:
-            body_sys.save_to_json(save_as_json, {"dt": dt, "position": position})
+            body_sys.save_to_json(save_as_json, {"dt": dt, "position": position, "show_trail": show_trail})
             print(f"{save_as_json} 文件生成成功！")
         except Exception as e:
             print(f"{save_as_json} 文件生成失败！" + str(e))

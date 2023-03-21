@@ -15,8 +15,7 @@ if __name__ == '__main__':
     太阳、地球 Sirius(size_scale=0.2, init_position=[0, 0, 0]),
     """
     bodies = [
-        Sirius(size_scale=2e1,init_position=[0,0,0]),
-        Sun(size_scale=5e1,init_position=[0,0,0]),                      # 太阳放大 50 倍
+        Sun(size_scale=5e1),                      # 太阳放大 50 倍
         Earth(size_scale=2e3, distance_scale=1),  # 地球放大 2000 倍，距离保持不变
     ]
 
@@ -26,4 +25,4 @@ if __name__ == '__main__':
     # 使用 ursina 查看的运行效果
     # 常用快捷键： P：运行和暂停  O：重新开始  I：显示天体轨迹
     # position = 左-右+、上+下-、前+后-
-    ursina_run(bodies, SECONDS_PER_WEEK, position=(0, AU, -3 * AU))
+    ursina_run(bodies, SECONDS_PER_WEEK, position=(0, AU, -3 * AU), show_trail=True)
