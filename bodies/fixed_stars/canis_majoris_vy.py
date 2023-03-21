@@ -6,7 +6,7 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import FixedStar
+from bodies import FixedStar, Sun
 from common.consts import MO
 
 
@@ -47,4 +47,8 @@ class CanisMajorisVY(FixedStar):
 
 
 if __name__ == '__main__':
-    print(CanisMajorisVY())
+    fixed_star = CanisMajorisVY()
+    sun = Sun()
+    print(fixed_star)
+    print("质量倍数", fixed_star.mass / sun.mass)
+    print("半径倍数", fixed_star.raduis / sun.raduis)

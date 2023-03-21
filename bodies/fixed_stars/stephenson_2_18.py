@@ -6,13 +6,13 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import FixedStar
+from bodies import FixedStar, Sun
 from common.consts import MO
 
 
 class Stephenson_2_18(FixedStar):
     """
-    TODO： 史蒂文森2-18 (Stephenson 2-18)
+    史蒂文森2-18 (Stephenson 2-18)
     质量：40.0 太阳质量
     大小：2150 太阳半径
     颜色：0xFF, 0xFF, 0xFF
@@ -28,7 +28,7 @@ class Stephenson_2_18(FixedStar):
     def __init__(self, name="史蒂文森2-18", mass=40 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=((0xFF, 98, 25)),
+                 color=((0xFF, 60, 0)),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.1, ignore_mass=False):
         params = {
@@ -48,4 +48,8 @@ class Stephenson_2_18(FixedStar):
 
 
 if __name__ == '__main__':
-    print(Stephenson_2_18())
+    fixed_star = Stephenson_2_18()
+    sun = Sun()
+    print(fixed_star)
+    print("质量倍数", fixed_star.mass / sun.mass)
+    print("半径倍数", fixed_star.raduis / sun.raduis)

@@ -6,7 +6,7 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import FixedStar
+from bodies import FixedStar, Sun
 from common.consts import MO
 
 
@@ -35,7 +35,7 @@ class Sirius(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 1.408e3,
+            "density": 2.6e3,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -47,4 +47,8 @@ class Sirius(FixedStar):
 
 
 if __name__ == '__main__':
-    print(Sirius())
+    fixed_star = Sirius()
+    sun = Sun()
+    print(fixed_star)
+    print("质量倍数", fixed_star.mass / sun.mass)
+    print("半径倍数", fixed_star.raduis / sun.raduis)

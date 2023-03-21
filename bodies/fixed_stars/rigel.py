@@ -6,13 +6,13 @@
 # link            :https://gitcode.net/pythoncr/
 # python_version  :3.8
 # ==============================================================================
-from bodies import FixedStar
+from bodies import FixedStar, Sun
 from common.consts import MO
 
 
 class Rigel(FixedStar):
     """
-    TODO： 参宿七（Rigel）
+    参宿七（Rigel）
     质量：为21太阳质量
     大小：为78.9太阳半径
     颜色：为0xFF, 0xEE, 0xC8
@@ -25,10 +25,10 @@ class Rigel(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="猎户座一等星", mass=17 * MO,
+    def __init__(self, name="参宿七星", mass=21 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=(0xFF, 0xEE, 0xC8),
+                 color=(0x90, 0x90, 0xFF),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.1, ignore_mass=False):
         params = {
@@ -36,7 +36,7 @@ class Rigel(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 1.408e3,
+            "density": 0.060199,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -48,4 +48,8 @@ class Rigel(FixedStar):
 
 
 if __name__ == '__main__':
-    print(Rigel())
+    fixed_star = Rigel()
+    sun = Sun()
+    print(fixed_star)
+    print("质量倍数", fixed_star.mass / sun.mass)
+    print("半径倍数", fixed_star.raduis / sun.raduis)
