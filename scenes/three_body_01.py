@@ -7,7 +7,7 @@
 # python_version  :3.8
 # ==============================================================================
 from bodies import Sun, Earth
-from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY, AU
+from common.consts import SECONDS_PER_WEEK, SECONDS_PER_YEAR, SECONDS_PER_MONTH, AU
 from scenes.func import mayavi_run, ursina_run
 
 if __name__ == '__main__':
@@ -34,4 +34,4 @@ if __name__ == '__main__':
     # 使用 ursina 查看的运行效果
     # 常用快捷键： P：运行和暂停  O：重新开始  I：显示天体轨迹
     # position = 左-右+、上+下-、前+后-
-    ursina_run(bodies, SECONDS_PER_DAY, position=(3 * AU, AU, -4 * AU))
+    ursina_run(bodies, SECONDS_PER_YEAR, position=(3 * AU, AU, -4 * AU), show_trail=True)

@@ -9,6 +9,7 @@
 import matplotlib.pyplot as plt
 from common.consts import SECONDS_PER_WEEK, SECONDS_PER_DAY, SECONDS_PER_HALF_DAY
 from common.system import System
+from simulators.ursina.ursina_config import UrsinaConfig
 from simulators.ursina.ursina_event import UrsinaEvent
 
 
@@ -60,6 +61,7 @@ def ursina_run(bodies,
                light=True,
                cosmic_bg=None,
                show_grid=True,
+               show_trail=False,
                save_as_json=None):
     """
 
@@ -132,6 +134,8 @@ def ursina_run(bodies,
 
     import sys
     sys.modules["__main__"].update = callback_update
+    if show_trail:
+        UrsinaConfig.show_trail = show_trail
     simulator.run(dt, light=light, cosmic_bg=cosmic_bg, show_grid=show_grid)
 
 
