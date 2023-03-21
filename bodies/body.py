@@ -358,6 +358,7 @@ class Body(metaclass=ABCMeta):
         """
         bodies = []
         params = {}
+        from bodies import FixedStar
         with open(json_file, "r", encoding='utf-8') as read_content:
             json_data = json.load(read_content)
             for body_data in json_data["bodies"]:
@@ -366,7 +367,12 @@ class Body(metaclass=ABCMeta):
                 except Exception as e:
                     err_msg = f"{json_file} 格式错误：" + str(e)
                     raise Exception(err_msg)
-                body = Body(**body_data)
+                if "is_fixed_star" in body_data:
+                    if body_data["is_fixed_star"]:
+                        body_data.pop("is_fixed_star")
+                        body = FixedStar(**body_data)
+                else:
+                    body = FixedStar(**body_data)
                 bodies.append(body)
             if "params" in json_data:
                 params = json_data["params"]

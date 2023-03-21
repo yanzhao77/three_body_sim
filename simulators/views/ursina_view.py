@@ -311,11 +311,12 @@ class Planet(Entity):
                 alpha = 0.4
 
             if glow_num > 0:
+                # _color = color.white
                 _color = self.body_view.body.color
                 _color = color.rgba(_color[0]/255, _color[1]/255, _color[2]/255, 1)
                 for i in range(glow_num):
                     glow_entity = Entity(parent=self, model='sphere', color=_color,
-                                         scale=math.pow(1.03, i), alpha=alpha)
+                                         scale=math.pow(1.03, i+1), alpha=alpha)
         if hasattr(self.body_view.body, "light_on"):
             if self.body_view.body.light_on:
                 for i in range(2):
