@@ -189,6 +189,11 @@ class ControlHandler(EventHandler):
         UrsinaConfig.run_speed_factor = self.ui.slider_run_speed_factor.value
 
     def settings_handler_input(self, key):
+        """
+
+        @param key:
+        @return:
+        """
         import sys
         if key == "escape":
             sys.exit()
@@ -218,14 +223,37 @@ class ControlHandler(EventHandler):
                 self.ui.on_off_switch.value = self.ui.pause_button_text
             self.on_off_switch_changed()
         elif key == '+' or key == "= up":
-            run_speed_factor = self.ui.slider_run_speed_factor.value + self.ui.slider_run_speed_factor.step * 50
-            if run_speed_factor > self.ui.slider_run_speed_factor.max:
-                run_speed_factor = self.ui.slider_run_speed_factor.max
-            self.ui.slider_run_speed_factor.value = run_speed_factor
-            self.ui.slider_run_speed_factor.knob.drop()
+            self.slider_increase(self.ui.slider_run_speed_factor)
         elif key == '-' or key == "- up":
-            run_speed_factor = self.ui.slider_run_speed_factor.value - self.ui.slider_run_speed_factor.step * 50
-            if run_speed_factor < self.ui.slider_run_speed_factor.min:
-                run_speed_factor = self.ui.slider_run_speed_factor.min
-            self.ui.slider_run_speed_factor.value = run_speed_factor
-            self.ui.slider_run_speed_factor.knob.drop()
+            self.slider_decrease(self.ui.slider_run_speed_factor)
+        elif key == 'n':
+            #   # ', up' <  > '. up'   n    m
+            self.slider_decrease(self.ui.slider_control_speed_factor, 10)
+        elif key == 'm':
+            self.slider_increase(self.ui.slider_control_speed_factor, 10)
+
+    def slider_increase(self, slider, step=50):
+        """
+
+        @param slider:
+        @param step:
+        @return:
+        """
+        run_speed_factor = slider.value + slider.step * step
+        if run_speed_factor > slider.max:
+            run_speed_factor = slider.max
+        slider.value = run_speed_factor
+        slider.knob.drop()
+
+    def slider_decrease(self, slider, step=50):
+        """
+
+        @param slider:
+        @param step:
+        @return:
+        """
+        value = slider.value - slider.step * step
+        if value < slider.min:
+            value = slider.min
+        slider.value = value
+        slider.knob.drop()

@@ -23,17 +23,17 @@ if __name__ == '__main__':
         Earth(size_scale=SIZE_SCALE, ignore_mass=True),
         Sun(size_scale=SIZE_SCALE, ignore_mass=True),  # 太阳
         Sirius(size_scale=SIZE_SCALE, ignore_mass=True),            # 天狼星A      质量倍数 2.06   半径倍数 1.71
-        Bellatrix(size_scale=SIZE_SCALE, ignore_mass=True),         # 参宿五       质量倍数 8.6    半径倍数 5.75
+        # Bellatrix(size_scale=SIZE_SCALE, ignore_mass=True),         # 参宿五       质量倍数 8.6    半径倍数 5.75
         Alcyone(size_scale=SIZE_SCALE, ignore_mass=True),           # 昴宿六       质量倍数 7      半径倍数 10
         Arcturus(size_scale=SIZE_SCALE, ignore_mass=True),          # 大角星       质量倍数 1.08   半径倍数 25.42
-        Aldebaran(size_scale=SIZE_SCALE, ignore_mass=True),         # 毕宿五       质量倍数 11.3   半径倍数 38
+        # Aldebaran(size_scale=SIZE_SCALE, ignore_mass=True),         # 毕宿五       质量倍数 11.3   半径倍数 38
         Rigel(size_scale=SIZE_SCALE, ignore_mass=True),             # 参宿七       质量倍数 21     半径倍数 78.9
-        YCanumVenaticorum(size_scale=SIZE_SCALE, ignore_mass=True), # 猎犬座Y      质量倍数 3.0    半径倍数 215
-        EtaCarinae(size_scale=SIZE_SCALE, ignore_mass=True),        # 海山二       质量倍数 100.0  半径倍数 278
+        # YCanumVenaticorum(size_scale=SIZE_SCALE, ignore_mass=True), # 猎犬座Y      质量倍数 3.0    半径倍数 215
+        # EtaCarinae(size_scale=SIZE_SCALE, ignore_mass=True),        # 海山二       质量倍数 100.0  半径倍数 278
         CarinaeV382(size_scale=SIZE_SCALE, ignore_mass=True),       # 船底座V382   质量倍数 20.0   半径倍数 350
-        Antares(size_scale=SIZE_SCALE, ignore_mass=True),           # 心宿二       质量倍数 12     半径倍数 770
+        # Antares(size_scale=SIZE_SCALE, ignore_mass=True),           # 心宿二       质量倍数 12     半径倍数 770
         Betelgeuse(size_scale=SIZE_SCALE, ignore_mass=True),        # 参宿四       质量倍数 11.6   半径倍数 887
-        VYCanisMajoris(size_scale=SIZE_SCALE, ignore_mass=True),    # 大犬座VY     质量倍数 25     半径倍数 1419.75
+        # VYCanisMajoris(size_scale=SIZE_SCALE, ignore_mass=True),    # 大犬座VY     质量倍数 25     半径倍数 1419.75
         UYScuti(size_scale=SIZE_SCALE, ignore_mass=True),           # 盾牌座 UY    质量倍数 10.0   半径倍数 1706.7
         Stephenson_2_18(size_scale=SIZE_SCALE, ignore_mass=True)    # 史蒂文森2-18 质量倍数 40.0   半径倍数 2158.5
     ]

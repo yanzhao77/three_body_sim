@@ -49,7 +49,7 @@ class FixedStar(Body):
         }
         super().__init__(**params)
         self.light_on = True
-        self.glows = (12, 1.005, 0.08)
+        self.glows = (12, 1.009, 0.08)
 
     def gen_texture(self, texture, texture_bright, texture_contrast):
         if texture is None:
