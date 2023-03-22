@@ -26,3 +26,7 @@ from bodies.fixed_stars.alcyone import Alcyone
 from bodies.fixed_stars.antares import Antares
 from bodies.fixed_stars.arcturus import Arcturus
 from bodies.fixed_stars.betelgeuse import Betelgeuse
+from bodies.fixed_stars.bellatrix import Bellatrix
+from bodies.fixed_stars.aldebaran import Aldebaran
+from bodies.fixed_stars.vy_canis_majoris import VYCanisMajoris
+from bodies.fixed_stars.uy_scuti import UYScuti
