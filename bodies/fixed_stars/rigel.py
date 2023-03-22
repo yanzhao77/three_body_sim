@@ -41,7 +41,7 @@ class Rigel(FixedStar):
                  init_velocity=[0, 0, 0],
                  color=(141,213,227),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
-                 rotation_speed=0.1, ignore_mass=False):
+                 rotation_speed=0.33, ignore_mass=False):
         params = {
             "name": name,
             "mass": mass,

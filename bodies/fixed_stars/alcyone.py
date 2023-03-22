@@ -41,7 +41,7 @@ class Alcyone(FixedStar):
                  init_velocity=[0, 0, 0],
                  color=(0xBB, 0xAA, 0xFF),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
-                 rotation_speed=0.1, ignore_mass=False):
+                 rotation_speed=0.45, ignore_mass=False):
         params = {
             "name": name,
             "mass": mass,

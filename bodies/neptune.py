@@ -27,7 +27,7 @@ class Neptune(Body):
                  init_position=[30 * AU, 0, 0],
                  init_velocity=[0, 5.43, 0],
                  texture="neptune.png", size_scale=1.0, distance_scale=1.0,
-                 rotation_speed=22.3463):
+                 rotation_speed=22.3463, ignore_mass=False, trail_color=None):
         params = {
             "name": name,
             "mass": mass,
@@ -38,7 +38,9 @@ class Neptune(Body):
             "texture": texture,
             "size_scale": size_scale,
             "distance_scale": distance_scale,
-            "rotation_speed": rotation_speed
+            "rotation_speed": rotation_speed,
+            "ignore_mass": ignore_mass,
+            "trail_color": trail_color
         }
         super().__init__(**params)
 

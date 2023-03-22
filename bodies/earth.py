@@ -27,7 +27,7 @@ class Earth(Body):
                  init_position=[1.12 * AU, 0, 0],
                  init_velocity=[0, 29.79, 0],
                  texture="earth1.jpg", size_scale=1.0, distance_scale=1.0,
-                 rotation_speed=15):
+                 rotation_speed=15, ignore_mass=False, trail_color=None):
         params = {
             "name": name,
             "mass": mass,
@@ -38,7 +38,9 @@ class Earth(Body):
             "texture": texture,
             "size_scale": size_scale,
             "distance_scale": distance_scale,
-            "rotation_speed": rotation_speed
+            "rotation_speed": rotation_speed,
+            "ignore_mass": ignore_mass,
+            "trail_color": trail_color
         }
         super().__init__(**params)
 

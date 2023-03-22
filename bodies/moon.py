@@ -26,7 +26,7 @@ class Moon(Body):
                  init_position=[363104 + 1.12 * AU, 0, 0],
                  init_velocity=[0, 29.79 + 1.023, 0],
                  texture="moon.jpg", size_scale=1.0, distance_scale=1.0,
-                 rotation_speed=0.5487):
+                 rotation_speed=0.5487, ignore_mass=False, trail_color=None):
         params = {
             "name": name,
             "mass": mass,
@@ -37,7 +37,9 @@ class Moon(Body):
             "texture": texture,
             "size_scale": size_scale,
             "distance_scale": distance_scale,
-            "rotation_speed": rotation_speed
+            "rotation_speed": rotation_speed,
+            "ignore_mass": ignore_mass,
+            "trail_color": trail_color
         }
         super().__init__(**params)
 

@@ -46,7 +46,7 @@ class Arcturus(FixedStar):
                  init_velocity=[0, 0, 0],
                  color=(254,218,185),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
-                 rotation_speed=0.1, ignore_mass=False):
+                 rotation_speed=0.4, ignore_mass=False):
         params = {
             "name": name,
             "mass": mass,
