@@ -125,7 +125,7 @@ class System(object):
         filed_names = ["name", "mass", "init_position", "init_velocity",
                        "density", "color", "texture",
                        "size_scale", "distance_scale",  # "parent"
-                       "rotation_speed", "ignore_mass", "is_fixed_star"]
+                       "rotation_speed", "ignore_mass", "is_fixed_star", "trail_color"]
         bodies = []
         for b in self.bodies:
             body = {}
