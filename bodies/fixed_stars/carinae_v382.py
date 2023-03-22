@@ -33,7 +33,7 @@ class CarinaeV382(FixedStar):
     def __init__(self, name="船底座V382", mass=20 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=(0xFF, 0xBF, 0x00),
+                 color=(255, 244, 89),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.1, ignore_mass=False):
         params = {
@@ -41,7 +41,7 @@ class CarinaeV382(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 1.408e3,
+            "density": 0.000656,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -53,9 +53,7 @@ class CarinaeV382(FixedStar):
 
 
 if __name__ == '__main__':
-    from bodies import Sun
     fixed_star = CarinaeV382()
-    sun = Sun()
     print(fixed_star)
-    print("质量倍数", fixed_star.mass / sun.mass)
-    print("半径倍数", fixed_star.raduis / sun.raduis)
+    fixed_star.compare_with_sun()
+    fixed_star.density_by_radius(num_sun_raduis=350)

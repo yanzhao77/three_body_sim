@@ -39,7 +39,7 @@ class Aldebaran(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="毕宿五", mass=1.16 * MO,
+    def __init__(self, name="毕宿五", mass=11.3 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  color=(250, 195, 47),
@@ -50,7 +50,7 @@ class Aldebaran(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 0.019,
+            "density": 0.29,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -69,5 +69,5 @@ if __name__ == '__main__':
     print(fixed_star)
     print("质量倍数", fixed_star.mass / sun.mass)
     print("半径倍数", fixed_star.raduis / sun.raduis)
-    r = 44.13
+    r = 38
     print("密度換算", fixed_star.mass / 1e9 / (4 / 3 * math.pi * pow(r * sun.raduis, 3)))

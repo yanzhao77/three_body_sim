@@ -59,13 +59,7 @@ class Alcyone(FixedStar):
 
 
 if __name__ == '__main__':
-    from bodies import Sun
-    import math
-
     fixed_star = Alcyone()
-    sun = Sun()
     print(fixed_star)
-    print("质量倍数", fixed_star.mass / sun.mass)
-    print("半径倍数", fixed_star.raduis / sun.raduis)
-    r = 10
-    print("密度換算", fixed_star.mass / 1e9 / (4 / 3 * math.pi * pow(r * sun.raduis, 3)))
+    fixed_star.compare_with_sun()
+    fixed_star.density_by_radius(num_sun_raduis=10)

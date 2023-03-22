@@ -77,6 +77,27 @@ class FixedStar(Body):
         """
         return True
 
+    def compare_with_sun(self):
+        from bodies import Sun
+        sun = Sun()
+        print("质量倍数", self.mass / sun.mass)
+        print("半径倍数", self.raduis / sun.raduis)
+
+    def density_by_radius(self, raduis=None, num_sun_raduis=None):
+        """
+        密度換算
+        @param raduis: 半径的长度（km）
+        @param num_sun_raduis: 多少个太阳半径
+        @return:
+        """
+        from bodies import Sun
+        import math
+
+        sun = Sun()
+        if num_sun_raduis is not None:
+            raduis = num_sun_raduis * sun.raduis
+        print("密度換算", self.mass / 1e9 / (4 / 3 * math.pi * pow(raduis, 3)))
+
 
 if __name__ == '__main__':
     print(FixedStar())

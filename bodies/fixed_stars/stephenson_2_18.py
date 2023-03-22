@@ -13,10 +13,10 @@ from common.consts import MO
 class Stephenson_2_18(FixedStar):
     """
     史蒂文森2-18 (Stephenson 2-18)
-    质量：40.0 太阳质量 ? TODO: 14.28e5 * MO ??
+    质量：40.0 太阳质量 ?
     大小：2150 太阳半径
     颜色：0xFF, 0xFF, 0xFF
-    密度：0.0002 g/cm³ >> TODO:???
+    密度：0.0002 g/cm³
     半径：2158R☉
 
 
