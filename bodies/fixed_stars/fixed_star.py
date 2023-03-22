@@ -27,10 +27,12 @@ class FixedStar(Body):
                  init_velocity=[0, 0, 0],
                  color=(0xFF, 0xFF, 0xFF),
                  texture=None, size_scale=1.0, distance_scale=1.0,
-                 rotation_speed=0.1, ignore_mass=False, density=1.408e3):
+                 rotation_speed=0.1, ignore_mass=False, density=1.408e3, trail_color=None,
+                 texture_bright=None, texture_contrast=None):
         if texture is None or texture == "fixed_star.png":
             self.color = color
-            texture = self.gen_texture(texture)
+            # bright=1.1, contrast=3.2
+            texture = self.gen_texture(texture, texture_bright, texture_contrast)
         params = {
             "name": name,
             "mass": mass,
@@ -42,13 +44,14 @@ class FixedStar(Body):
             "size_scale": size_scale,
             "distance_scale": distance_scale,
             "rotation_speed": rotation_speed,
-            "ignore_mass": ignore_mass
+            "ignore_mass": ignore_mass,
+            "trail_color": trail_color
         }
         super().__init__(**params)
         self.light_on = True
-        self.glow_num = 10
+        self.glows = 10
 
-    def gen_texture(self, texture):
+    def gen_texture(self, texture, texture_bright, texture_contrast):
         if texture is None:
             return None
         texture_path = find_texture_root_path()
@@ -59,7 +62,11 @@ class FixedStar(Body):
         if os.path.exists(save_file):
             return save_file
         fixed_star_img = os.path.join(texture_path, texture)
-        gen_fixed_star_texture(self.color, save_file=save_file, fixed_star_img=fixed_star_img)
+        gen_fixed_star_texture(self.color,
+                               bright=texture_bright,
+                               contrast=texture_contrast,
+                               save_file=save_file,
+                               fixed_star_img=fixed_star_img)
         return save_file
 
     @property

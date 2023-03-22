@@ -117,7 +117,8 @@ class Planet(Entity):
             texture=texture,
             color=self.plant_color,
             position=pos,
-            rotation=rotation  # ,double_sided=True
+            rotation=rotation,
+            double_sided=True
         )
 
         if hasattr(self.body_view.body, "torus_stars") or \
@@ -142,7 +143,7 @@ class Planet(Entity):
         self.trails = {}
 
         # 根据天体的颜色获取拖尾的颜色
-        trail_color = conv_to_vec4_color(self.body_view.body.color)
+        trail_color = conv_to_vec4_color(self.body_view.body.trail_color)
         trail_color = adjust_brightness(trail_color, 0.4)
         self.trail_color = color.rgba(trail_color[0], trail_color[1], trail_color[2], 0.6)
         # 拖尾球体的大小为该天体的 1/5
@@ -297,26 +298,35 @@ class Planet(Entity):
         # lights = []
         # # 创建多个新的 Entity 对象，作为光晕的容器
         # _color = color.rgba(1.0, 0.6, 0.2, 1)
-        if hasattr(self.body_view.body, "glow_num"):
-            glow_num = self.body_view.body.glow_num
-            if glow_num > 12:
-                glow_num = 12
-            if glow_num > 5:
-                alpha = 0.1
-            elif glow_num > 4:
-                alpha = 0.2
-            elif glow_num > 3:
-                alpha = 0.3
-            elif glow_num > 2:
-                alpha = 0.4
+        if hasattr(self.body_view.body, "glows"):
+            # glows = (glow_num:10, glow_scale:1.03 glow_alpha:0.1~1)
+            glows = self.body_view.body.glows
+            if glows is not None:
+                if isinstance(glows, tuple):
+                    if len(glows) == 3:
+                        glow_num, glow_scale, glow_alpha = glows
+                    elif len(glows) == 2:
+                        glow_num, glow_scale = glows
+                        glow_alpha = None
+                else:
+                    glow_num = glows
+                    glow_scale = 1.02
+                    glow_alpha = None
 
-            if glow_num > 0:
-                # _color = color.white
-                _color = self.body_view.body.color
-                _color = color.rgba(_color[0]/255, _color[1]/255, _color[2]/255, 1)
-                for i in range(glow_num):
-                    glow_entity = Entity(parent=self, model='sphere', color=_color,
-                                         scale=math.pow(1.03, i+1), alpha=alpha)
+                if glow_num > 0:
+                    glow_alphas = [0, 0.5, 0.4, 0.3, 0.2, 0.1]
+                    if glow_alpha is None:
+                        if glow_num < len(glow_alphas)-1:
+                            glow_alpha = glow_alphas[glow_num]
+                        else:
+                            glow_alpha = glow_alphas[-1]
+
+                    # _color = color.white
+                    _color = self.body_view.body.color
+                    _color = color.rgba(_color[0]/255, _color[1]/255, _color[2]/255, 1)
+                    for i in range(glow_num):
+                        glow_entity = Entity(parent=self, model='sphere', color=_color,
+                                             scale=math.pow(glow_scale, i+1), alpha=glow_alpha)
         if hasattr(self.body_view.body, "light_on"):
             if self.body_view.body.light_on:
                 for i in range(2):

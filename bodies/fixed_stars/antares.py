@@ -65,7 +65,7 @@ class Antares(FixedStar):
             "ignore_mass": ignore_mass
         }
         super().__init__(**params)
-        self.glow_num = 6
+        self.glows = 6
 
 
 if __name__ == '__main__':

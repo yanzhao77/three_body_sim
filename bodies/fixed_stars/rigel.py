@@ -56,7 +56,7 @@ class Rigel(FixedStar):
             "ignore_mass": ignore_mass
         }
         super().__init__(**params)
-        self.glow_num = 7
+        self.glows = 7
 
 
 if __name__ == '__main__':

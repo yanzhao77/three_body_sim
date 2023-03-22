@@ -31,17 +31,17 @@ if __name__ == '__main__':
         Sun(name="红轨太阳A", mass=mass,
             init_position=[0, math.sqrt(3) * r, 0],
             init_velocity=[-p, 0, 0],
-            color=(255, 0, 0),
+            trail_color=(255, 0, 0),
             size_scale=5e1, texture="sun2.jpg"),  # 太阳放大 100 倍
         Sun(name="绿轨太阳B", mass=mass,
             init_position=[-r, 0, 0],
             init_velocity=[1 / 2 * p, -math.sqrt(3) / 2 * p, 0],
-            color=(0, 255, 0),
+            trail_color=(0, 255, 0),
             size_scale=5e1, texture="sun2.jpg"),  # 太阳放大 100 倍
         Sun(name="蓝轨太阳C", mass=mass,
             init_position=[r, 0, 0],
             init_velocity=[1 / 2 * p, math.sqrt(3) / 2 * p, 0],
-            color=(0, 0, 255),
+            trail_color=(0, 0, 255),
             size_scale=5e1, texture="sun2.jpg"),  # 太阳放大 100 倍
         # Earth(init_position=[0, -349597870.700, 0],
         #       init_velocity=[15.50, 0, 0],

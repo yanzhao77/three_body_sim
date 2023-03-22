@@ -23,7 +23,7 @@ class Body(metaclass=ABCMeta):
                  density=5e3, color=(125 / 255, 125 / 255, 125 / 255),
                  texture=None, size_scale=1.0, distance_scale=1.0,
                  rotation_speed=None, parent=None, ignore_mass=False,
-                 is_fixed_star=False):
+                 is_fixed_star=False, trail_color=None):
         """
         天体类
         :param name: 天体名称
@@ -39,6 +39,7 @@ class Body(metaclass=ABCMeta):
         :param parent: 天体的父对象
         :param ignore_mass: 是否忽略质量（如果为True，则不计算引力）
         :param is_fixed_star: 是否为恒星
+        :param trail_color: 天体拖尾颜色（默认天体颜色）
         """
         self.__his_pos = []
         self.__his_vel = []
@@ -66,6 +67,7 @@ class Body(metaclass=ABCMeta):
         self.__rotation_speed = rotation_speed
 
         self.color = color
+        self.trail_color = color if trail_color is None else trail_color
         self.texture = texture
 
         self.size_scale = size_scale
@@ -394,7 +396,7 @@ class Body(metaclass=ABCMeta):
                     exp = v[5:]
                     body_data[k] = eval(exp)
             elif isinstance(v, list):
-                for idx,item in  enumerate(v):
+                for idx, item in enumerate(v):
                     if isinstance(item, str):
                         if item.startswith("$exp:"):
                             exp = item[5:]

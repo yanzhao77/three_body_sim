@@ -48,7 +48,7 @@ class Stephenson_2_18(FixedStar):
     def __init__(self, name="史蒂文森2-18", mass=14.28e5 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=((198,29,3)),
+                 color=(198, 29, 3),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.1, ignore_mass=False):
         params = {
@@ -62,14 +62,17 @@ class Stephenson_2_18(FixedStar):
             "size_scale": size_scale,
             "distance_scale": distance_scale,
             "rotation_speed": rotation_speed,
-            "ignore_mass": ignore_mass
+            "ignore_mass": ignore_mass,
+            "texture_bright": 3,
+            "texture_contrast": 4
         }
         super().__init__(**params)
-        self.glow_num = 5
+        self.glows = (12, 1.008, 0.1)
 
 
 if __name__ == '__main__':
     from bodies import Sun
+
     fixed_star = Stephenson_2_18()
     sun = Sun()
     print(fixed_star)

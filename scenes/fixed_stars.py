@@ -31,7 +31,7 @@ if __name__ == '__main__':
     ]
     distance_sum = 0
     for idx, body in enumerate(bodies):
-        body.rotation_speed /= 50
+        body.rotation_speed /= 10
         if idx > 1:
             body.light_on = False  # 关闭灯光效果，只有太阳对地球有灯光效果
             d = pow((body.diameter + bodies[idx - 1].diameter) * SIZE_SCALE, 0.75) * 120
