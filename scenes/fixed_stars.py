@@ -14,12 +14,7 @@ from bodies.body import Body, AU
 
 if __name__ == '__main__':
     """
-    恒星演示
-    
-    
-    质量: 8.60 M☉ (1.711e+31 kg)
-半径: 5.75 R☉ (4.003e+06 km)
-    
+    恒星演示   
     """
     # 构建两个天体对象（太阳、地球）
     D = 5e5
@@ -39,7 +34,7 @@ if __name__ == '__main__':
         CarinaeV382(size_scale=SIZE_SCALE, ignore_mass=True),       # 船底座V382   质量倍数 39     半径倍数 747
         # Betelgeuse(size_scale=SIZE_SCALE, ignore_mass=True),        # 参宿四       质量倍数 19     半径倍数 1180
         VYCanisMajoris(size_scale=SIZE_SCALE, ignore_mass=True),    # 大犬座VY     质量倍数 30     半径倍数 1400
-        # UYScuti(size_scale=SIZE_SCALE, ignore_mass=True),           # 盾牌座 UY    质量倍数 10     半径倍数 1708
+        UYScuti(size_scale=SIZE_SCALE, ignore_mass=True),           # 盾牌座 UY    质量倍数 10     半径倍数 1708
         Stephenson_2_18(size_scale=SIZE_SCALE, ignore_mass=True)    # 史蒂文森2-18 质量倍数 40.0   半径倍数 2150
     ]
     distance_sum = 0
