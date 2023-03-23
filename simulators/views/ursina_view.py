@@ -285,9 +285,16 @@ class Planet(Entity):
             self.clear_trails()
 
         if hasattr(self, "name_text"):
-            # 计算相机和实体之间的距离
-            distance = (camera.world_position - self.world_position).length()
-            # 根据距离设置文本缩放比例
+            d = (camera.world_position - self.name_text.world_position).length()
+
+            if d < self.scale_x * 1.22:
+                self.name_text.visible = False
+            else:
+                self.name_text.visible = True
+            # print(d, self.name_text.text, self.scale_x ,self.scale_x*1.23)
+            # # 计算相机和实体之间的距离
+            # distance = (camera.world_position - self.world_position).length()
+            # # 根据距离设置文本缩放比例
             # self.name_text.scale = distance / 10
 
     def follow_parent(self):

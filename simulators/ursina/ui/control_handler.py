@@ -227,10 +227,17 @@ class ControlHandler(EventHandler):
         elif key == '-' or key == "- up":
             self.slider_decrease(self.ui.slider_run_speed_factor)
         elif key == 'n':
+            import math
+            # min=0.01, max=20
             #   # ', up' <  > '. up'   n    m
-            self.slider_decrease(self.ui.slider_control_speed_factor, 10)
+            self.ui.slider_control_speed_factor.current_step = self.ui.slider_control_speed_factor.value/2
+            self.slider_decrease(self.ui.slider_control_speed_factor, self.ui.slider_control_speed_factor.current_step)
+
+            print(self.ui.slider_control_speed_factor.current_step)
         elif key == 'm':
-            self.slider_increase(self.ui.slider_control_speed_factor, 10)
+            self.ui.slider_control_speed_factor.current_step = self.ui.slider_control_speed_factor.value
+            self.slider_increase(self.ui.slider_control_speed_factor, self.ui.slider_control_speed_factor.current_step)
+            print(self.ui.slider_control_speed_factor.current_step)
 
     def slider_increase(self, slider, step=50):
         """
@@ -239,7 +246,7 @@ class ControlHandler(EventHandler):
         @param step:
         @return:
         """
-        run_speed_factor = slider.value + slider.step * step
+        run_speed_factor = slider.value + step
         if run_speed_factor > slider.max:
             run_speed_factor = slider.max
         slider.value = run_speed_factor
@@ -252,7 +259,7 @@ class ControlHandler(EventHandler):
         @param step:
         @return:
         """
-        value = slider.value - slider.step * step
+        value = slider.value - step
         if value < slider.min:
             value = slider.min
         slider.value = value

@@ -30,10 +30,11 @@ class ControlUI(UiPanel):
         self.no_trail_button_text = "○ "
         self.trail_button_text = "○--"
 
-        self.slider_body_spin_factor = UiSlider(text='自转速度', min=0.01, max=30, default=1)
+        self.slider_body_spin_factor = UiSlider(text='自转速度', min=0.01, max=5, default=1)
         self.slider_body_size_factor = UiSlider(text='天体缩放', min=0.1, max=100, step=0.1, default=1)
         self.slider_run_speed_factor = UiSlider(text="运行速度", min=0.01, max=80, default=1)
-        self.slider_control_speed_factor = UiSlider(text="控制速度", min=0.01, max=20, default=application.time_scale)
+        self.slider_control_speed_factor = UiSlider(text="控制速度", min=0.01, max=20,
+                                                    step=0.1, default=application.time_scale)
         self.slider_trail_length = UiSlider(text="拖尾长度", min=30, max=500, step=10, default=UrsinaConfig.trail_length)
 
         self.on_off_switch = SwithButton((self.pause_button_text,
