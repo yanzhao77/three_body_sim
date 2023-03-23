@@ -54,7 +54,7 @@ class CarinaeV382(FixedStar):
     def __init__(self, name="船底座V382", mass=39 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=(255, 244, 89),
+                 color=(255, 172, 40),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.26, ignore_mass=False):
         params = {

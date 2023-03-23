@@ -67,8 +67,8 @@ class VYCanisMajoris(FixedStar):
             "distance_scale": distance_scale,
             "rotation_speed": rotation_speed,
             "ignore_mass": ignore_mass,
-            "texture_bright": 1,
-            "texture_contrast": 5
+            "texture_bright": 2,
+            "texture_contrast": 3
         }
         super().__init__(**params)
 
