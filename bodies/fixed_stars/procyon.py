@@ -65,12 +65,6 @@ class Procyon(FixedStar):
     (secondary)	92.2°
     其他命名
     Elgomaisa, Algomeysa, Antecanis, α Canis Minoris, 10 Canis Minoris,GCTP 1805.00, HR 2943, BD+05°1739, HD 61421, LHS 233, GJ 280, HIP 37279, SAO 115756.[12]
-
-
-
-
-
-
     ------------------------
     == 太阳参数 ==
     自转周期: 24.47 地球日，自转角速度约为 0.6130 度/小时 = 360/(24.47*24)

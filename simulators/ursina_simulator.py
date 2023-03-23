@@ -275,8 +275,27 @@ class UrsinaSimulator(Simulator):
         EditorCamera(ignore_paused=True)
         # 防止打开中文输入法
         # self.switch_to_english_input_method()
-        audio = Audio('../sounds/universe_04.mp3', pitch=1, loop=True, autoplay=True)
-        audio.volume = 0.3
+        #     file: 指定音乐文件的路径
+        #     loop: 是否循环播放，默认为 True
+        #     autoplay: 是否自动播放，默认为 True
+        #     volume: 音量大小，取值范围为 0.0 到 1.0，默认为 1.0
+        #     pitch: 音调，取值范围为 0.5 到 2.0，默认为 1.0
+        #     time: 指定音乐从何处开始播放，单位为秒，默认为 0.0
+        #     stop_when_done: 音乐播放完毕后是否停止播放，默认为 True
+        if "bg_music" in kwargs:
+            bg_music = kwargs["bg_music"]
+        elif "background_music" in kwargs:
+            bg_music = kwargs["background_music"]
+        else:
+            bg_music = None
+
+        if bg_music is None:
+            bg_music = "../sounds/universe_04.mp3"
+
+        if os.path.exists(bg_music):
+            audio = Audio(bg_music, pitch=1, loop=True, autoplay=True)
+            audio.volume = 0.3
+
         self.app.run()
 
 

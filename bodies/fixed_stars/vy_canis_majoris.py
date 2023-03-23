@@ -52,7 +52,7 @@ class VYCanisMajoris(FixedStar):
     def __init__(self, name="大犬座VY", mass=30 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=(234,90,65),
+                 color=(234, 90, 65),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.23, ignore_mass=False):
         params = {
@@ -66,7 +66,9 @@ class VYCanisMajoris(FixedStar):
             "size_scale": size_scale,
             "distance_scale": distance_scale,
             "rotation_speed": rotation_speed,
-            "ignore_mass": ignore_mass
+            "ignore_mass": ignore_mass,
+            "texture_bright": 1,
+            "texture_contrast": 5
         }
         super().__init__(**params)
 

@@ -58,7 +58,7 @@ class Antares(FixedStar):
     def __init__(self, name="心宿二A", mass=15.5 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=(249,198,83),
+                 color=(249, 198, 83),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.25, ignore_mass=False):
         params = {

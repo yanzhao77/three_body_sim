@@ -48,7 +48,7 @@ class EtaCarinae(FixedStar):
     def __init__(self, name="海山二", mass=125 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=(111,140,255),
+                 color=(111, 140, 255),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.28, ignore_mass=False):
         params = {
@@ -72,4 +72,3 @@ if __name__ == '__main__':
     print(fixed_star)
     fixed_star.compare_with_sun()
     fixed_star.density_by_radius(num_sun_raduis=278)
-

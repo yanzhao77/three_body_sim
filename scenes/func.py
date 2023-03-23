@@ -60,6 +60,7 @@ def ursina_run(bodies,
                # view_azimuth=0,
                light=True,
                cosmic_bg=None,
+               bg_music=None,
                show_grid=True,
                show_trail=False,
                show_name=False,
@@ -143,7 +144,7 @@ def ursina_run(bodies,
     sys.modules["__main__"].update = callback_update
     if show_trail:
         UrsinaConfig.show_trail = show_trail
-    simulator.run(dt, light=light, cosmic_bg=cosmic_bg, show_grid=show_grid)
+    simulator.run(dt, light=light, cosmic_bg=cosmic_bg, show_grid=show_grid, bg_music=bg_music)
 
 
 def mpl_run(bodies, dt=SECONDS_PER_WEEK, gif_file_name=None, gif_max_frame=200):

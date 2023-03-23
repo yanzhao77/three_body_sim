@@ -51,7 +51,7 @@ class Rigel(FixedStar):
     def __init__(self, name="参宿七", mass=18 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=(141,213,227),
+                 color=(141, 213, 227),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.33, ignore_mass=False):
         params = {
