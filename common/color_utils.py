@@ -43,3 +43,17 @@ def adjust_brightness(color, target_brightness: float = 0.6):
         return Vec4(r, g, b, color.w)
     else:
         return color
+
+
+def get_inverse_color(color):
+    """计算 RGB 颜色的反色"""
+    r, g, b = color
+    if r + g + b <= 3:
+        inverse_r = 1.0 - r
+        inverse_g = 1.0 - g
+        inverse_b = 1.0 - b
+    else:
+        inverse_r = 255 - r
+        inverse_g = 255 - g
+        inverse_b = 255 - b
+    return inverse_r, inverse_g, inverse_b

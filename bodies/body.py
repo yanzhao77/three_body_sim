@@ -23,7 +23,7 @@ class Body(metaclass=ABCMeta):
                  density=5e3, color=(125 / 255, 125 / 255, 125 / 255),
                  texture=None, size_scale=1.0, distance_scale=1.0,
                  rotation_speed=None, parent=None, ignore_mass=False,
-                 is_fixed_star=False, trail_color=None):
+                 is_fixed_star=False, trail_color=None, show_name=False):
         """
         天体类
         :param name: 天体名称
@@ -82,6 +82,8 @@ class Body(metaclass=ABCMeta):
         self.appeared = True
         self.parent = parent
         self.__is_fixed_star = is_fixed_star
+
+        self.show_name = show_name
 
     @property
     def init_position(self):

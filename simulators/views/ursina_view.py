@@ -8,7 +8,7 @@
 # ==============================================================================
 # pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina
 from ursina import Ursina, window, Entity, Mesh, SmoothFollow, Texture, clamp, time, \
-    camera, color, mouse, Vec2, Vec3, Vec4, \
+    camera, color, mouse, Vec2, Vec3, Vec4, Text, \
     load_texture, held_keys, destroy, PointLight
 
 from ursina.prefabs.first_person_controller import FirstPersonController
@@ -17,7 +17,7 @@ from bodies import Body
 
 from simulators.ursina.ursina_config import UrsinaConfig
 from simulators.ursina.ursina_event import UrsinaEvent
-from common.color_utils import adjust_brightness, conv_to_vec4_color
+from common.color_utils import adjust_brightness, conv_to_vec4_color, get_inverse_color
 from simulators.views.body_view import BodyView
 from simulators.views.ursina_mesh import create_sphere, create_torus
 import numpy as np
@@ -133,6 +133,19 @@ class Planet(Entity):
             self.trail_init()
             if self.body_view.body.is_fixed_star:
                 self.create_fixed_star_lights()
+
+        if self.body_view.body.show_name:
+            self.create_name_text()
+
+    def create_name_text(self):
+        b_color = self.body_view.color
+        self.name_text = Text(self.body_view.body.name, scale=2, billboard=True, parent=self,
+                              font=UrsinaConfig.CN_FONT, background=True,
+                              origin=(0, 0))
+        self.name_text.background.color = color.rgba(b_color[0], b_color[1], b_color[2], 0.3)
+        # self.name_text.scale = self.scale
+        inverse_color = get_inverse_color(b_color)
+        self.name_text.color = color.rgba(inverse_color[0], inverse_color[1], inverse_color[2], 1)
 
     def trail_init(self):
         """
@@ -271,6 +284,12 @@ class Planet(Entity):
         else:
             self.clear_trails()
 
+        if hasattr(self, "name_text"):
+            # 计算相机和实体之间的距离
+            distance = (camera.world_position - self.world_position).length()
+            # 根据距离设置文本缩放比例
+            # self.name_text.scale = distance / 10
+
     def follow_parent(self):
         if not hasattr(self, "f_parent"):
             if not hasattr(self.body_view, "bodies_system"):
@@ -316,17 +335,17 @@ class Planet(Entity):
                 if glow_num > 0:
                     glow_alphas = [0, 0.5, 0.4, 0.3, 0.2, 0.1]
                     if glow_alpha is None:
-                        if glow_num < len(glow_alphas)-1:
+                        if glow_num < len(glow_alphas) - 1:
                             glow_alpha = glow_alphas[glow_num]
                         else:
                             glow_alpha = glow_alphas[-1]
 
                     # _color = color.white
                     _color = self.body_view.body.color
-                    _color = color.rgba(_color[0]/255, _color[1]/255, _color[2]/255, 1)
+                    _color = color.rgba(_color[0] / 255, _color[1] / 255, _color[2] / 255, 1)
                     for i in range(glow_num):
                         glow_entity = Entity(parent=self, model='sphere', color=_color,
-                                             scale=math.pow(glow_scale, i+1), alpha=glow_alpha)
+                                             scale=math.pow(glow_scale, i + 1), alpha=glow_alpha)
         if hasattr(self.body_view.body, "light_on"):
             if self.body_view.body.light_on:
                 for i in range(2):

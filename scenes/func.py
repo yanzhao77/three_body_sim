@@ -62,6 +62,7 @@ def ursina_run(bodies,
                cosmic_bg=None,
                show_grid=True,
                show_trail=False,
+               show_name=False,
                save_as_json=None):
     """
 
@@ -81,9 +82,15 @@ def ursina_run(bodies,
     from ursina import application, Sequence, camera, held_keys, time, clamp, Entity, Text, color
     from ursina.prefabs.first_person_controller import FirstPersonController
     body_sys = System(bodies)
+
+    if show_name:
+        for body in body_sys.bodies:
+            body.show_name = True
+
     if save_as_json is not None:
         try:
-            body_sys.save_to_json(save_as_json, {"dt": dt, "position": position, "show_trail": show_trail})
+            body_sys.save_to_json(save_as_json, {"dt": dt, "position": position,
+                                                 "show_trail": show_trail, "show_name": show_name})
             print(f"{save_as_json} 文件生成成功！")
         except Exception as e:
             print(f"{save_as_json} 文件生成失败！" + str(e))

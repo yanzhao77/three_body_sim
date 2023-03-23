@@ -17,6 +17,8 @@ class Stephenson_2_18(FixedStar):
     分类: 红超巨星
     直径: 3005015000 km
     半径: 2158R☉ [1]
+    https://baijiahao.baidu.com/s?id=1734063731226819203&wfr=spider&for=pc
+    这颗恒星的体积就更加夸张了，根据科学家的估计，这颗恒星的体积，是太阳的100亿倍。换一句话说，史蒂文森2-18的体积是盾牌座UY的两倍。
     --------------- 维基百科 ---------------
     史蒂芬森2-18
     Stephenson 2-18 zoomed in, 2MASS survey, 2003.png

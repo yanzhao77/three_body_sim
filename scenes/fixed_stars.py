@@ -34,7 +34,7 @@ if __name__ == '__main__':
         CarinaeV382(size_scale=SIZE_SCALE, ignore_mass=True),       # 船底座V382   质量倍数 39     半径倍数 747
         # Betelgeuse(size_scale=SIZE_SCALE, ignore_mass=True),        # 参宿四       质量倍数 19     半径倍数 1180
         VYCanisMajoris(size_scale=SIZE_SCALE, ignore_mass=True),    # 大犬座VY     质量倍数 30     半径倍数 1400
-        UYScuti(size_scale=SIZE_SCALE, ignore_mass=True),           # 盾牌座 UY    质量倍数 10     半径倍数 1708
+        # UYScuti(size_scale=SIZE_SCALE, ignore_mass=True),           # 盾牌座 UY    质量倍数 10     半径倍数 1708
         Stephenson_2_18(size_scale=SIZE_SCALE, ignore_mass=True)    # 史蒂文森2-18 质量倍数 40.0   半径倍数 2150
     ]
     distance_sum = 0
@@ -54,4 +54,4 @@ if __name__ == '__main__':
     # 使用 ursina 查看的运行效果
     # 常用快捷键： P：运行和暂停  O：重新开始  I：显示天体轨迹
     # position = 左-右+、上+下-、前+后-
-    ursina_run(bodies, SECONDS_PER_WEEK, position=(0, AU, -AU / 500), show_trail=True)
+    ursina_run(bodies, SECONDS_PER_WEEK, position=(0, AU, -AU / 500), show_name=True)
