@@ -12,24 +12,39 @@ from common.consts import MO
 
 class Betelgeuse(FixedStar):
     """
-    TODO： 参宿四 (Betelgeuse)
-    质量：11.6太阳质量
-    密度：1.16×10⁻⁴ g/cm³
-    颜色值：#FF9100
-    直径：887倍太阳直径
-
-    中文名参宿四外文名Betelgeuse
-    别    名α Orionis
-    分    类红超巨星
-    质    量11.6，11.6 + 5.0 或 11.6 - 3.9 M⊙
-    直    径887 ± 203 或955 ± 217 D⊙
-    表面温度3590 K视星等+0.50（0.0 ~ +1.3）绝对星等-5.85
-    赤    经5时55分10.30秒
-    赤    纬+7°24′25.43″
-    距地距离640 光年
-    光谱型M1-M2Ia-abU-B 色指数+2.06B-V 色指数+1.85
-    光    度90000 ~ 1.5 × 10^5 L⊙变星类型SRc
-
+    参宿四 (Betelgeuse)
+    --------------- 维基百科 ---------------
+    观测资料
+    历元 J2000.0
+    星座	猎户座
+    星官	参宿
+    赤经	05h 55m 10.3053s[1]
+    赤纬	+07° 24′ 25.426″[1]
+    视星等（V）	0.42[1]（0.3 to 1.2）
+    特性
+    光谱分类	M2Iab（红超巨星）[1]
+    U−B 色指数	2.06[2]
+    B−V 色指数	1.85（橙红）[2]
+    变星类型	SR c （半规则）[1]
+    天体测定
+    径向速度 (Rv)	+21.91[1] km/s
+    自行 (μ)	赤经：24.95 ± 0.08[3] mas/yr
+    赤纬：9.56 ± 0.15[3] mas/yr
+    视差 (π)	5.07 ± 1.10[3] mas
+    距离	643 ± 146 [3] ly
+    (197 ± 45 [3] pc)
+    绝对星等 (MV)	−6.05[4]
+    详细资料
+    质量	~18–19[5] M☉
+    半径	~1180[6] R☉
+    表面重力 (log g)	-0.5[7]
+    亮度	~140,000[8] L☉
+    温度	3,500[7][9] K
+    金属量	0.05 Fe/H[10]
+    自转	5 km/s[9]
+    年龄	~1.0×107 [5] 年
+    其他命名
+    参宿四，α Ori，58 Ori，HR 2061, BD +7° 1055, HD 39801, FK5 224, HIP 27989, SAO 113271, GC 7451, CCDM J05552+0724AP, AAVSO 0549+07
     ------------------------
     == 太阳参数 ==
     自转周期: 24.47 地球日，自转角速度约为 0.6130 度/小时 = 360/(24.47*24)
@@ -37,7 +52,7 @@ class Betelgeuse(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="参宿四", mass=11.6 * MO,
+    def __init__(self, name="参宿四", mass=19 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  color=(254,162,1),
@@ -48,7 +63,7 @@ class Betelgeuse(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 0.0000234,
+            "density": 1.6282093105916417e-05,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -60,9 +75,7 @@ class Betelgeuse(FixedStar):
 
 
 if __name__ == '__main__':
-    from bodies import Sun
     fixed_star = Betelgeuse()
-    sun = Sun()
     print(fixed_star)
-    print("质量倍数", fixed_star.mass / sun.mass)
-    print("半径倍数", fixed_star.raduis / sun.raduis)
+    fixed_star.compare_with_sun()
+    fixed_star.density_by_radius(num_sun_raduis=1180)

@@ -80,8 +80,17 @@ class FixedStar(Body):
     def compare_with_sun(self):
         from bodies import Sun
         sun = Sun()
-        print("质量倍数", self.mass / sun.mass)
-        print("半径倍数", self.raduis / sun.raduis)
+        print("---------------------------------")
+        print("质量: %.2f M☉ (%.4g kg)" % (self.mass / sun.mass, self.mass))
+        print("半径: %.2f R☉ (%.4g km)" % (self.raduis / sun.raduis, self.raduis))
+        print("直径: %.2f R☉ (%.4g km)" % (self.diameter / sun.diameter, self.diameter))
+        num_sun_volume = self.volume / sun.volume  # 相当于多少个太阳体积
+        if num_sun_volume <= 10000:
+            print("体积: %.2f M☉ (%.4g km³)" % (num_sun_volume, self.volume))
+        elif num_sun_volume <= 100000000:
+            print("体积: %.2f万 M☉ (%.4g km³)" % (num_sun_volume / 10000, self.volume))
+        else:
+            print("体积: %.2f亿 M☉ (%.4g km³)" % (num_sun_volume / 100000000, self.volume))
 
     def density_by_radius(self, raduis=None, num_sun_raduis=None):
         """
@@ -96,7 +105,7 @@ class FixedStar(Body):
         sun = Sun()
         if num_sun_raduis is not None:
             raduis = num_sun_raduis * sun.raduis
-        print("密度換算", self.mass / 1e9 / (4 / 3 * math.pi * pow(raduis, 3)))
+        print("---------------------------------\n密度換算: ", self.mass / 1e9 / (4 / 3 * math.pi * pow(raduis, 3)))
 
 
 if __name__ == '__main__':

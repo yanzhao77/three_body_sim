@@ -13,31 +13,41 @@ from common.consts import MO
 class Stephenson_2_18(FixedStar):
     """
     史蒂文森2-18 (Stephenson 2-18)
-    质量：40.0 太阳质量 ?
-    大小：2150 太阳半径
-    颜色：0xFF, 0xFF, 0xFF
-    密度：0.0002 g/cm³
-    半径：2158R☉
-
-
-    中文名: 史蒂文森2-18
-    外文名: Stephenson 2-18
-    别名: Stephenson 2 DFK 1、RSGC2-18、St2-18、2MASS J18390238-0605106 [2]  、IRAS 18363-0607 [2]
+    质量：40.0 太阳质量
     分类: 红超巨星
-    发现者: 查尔斯·布鲁斯·史蒂文森发现时间1990年
     直径: 3005015000 km
-    表面温度: 约 3200 K [3]
-    赤经: 18时39分02.37秒
-    赤纬: -6°05′10.54″
-    距地距离: 约 20000 光年
-    光谱型~M6 [4]
-    视星等（V）不可见 [5]
-    视星等（G）15.2631 ± 0.0092 [6]
-    视星等（J）7.150 [7]
-    视星等（H）4.698 [7]
-    视星等（K）2.9 [7]
     半径: 2158R☉ [1]
-    光度: 437000（90000~630000）L☉ [3]
+    --------------- 维基百科 ---------------
+    史蒂芬森2-18
+    Stephenson 2-18 zoomed in, 2MASS survey, 2003.png
+    2MASS拍摄的史蒂芬森2-18与其母星团史蒂芬森2（左上）。
+    Credit: 斯特拉斯堡大学/CNRS (2003)
+    观测资料
+    历元 J2000
+    星座	盾牌座
+    星官
+    赤经	18h 39m 02.3709s[1]
+    赤纬	-06° 05′ 10.5357″[1]
+    视星等（V）
+    特性
+    演化阶段	红超巨星
+    光谱分类	~M6[2]
+    视星等 (G)	15.2631±0.0092[1]
+    视星等 (J)	7.150[3]
+    视星等 (H)	4.698[3]
+    视星等 (K)	2.9[3]
+    天体测定
+    自行 (μ)	赤经：−3.045±0.511[1] mas/yr
+    赤纬：−5.950±0.480[1] mas/yr
+    视差 (π)	−0.0081 ± 0.3120[1] mas
+    距离	18,900[4] ly
+    (5,800[4] pc)
+    详细资料
+    半径	2,150[5][a] R☉
+    亮度	437,000[5] (90,000[6] – 630,000[4][b]) L☉
+    温度	3,200[5] K
+    其他命名
+    史蒂芬2-18、史蒂芬森2DFK1、RSGC2-18、2MASS J18390238-0605106、IRAS 18363-0607
     ------------------------
     == 太阳参数 ==
     自转周期: 24.47 地球日，自转角速度约为 0.6130 度/小时 = 360/(24.47*24)
@@ -56,7 +66,7 @@ class Stephenson_2_18(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 5.60e-06,
+            "density": 5.666922409347618e-06,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -71,12 +81,7 @@ class Stephenson_2_18(FixedStar):
 
 
 if __name__ == '__main__':
-    from bodies import Sun
-    import math
     fixed_star = Stephenson_2_18()
-    sun = Sun()
     print(fixed_star)
-    print("质量倍数", fixed_star.mass / sun.mass)
-    print("半径倍数", fixed_star.raduis / sun.raduis)
-    r = 2158
-    print("密度換算", fixed_star.mass / 1e9 / (4 / 3 * math.pi * pow(r * sun.raduis, 3)))
+    fixed_star.compare_with_sun()
+    fixed_star.density_by_radius(num_sun_raduis=2150)

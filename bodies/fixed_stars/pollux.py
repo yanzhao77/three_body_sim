@@ -12,32 +12,45 @@ from common.consts import MO
 
 class Pollux(FixedStar):
     """
-    TODO： 北河三 (Pollux)
-    质量：1.5太阳质量
-    密度：1.8 g/cm³
-    颜色值：#F5E8D5
-    直径：1.84倍太阳直径
+    北河三 (Pollux)
+    --------------- 维基百科 ---------------
+    观测资料
+    历元 J2000.0
+    星座	双子座
+    星官	北河 (井宿)
+    赤经	07h 45m 18.94987s[1]
+    赤纬	+28° 01′ 34.3160″[1]
+    视星等（V）	1.14[2]
+    特性
+    演化阶段	巨星
+    光谱分类	K0III[3]
+    U−B 色指数	+0.86[2]
+    B−V 色指数	+1.00[2]
+    变星类型	Suspected[4]
+    天体测定
+    径向速度 (Rv)	+3.23[5] km/s
+    自行 (μ)	赤经：–626.55[1] mas/yr
+    赤纬：–45.80[1] mas/yr
+    视差 (π)	96.54 ± 0.27[1] mas
+    距离	33.78 ± 0.09 ly
+    (10.36 ± 0.03 pc)
+    绝对星等 (MV)	+1.08±0.02[6]
+    详细资料
+    质量	1.91±0.09[7] M☉
+    半径	8.8±0.1[8] R☉
+    表面重力 (log g)	2.685±0.09[8]
+    亮度	43[9] L☉
+    温度	4666±95[8] K
+    金属量 [Fe/H]	–0.07 to +0.19[8] dex
+    自转	558 days[10]
+    自转速度 (v sin i)	2.8[11] km/s
+    年龄	724[12] Myr
+    其他命名
+    Beta Geminorum, 78 Geminorum, BD+28°1463, GCTP 1826.00, Gliese 286, HD 62509, HIP 37826, HR 2990, LFT 548, LHS 1945, LTT 12065, SAO 79666.[13]
 
-    中文名北河三外文名Pollux别    名双子座β星分    类恒星，橙巨星
-    质    量1.86 M⊙
-    表面温度4770 K
-    视星等1.14 等
-    绝对星等1.08 等自
-    转周期558天
-    赤    经7时45分18.94秒
-    赤    纬+28°01′34.31″
-    距地距离33.78 光年B-V
-    色指数1U-B
-    色指数0.86
-    光    度39L⊙
-    位    置双子座
 
 
-一、北河三比太阳大多少，77.4个太阳
-北河三，亮度为太阳的43倍，是目前发现的全天第17亮星（夜晚最亮的是大犬座的天狼星，典型的蓝矮星）。因为北河三非常亮，所以经常有人把它与太阳相比较，至于北河三比太阳大多少？据小编查询，北河三质量是太阳的1.86倍，半径是太阳的8.8倍，体积是太阳的77.4倍。
 
-二、北河三有多大，红巨星中较小
-太阳是恒星，北河三为红巨星，所以北河三比太阳大很多。不过在红巨星中，北河三又成了较小的存在，多数亮巨星超巨星都比他大。比如星心宿二是颗红超巨星，直径达到太阳的700倍；参宿七是颗蓝超巨星，直径约为太阳77倍。类似的恒星还很多，北河三并不算大。
 
     ------------------------
     == 太阳参数 ==
@@ -46,7 +59,7 @@ class Pollux(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="北河三", mass=1.5 * MO,
+    def __init__(self, name="北河三", mass=2 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  color=(0xF5, 0xE8, 0xD5),
@@ -57,7 +70,7 @@ class Pollux(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 0.5e3,
+            "density": 4.132231404958686,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -69,9 +82,7 @@ class Pollux(FixedStar):
 
 
 if __name__ == '__main__':
-    from bodies import Sun
     fixed_star = Pollux()
-    sun = Sun()
     print(fixed_star)
-    print("质量倍数", fixed_star.mass / sun.mass)
-    print("半径倍数", fixed_star.raduis / sun.raduis)
+    fixed_star.compare_with_sun()
+    fixed_star.density_by_radius(num_sun_raduis=8.8)

@@ -12,13 +12,36 @@ from common.consts import MO
 
 class YCanumVenaticorum(FixedStar):
     """
-
-中文名猎犬座Y外文名Y Canum Venaticorum
-别    名La Superba
-分    类红巨星，碳星，变星
-质    量3M⊙
-直    径 299280000 km
-表面温度2800K反照率不是行星视星等4.99赤    经12时45分07.83秒赤    纬+45°26′24.92″距地距离1000Ly光    度5800L⊙光    谱N3U-B色指数6.62B-V色指数2.54变星类型SRb编    号HR4846,HD110914,HIP62223
+    猎犬座Y (Y Canum Venaticorum)
+    分  类: 红巨星，碳星，变星
+    --------------- 维基百科 ---------------
+    La Superba
+    Y Canum Venaticorum.jpg
+    天文程式 Celestia 中的猎犬座Y（右）与太阳（左）的体积比较。
+    观测资料
+    历元 J2000.0
+    星座	猎犬座
+    星官
+    赤经	12h 45m 07.83s
+    赤纬	+45° 26' 24.92"
+    视星等（V）	+4.8 to +6.3
+    天体测定
+    自行 (μ)	赤经：-2.20 mas/yr
+    赤纬：13.05 mas/yr
+    视差 (π)	4.590 mas
+    距离	711 ± 113 ly
+    (218 ± 35 pc)
+    特性
+    光谱分类	C54J, C-N5, C-J4.5
+    变星类型	半规则变星
+    详细资料
+    质量	3 M☉
+    半径	215 R☉
+    亮度	4,400
+    (bolometric) L☉
+    温度	2,800 K
+    其他命名
+    Y Canum Venaticorum, HR 4846, HD 110914, BD+46°1817, FK5 1327, HIP 62223, SAO 44317, GC 17342
     ------------------------
     == 太阳参数 ==
     自转周期: 24.47 地球日，自转角速度约为 0.6130 度/小时 = 360/(24.47*24)
@@ -29,7 +52,7 @@ class YCanumVenaticorum(FixedStar):
     def __init__(self, name="猎犬座Y", mass=3 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=(255,55,18),
+                 color=(255, 55, 18),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.3, ignore_mass=False):
         params = {
@@ -49,14 +72,7 @@ class YCanumVenaticorum(FixedStar):
 
 
 if __name__ == '__main__':
-    from bodies import Sun
-    import math
-
     fixed_star = YCanumVenaticorum()
-    sun = Sun()
     print(fixed_star)
-    print("质量倍数", fixed_star.mass / sun.mass)
-    print("半径倍数", fixed_star.raduis / sun.raduis)
-    r = 215
-    print("密度換算", fixed_star.mass / 1e9 / (4 / 3 * math.pi * pow(r * sun.raduis, 3)))
-    print((299280000 / sun.diameter))
+    fixed_star.compare_with_sun()
+    fixed_star.density_by_radius(num_sun_raduis=215)

@@ -12,31 +12,41 @@ from common.consts import MO
 
 class Antares(FixedStar):
     """
-    心宿二，英文名为Antares
-    质    量A：12 ± 0.2 M⊙ B：7.2 M⊙
-    半    径A:680–800 R☉；B:5.2 R☉
-    A：红超巨星 B：蓝矮星
-    质量：为12太阳质量
-    大小：为680–800太阳半径
-    颜色：为0xFF, 0x44, 0x00
-    密度：为0.0037 g/cm³。
+    心宿二 (Antares)
+    --------------- 维基百科 ---------------
+    观测资料
+    历元 J2000
+    星座	天蝎座
+    星官	心 (心宿)
+    赤经	16h 29m 24s[1]
+    赤纬	−26° 25′ 55″[1]
+    视星等（V）	+0.96[2]
+    特性
+    光谱分类	M1.5Iab-b + B2.5V[3]
+    U−B 色指数	+1.34[2]
+    B−V 色指数	+1.83[2]
+    变星类型	LC[4]
+    天体测定
+    径向速度 (Rv)	−3.4[5] km/s
+    自行 (μ)	赤经：−12.11[1] mas/yr
+    赤纬：−23.30[1] mas/yr
+    视差 (π)	5.89 ± 1.00[1] mas
+    距离	大约550 ly
+    (大约170 pc)
+    绝对星等 (MV)	−5.28
+    详细资料
+    A
+    质量	15.5[6] M☉
+    半径	680[6] R☉
+    表面重力 (log g)	0.1[6]
+    亮度	62,300[7] L☉
+    温度	3400 ± 200[7] K
+    自转速度 (v sin i)	20[8] km/s
+    B
+    质量	6-8 M☉
+    半径	4 R☉
+    温度	18,500[7] K
 
-    中文名: 心宿二
-    外文名: Antares
-    别名: Alpha Scorpii
-    分类: A：红超巨星 B：蓝矮星
-    质量: A：12 ± 0.2 M⊙ B：7.2 M⊙
-    表面温度: A：3570 K B：18500 K
-    视星等: A：0.6 ～ 1.6 B：5.5
-    绝对星等: -5.28 等 [9]
-    赤经: 16时29分24.46秒
-    赤纬: -26°25′55.21″
-    距地距离: 550 ly（170 pc）U-B
-    色指数: A：M1.5Iab-Ib B：B2.5VB-V
-    色指数: +1.83
-    光度: A:75,900 L☉ (44,700 – 128,900 L☉)；B:2754 L☉ [9]
-    变星类型: Lc
-    半径: A:680–800 R☉；B:5.2 R☉
 
     ------------------------
     == 太阳参数 ==
@@ -45,7 +55,7 @@ class Antares(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="心宿二", mass=12 * MO,
+    def __init__(self, name="心宿二A", mass=15.5 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  color=(249,198,83),
@@ -56,7 +66,7 @@ class Antares(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 0.000037,
+            "density": 6.940769387339728e-05,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -69,9 +79,7 @@ class Antares(FixedStar):
 
 
 if __name__ == '__main__':
-    from bodies import Sun
     fixed_star = Antares()
-    sun = Sun()
     print(fixed_star)
-    print("质量倍数", fixed_star.mass / sun.mass)
-    print("半径倍数", fixed_star.raduis / sun.raduis)
+    fixed_star.compare_with_sun()
+    fixed_star.density_by_radius(num_sun_raduis=680)

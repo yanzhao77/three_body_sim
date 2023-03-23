@@ -12,32 +12,36 @@ from common.consts import MO
 
 class VYCanisMajoris(FixedStar):
     """
-    TODO： 大犬座VY（VY Canis Majoris）
-    质量：17±8 太阳质量
-    大小：1420-2100 太阳半径
-    颜色：234,90,65
-    密度：0.0004 g/cm³
+    T大犬座VY（VY Canis Majoris）
+    --------------- 维基百科 ---------------
+    VY Canis Majoris
+    Sun and VY Canis Majoris.svg
 
-  中文名大犬座VY外文名VY Canis Majoris
-  别    名VY CMa
-  分    类红特超巨星
-  发现者杰罗姆·拉朗德发现时间1801年3月7日
-  平均密度5.33✕10-3 至 8.38✕10-3 g/m³表
-  面温度3490 K(±90)
-  视星等6.5 至 9.6 等
-  赤    经07时22分58.33秒
-  赤    纬-25°46′03.24″
-  距地距离3820 光年(+260 −230)
-  光谱型M3-M4.5（M2.5-M5e Ia） [1-3]
-  视星等（U）12.01 [4] 视星等（B）10.19 [4] 视星等（V）7.95 [4]
-  视星等（J）1.98 [4] 视星等（H）0.44 [4] 视星等（K）8.1 [5]
-  U-B色指数+2.32 [6] B-V色指数+2.057 [7] V-R色指数+2.20 [6]
-  变星类型SRc或Lc [8-9]  径向速度41 km/s [10] 自    行赤
-  经：9.84 mas/yr 赤纬：0.75 mas/yr [7]
-  视    差0.83±0.08 mas [11] 距    离1,170（+80或-70）pc，3,820（+260或-230）ly [1] 绝对热星等-9.4
-  恒星质量17±8 M☉ [1]
-  半    径2,069 R☉ [1]  [12-13]
-  热光度270,000±40,000，178,000（+40,900或-29,900）L☉ [12-14]   表面重力-0.6±0.4 cgs [1] 有效温度3,940±90 K [1] 金属丰度[Fe/H]-0.3 dex [15] 自转速度300 km/s [11] 年    龄8.2 Myr [11]
+    太阳与大犬座VY大小比较
+    观测资料
+    历元 J2000
+    星座	大犬座
+    星官
+    赤经	07h 22m 58.33s[1]
+    赤纬	−25° 46′ 03.17″[1]
+    视星等（V）	6.5 to 9.6[2]
+    7.9607[3]
+    特性
+    光谱分类	M3[1]-M5e Ia[4]
+    B−V 色指数	2.24[1]
+    变星类型	半规则变星[5]
+    天体测定
+    径向速度 (Rv)	49 ± 10[1] km/s
+    自行 (μ)	赤经：9.84[1] mas/yr
+    赤纬：0.75[1] mas/yr
+    视差 (π)	0.83 ± 0.1[6] mas
+    距离	大约3900 ly
+    (大约1200 pc)
+    详细资料
+    质量	~30[7]-40[8] M☉
+    半径	~1400左右[9] R☉
+    亮度	~450,000[10][11] L☉
+    温度	~3000[11] K
     ------------------------
     == 太阳参数 ==
     自转周期: 24.47 地球日，自转角速度约为 0.6130 度/小时 = 360/(24.47*24)
@@ -45,7 +49,7 @@ class VYCanisMajoris(FixedStar):
     平均密度: 1.408×10³ kg/m³
     """
 
-    def __init__(self, name="大犬座VY", mass=25 * MO,
+    def __init__(self, name="大犬座VY", mass=30 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
                  color=(234,90,65),
@@ -56,7 +60,7 @@ class VYCanisMajoris(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 1.23e-05,
+            "density": 1.5393586005830937e-05,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -68,12 +72,7 @@ class VYCanisMajoris(FixedStar):
 
 
 if __name__ == '__main__':
-    from bodies import Sun
-    import math
     fixed_star = VYCanisMajoris()
-    sun = Sun()
     print(fixed_star)
-    print("质量倍数", fixed_star.mass / sun.mass)
-    print("半径倍数", fixed_star.raduis / sun.raduis)
-    r = 1420
-    print("密度換算", fixed_star.mass / 1e9 / (4 / 3 * math.pi * pow(r * sun.raduis, 3)))
+    fixed_star.compare_with_sun()
+    fixed_star.density_by_radius(num_sun_raduis=1400)

@@ -13,17 +13,30 @@ from common.consts import MO
 class UYScuti(FixedStar):
     """
     盾牌座 UY (UY Scuti)
-    质量：10个太阳质量
-    密度：不详
-    颜色值：#EFF6FF
-    直径：为1708±192倍太阳直径
-
-中文名盾牌座 UY外文名UY Scuti
-别    名UY Sct、BD−12°5055、IRC−10422、RAFGL 2162、HV 3805
-分    类红超巨星发现时间1860年
-质    量7 至 10 M⊙(有争议)
-直    径2.376✕109 km(±0.268)表面温度3365 K(±134)视星等+8.29 ~ +10.56绝对星等-6.2 等 [1] 赤    经18时27分36.53秒赤    纬-12°27′58.86″距地距离9500 光年(±1030, 有争议) [1] 光谱类别M2-M4Ia-IabU-B 色指数+3.29 [2] B-V 色指数+3.00 [3] 变星类型SRc（半规则） [4] 光    度约340000 L⊙（有争议）半    径1708±192 R☉（有争议）表面重力加速度0.008 m/s²表面重力-0.5 cgs [2] 赤道自转线速度约1.95 km/s径向速度18.33±0.82 km/s [5] 视    差0.6433±0.1059 mas（有争议） [5] 自    行赤经: 1.3 mas/yr; 赤纬: −1.6 mas/yr
-
+    --------------- 维基百科 ---------------
+    盾牌座UY
+    盾牌座UY（影像中最亮恒星）周围有大量恒星。
+    由美国哥伦比亚大学拉瑟弗德天文台摄于2011年。
+    观测资料
+    历元 J2000.0
+    星座	盾牌座
+    星官
+    赤经	18h 27m 36.5334s[1]
+    赤纬	-12° 27′ 58.866″[1]
+    视星等（V）	9.0[1]
+    特性
+    光谱分类	M4Ia [1]
+    B−V 色指数	2.6[1]
+    变星类型	Semiregular[1]
+    天体测定
+    自行 (μ)	赤经：1.3[1] mas/yr
+    赤纬：-1.6[1] mas/yr
+    详细资料
+    质量	7-10 M☉
+    半径	~755 R☉
+    亮度	86300 ~ 87100 [2] L☉
+    其他命名
+    V* UY Sct、BD-12 5055、IRC -10422、RAFGL 2162[1]
     ------------------------
     == 太阳参数 ==
     自转周期: 24.47 地球日，自转角速度约为 0.6130 度/小时 = 360/(24.47*24)
@@ -34,7 +47,7 @@ class UYScuti(FixedStar):
     def __init__(self, name="盾牌座UY", mass=10 * MO,
                  init_position=[0, 0, 0],
                  init_velocity=[0, 0, 0],
-                 color=(255,116,0),
+                 color=(255, 116, 0),
                  texture="fixed_star.png", size_scale=1.0, distance_scale=1.0,
                  rotation_speed=0.22, ignore_mass=False):
         params = {
@@ -42,7 +55,7 @@ class UYScuti(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 2.832e-06,
+            "density": 3.271612056053086e-05,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -54,15 +67,7 @@ class UYScuti(FixedStar):
 
 
 if __name__ == '__main__':
-    from bodies import Sun
-    import math
-
     fixed_star = UYScuti()
-    sun = Sun()
     print(fixed_star)
-    print("质量倍数", fixed_star.mass / sun.mass)
-    print("半径倍数", fixed_star.raduis / sun.raduis)
-    r = 1708
-    print("密度換算", fixed_star.mass / 1e9 / (4 / 3 * math.pi * pow(r * sun.raduis, 3)))
-
-    # print( "%s" % (2.376e9 / (sun.raduis*2)))
+    fixed_star.compare_with_sun()
+    fixed_star.density_by_radius(num_sun_raduis=755)
