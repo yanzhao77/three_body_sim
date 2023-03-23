@@ -19,11 +19,11 @@ if __name__ == '__main__':
     # TODO: 去掉注释，在地球上看月相演示变化过程演示
     # bodies, params = Body.build_bodies_from_json('../data/sun_earth_moon.json')
     # TODO: 去掉注释，完美数据的三体模型的演示01（等边三角形）
-    # bodies, params = Body.build_bodies_from_json('../data/tri_bodies_sim_perfect_01.json')
+    bodies, params = Body.build_bodies_from_json('../data/tri_bodies_sim_perfect_01.json')
     # TODO: 去掉注释，完美数据的三体模型的演示02（等边三角形）
     # bodies, params = Body.build_bodies_from_json('../data/tri_bodies_sim_perfect_02.json')
     # TODO: 去掉注释，完美数据的三体模型的演示03（等边三角形）
-    bodies, params = Body.build_bodies_from_json('../data/tri_bodies_sim_perfect_03.json')
+    # bodies, params = Body.build_bodies_from_json('../data/tri_bodies_sim_perfect_03.json')
     # TODO: 去掉注释，引力弹弓的演示
     # bodies, params = Body.build_bodies_from_json('../data/gravity_slingshot.json')
 

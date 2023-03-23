@@ -290,7 +290,8 @@ class UrsinaSimulator(Simulator):
             bg_music = None
 
         if bg_music is None:
-            bg_music = "../sounds/universe_04.mp3"
+            # bg_music = "../sounds/universe_04.mp3"
+            bg_music = "../none"
 
         if os.path.exists(bg_music):
             audio = Audio(bg_music, pitch=1, loop=True, autoplay=True)

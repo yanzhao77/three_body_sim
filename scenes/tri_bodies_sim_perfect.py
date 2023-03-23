@@ -22,11 +22,11 @@ if __name__ == '__main__':
 
     mass = 2e30
     r = 2 * AU
-    # p = 12  # 三体转圆形花
-    p = 14.88  # 三体转圈近似圆形
-    # p = 16  # 三体转圆形花
-    # p = 18  # 三体转圆形花
-    # p = 19  # 三体转圆形花
+    # p = 12  # TODO: 三体转圆形花
+    p = 14.88  # TODO: 三体转圈近似圆形
+    # p = 16  # TODO: 三体转圆形花
+    # p = 18  # TODO: 三体转圆形花
+    # p = 19  # TODO: 三体转圆形花
     bodies = [
         Sun(name="红轨太阳A", mass=mass,
             init_position=[0, math.sqrt(3) * r, 0],
