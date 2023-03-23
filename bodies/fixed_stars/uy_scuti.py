@@ -13,6 +13,8 @@ from common.consts import MO
 class UYScuti(FixedStar):
     """
     盾牌座 UY (UY Scuti)
+    质量	7-10 M☉
+    半径	1708 R☉ (有争议)
     --------------- 维基百科 ---------------
     盾牌座UY
     盾牌座UY（影像中最亮恒星）周围有大量恒星。
@@ -55,7 +57,7 @@ class UYScuti(FixedStar):
             "mass": mass,
             "init_position": init_position,
             "init_velocity": init_velocity,
-            "density": 3.271612056053086e-05,
+            "density": 2.825784611529699e-06,
             "color": color,
             "texture": texture,
             "size_scale": size_scale,
@@ -70,4 +72,4 @@ if __name__ == '__main__':
     fixed_star = UYScuti()
     print(fixed_star)
     fixed_star.compare_with_sun()
-    fixed_star.density_by_radius(num_sun_raduis=755)
+    fixed_star.density_by_radius(num_sun_raduis=1708)

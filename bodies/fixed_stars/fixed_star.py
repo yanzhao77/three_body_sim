@@ -83,14 +83,14 @@ class FixedStar(Body):
         print("---------------------------------")
         print("质量: %.2f M☉ (%.4g kg)" % (self.mass / sun.mass, self.mass))
         print("半径: %.2f R☉ (%.4g km)" % (self.raduis / sun.raduis, self.raduis))
-        print("直径: %.2f R☉ (%.4g km)" % (self.diameter / sun.diameter, self.diameter))
+        print("直径: %.2f D☉ (%.4g km)" % (self.diameter / sun.diameter, self.diameter))
         num_sun_volume = self.volume / sun.volume  # 相当于多少个太阳体积
         if num_sun_volume <= 10000:
-            print("体积: %.2f M☉ (%.4g km³)" % (num_sun_volume, self.volume))
+            print("体积: %.2f V☉ (%.4g km³)" % (num_sun_volume, self.volume))
         elif num_sun_volume <= 100000000:
-            print("体积: %.2f万 M☉ (%.4g km³)" % (num_sun_volume / 10000, self.volume))
+            print("体积: %.2f万 V☉ (%.4g km³)" % (num_sun_volume / 10000, self.volume))
         else:
-            print("体积: %.2f亿 M☉ (%.4g km³)" % (num_sun_volume / 100000000, self.volume))
+            print("体积: %.2f亿 V☉ (%.4g km³)" % (num_sun_volume / 100000000, self.volume))
 
     def density_by_radius(self, raduis=None, num_sun_raduis=None):
         """

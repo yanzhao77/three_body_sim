@@ -15,6 +15,11 @@ from bodies.body import Body, AU
 if __name__ == '__main__':
     """
     恒星演示
+    
+    
+    质量: 8.60 M☉ (1.711e+31 kg)
+半径: 5.75 R☉ (4.003e+06 km)
+    
     """
     # 构建两个天体对象（太阳、地球）
     D = 5e5
@@ -22,20 +27,20 @@ if __name__ == '__main__':
     bodies = [
         Earth(size_scale=SIZE_SCALE, ignore_mass=True),
         Sun(size_scale=SIZE_SCALE, ignore_mass=True),  # 太阳
-        Sirius(size_scale=SIZE_SCALE, ignore_mass=True),            # 天狼星A      质量倍数 2.06   半径倍数 1.71
+        Sirius(size_scale=SIZE_SCALE, ignore_mass=True),            # 天狼星A      质量倍数 2.02   半径倍数 1.71
         # Bellatrix(size_scale=SIZE_SCALE, ignore_mass=True),         # 参宿五       质量倍数 8.6    半径倍数 5.75
-        Alcyone(size_scale=SIZE_SCALE, ignore_mass=True),           # 昴宿六       质量倍数 7      半径倍数 10
-        Arcturus(size_scale=SIZE_SCALE, ignore_mass=True),          # 大角星       质量倍数 1.08   半径倍数 25.42
-        # Aldebaran(size_scale=SIZE_SCALE, ignore_mass=True),         # 毕宿五       质量倍数 11.3   半径倍数 38
-        Rigel(size_scale=SIZE_SCALE, ignore_mass=True),             # 参宿七       质量倍数 21     半径倍数 78.9
+        Alcyone(size_scale=SIZE_SCALE, ignore_mass=True),           # 昴宿六       质量倍数 6      半径倍数 9.5
+        Arcturus(size_scale=SIZE_SCALE, ignore_mass=True),          # 大角星       质量倍数 1.1    半径倍数 25.7
+        Aldebaran(size_scale=SIZE_SCALE, ignore_mass=True),         # 毕宿五       质量倍数 1.16   半径倍数 44.13
+        Rigel(size_scale=SIZE_SCALE, ignore_mass=True),             # 参宿七       质量倍数 18     半径倍数 78
         # YCanumVenaticorum(size_scale=SIZE_SCALE, ignore_mass=True), # 猎犬座Y      质量倍数 3.0    半径倍数 215
-        # EtaCarinae(size_scale=SIZE_SCALE, ignore_mass=True),        # 海山二       质量倍数 100.0  半径倍数 278
-        CarinaeV382(size_scale=SIZE_SCALE, ignore_mass=True),       # 船底座V382   质量倍数 20.0   半径倍数 350
-        # Antares(size_scale=SIZE_SCALE, ignore_mass=True),           # 心宿二       质量倍数 12     半径倍数 770
-        Betelgeuse(size_scale=SIZE_SCALE, ignore_mass=True),        # 参宿四       质量倍数 11.6   半径倍数 887
-        # VYCanisMajoris(size_scale=SIZE_SCALE, ignore_mass=True),    # 大犬座VY     质量倍数 25     半径倍数 1419.75
-        UYScuti(size_scale=SIZE_SCALE, ignore_mass=True),           # 盾牌座 UY    质量倍数 10.0   半径倍数 1706.7
-        Stephenson_2_18(size_scale=SIZE_SCALE, ignore_mass=True)    # 史蒂文森2-18 质量倍数 40.0   半径倍数 2158.5
+        EtaCarinae(size_scale=SIZE_SCALE, ignore_mass=True),        # 海山二       质量倍数 125    半径倍数 278
+        # Antares(size_scale=SIZE_SCALE, ignore_mass=True),           # 心宿二       质量倍数 15     半径倍数 680
+        CarinaeV382(size_scale=SIZE_SCALE, ignore_mass=True),       # 船底座V382   质量倍数 39     半径倍数 747
+        # Betelgeuse(size_scale=SIZE_SCALE, ignore_mass=True),        # 参宿四       质量倍数 19     半径倍数 1180
+        VYCanisMajoris(size_scale=SIZE_SCALE, ignore_mass=True),    # 大犬座VY     质量倍数 30     半径倍数 1400
+        # UYScuti(size_scale=SIZE_SCALE, ignore_mass=True),           # 盾牌座 UY    质量倍数 10     半径倍数 1708
+        Stephenson_2_18(size_scale=SIZE_SCALE, ignore_mass=True)    # 史蒂文森2-18 质量倍数 40.0   半径倍数 2150
     ]
     distance_sum = 0
     for idx, body in enumerate(bodies):
