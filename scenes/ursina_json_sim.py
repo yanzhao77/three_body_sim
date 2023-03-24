@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     dt = params["dt"] if "dt" in params else SECONDS_PER_YEAR
     position = params["position"] if "position" in params else (0, 0, 0)
-    show_trail = params["show_trail"] if "show_trail" in params else True
+    show_trail = params["show_trail"] if "show_trail" in params else False
 
     # 使用 ursina 查看的运行效果
     # 常用快捷键： P：运行和暂停  O：重新开始  I：显示天体轨迹

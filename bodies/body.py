@@ -307,7 +307,7 @@ class Body(metaclass=ABCMeta):
 
     def __repr__(self):
         return '<%s(%s)> m=%.3e(kg), r|d=%.3e|%.3e(km), v=%.3e(km³), d=%.3e(kg/m³), p=[%.3e,%.3e,%.3e](km), v=%s(km/s)' % \
-               (self.name,self.__class__.__name__, self.mass, self.raduis, self.diameter, self.volume, self.density,
+               (self.name, self.__class__.__name__, self.mass, self.raduis, self.diameter, self.volume, self.density,
                 self.position[0], self.position[1], self.position[2], self.velocity)
 
     def ignore_gravity(self, body):
@@ -371,12 +371,15 @@ class Body(metaclass=ABCMeta):
                 except Exception as e:
                     err_msg = f"{json_file} 格式错误：" + str(e)
                     raise Exception(err_msg)
+                is_fixed_star = False
                 if "is_fixed_star" in body_data:
                     if body_data["is_fixed_star"]:
-                        body_data.pop("is_fixed_star")
-                        body = FixedStar(**body_data)
-                else:
+                        is_fixed_star = True
+                if is_fixed_star:
+                    body_data.pop("is_fixed_star")
                     body = FixedStar(**body_data)
+                else:
+                    body = Body(**body_data)
                 bodies.append(body)
             if "params" in json_data:
                 params = json_data["params"]
