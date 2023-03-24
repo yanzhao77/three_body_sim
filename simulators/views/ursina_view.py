@@ -139,7 +139,7 @@ class Planet(Entity):
 
     def create_name_text(self):
         b_color = self.body_view.color
-        self.name_text = Text(self.body_view.body.name, scale=2, billboard=True, parent=self,
+        self.name_text = Text(self.body_view.body.name, scale=1, billboard=True, parent=self,
                               font=UrsinaConfig.CN_FONT, background=True,
                               origin=(0, 0))
         self.name_text.background.color = color.rgba(b_color[0], b_color[1], b_color[2], 0.3)
@@ -287,7 +287,7 @@ class Planet(Entity):
         if hasattr(self, "name_text"):
             d = (camera.world_position - self.name_text.world_position).length()
 
-            if d < self.scale_x * 1.22:
+            if d < pow(self.scale_x, 1.02) * 1.2:
                 self.name_text.visible = False
             else:
                 self.name_text.visible = True
