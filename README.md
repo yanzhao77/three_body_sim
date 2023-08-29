@@ -95,3 +95,6 @@ python scenes/sun_earth.py
 # 太阳、地球、木星运行效果
 python scenes/sun_earth_jupiter.py 
 ```
+
+# 免责声明
+* 本项目开源代码和资料主要用于教学，任何直接或间接因使用我方的任何内容所导致的全部后果与我方无关，
