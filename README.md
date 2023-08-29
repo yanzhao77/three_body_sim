@@ -16,16 +16,7 @@
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_4.png" width="40%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/bodies_run.gif" width="90%">
 
-# 更多资源：
-<img src="images/universe_sim_list.jpg?raw=true" width="80.7%">
-<img src="images/chatgpt_list.jpg?raw=true" width="80.7%">
-<img src="images/python_oa_list.jpg?raw=true" width="80.7%">
 
-# 关注更多资源：
-<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/douyin_x.jpg" width="40%">
-
-# 课程下载
-https://gitcode.net/pythoncr/three_body_sim
 
 # 目录说明
 
@@ -104,6 +95,3 @@ python scenes/sun_earth.py
 # 太阳、地球、木星运行效果
 python scenes/sun_earth_jupiter.py 
 ```
-
-# 免责声明
-* 本项目开源代码和资料主要用于教学，任何直接或间接因使用我方的任何内容所导致的全部后果与我方无关，若使用者无法对使用我方内容后的任何后果负责，请不要使用我方的任何内容。若我方的任何内容侵犯了您的法律权益，请联系pythoncr@126.com，作者会第一时间删除侵权内容。
