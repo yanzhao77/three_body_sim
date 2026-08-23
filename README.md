@@ -1,3 +1,5 @@
+
+
 <p align="center">
   <strong>Python太阳系、三体模拟器</strong>
 </p> 
@@ -37,7 +39,7 @@
 # 安装 Python 库
 ```shell script
 # 先安装基础包
-pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina pyqt5 pyglet mayavi
+pip install -i http://pypi.douban.com/simple/ --trusted-host=pypi.douban.com ursina pyqt5 pyglet mayavi matplotlib
 ```
 
 # 支持三种模拟器
