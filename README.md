@@ -11,7 +11,7 @@
 我们可以自己通过调整天体的初始坐标、质量和矢量速度等等参数来自定义各种场景来控制天体的运行效果。
 
 # 三个模拟器效果图
-<img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_3.png" width="80.7%">
+<img src="/images/solar_system_3.png" width="80.7%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/solar_system_1.png" width="40%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_1.png" width="40%">
 <img src="https://gitcode.net/pythoncr/three_body_sim/-/raw/master/images/three_body_3.png" width="40%">
